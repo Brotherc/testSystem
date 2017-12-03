@@ -1,0 +1,183 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/base/tag.jsp"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- 引用jquery easy ui的js库及css -->
+<LINK rel="stylesheet" type="text/css" href="${baseurl}js/jquery-easyui-1.4.1/styles/default.css">
+<%-- <LINK rel="stylesheet" type="text/css" href="${baseurl}js/easyui/styles/default.css"> --%>
+<%@ include file="/WEB-INF/jsp/base/common_css2.jsp"%>
+<script type="text/javascript" src="${baseurl}js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="js/jquery-easyui-1.4.1/locale/easyui-lang-zh_CN.js"></script>
+
+<script type="text/javascript" src="${baseurl}js/jquery.form.min.js"></script>
+
+<script type="text/javascript" src="${baseurl}js/custom.jquery.form.js"></script>
+<script type="text/javascript" src="${baseurl}js/custom.box.main.js"></script>
+<script type="text/javascript" src="${baseurl}js/jquery.ajax.custom.extend.js"></script>
+<title>年级管理</title>
+
+<script type="text/javascript">
+var width=parent.document.body.clientWidth;
+var height=parent.document.body.clientHeight;
+var fixWidth=function(percent){
+	return (parent.document.body.clientWidth)*percent;
+};
+
+	//datagrid列定义
+	var columns_v = [ [ {
+		field : 'njnane',//对应json中的key
+		title : '年级名称',
+		width : fixWidth(0.36)
+	}, {
+		field : 'status',//对应json中的key
+		title : '状态 ',
+		width : fixWidth(0.36),
+		formatter : function(value, row, index) {
+			if(row.status==1)
+				return "正常";
+			else if(row.status==2)
+				return "过期";
+		}
+	},{
+		field : 'option1',//对应json中的key
+		title : '操作1',
+		width : fixWidth(0.055),
+		formatter : function(value, row, index) {
+			return "<a href=javascript:updateNj('"+row.uuid+"')>过期</a>";
+		}
+	} ] ];
+
+	//定义 datagird工具
+	var toolbar_v = [ {//工具栏
+		id : 'btnadd',
+		text : '添加',
+		iconCls : 'icon-add',
+		handler : function() {
+			//打开一个窗口，用户添加页面
+			//参数：窗口的title、宽、高、url地址
+			createmodalwindow("添加年级信息", width*0.3, height*0.3, '${baseurl}njInput.action');
+		}
+	} ];
+
+	//加载datagrid
+	$(function() {
+		$('#njlist').datagrid({
+			title : '年级查询',//数据列表标题
+			nowrap : true,//单元格中的数据不换行，如果为true表示不换行，不换行情况下数据加载性能高，如果为false就是换行，换行数据加载性能不高
+			striped : true,//条纹显示效果
+			url : '${baseurl}nj/query.action',//加载数据的连接，引连接请求过来是json数据
+			idField : 'uuid',//此字段很重要，数据结果集的唯一约束(重要)，如果写错影响 获取当前选中行的方法执行
+			loadMsg : '',
+			columns : columns_v,
+			pagination : true,//是否显示分页
+			rownumbers : true,//是否显示行号
+			pageList:[15,30,50],
+			toolbar : toolbar_v,
+			onClickRow : function(index, field, value) {
+				$('#njlist').datagrid('unselectRow', index);
+			},
+			//将加载成功后执行：清除选中的行
+			onLoadSuccess:function(){
+				$('#njlist').datagrid('clearSelections');
+			}
+		}); 
+
+	        
+	});
+	
+	function queryNj(){
+		//datagrid的方法load方法要求传入json数据，最终将 json转成key/value数据传入action
+		//将form表单数据提取出来，组成一个json
+		$("input[type=text]").each(function(i){
+			var val=$.trim($(this).val());
+			$(this).val(val);
+		});
+		var formdata = $("#njqueryForm").serializeJson();
+		$('#njlist').datagrid('load',formdata);
+	}
+	//删除系方法
+	function updateNj(id){
+
+		//第一个参数是提示信息，第二个参数，取消执行的函数指针，第三个参是，确定执行的函数指针
+		_confirm('您确认要置该年级状态为过期吗？',null,function (){
+
+			//将要删除的id赋值给deleteid，deleteid在sysuserdeleteform中
+			$("#update_id").val(id);
+			//使用ajax的from提交执行删除
+			//sysuserdeleteform：form的id，userdel_callback：删除回调函数，
+			//第三个参数是url的参数
+			//第四个参数是datatype，表示服务器返回的类型
+			jquerySubByFId('njupdateform',njupdate_callback,null,"json");
+			
+			
+		});
+	}
+	//删除系的回调
+	function njupdate_callback(data){
+		message_alert(data);
+		//刷新 页面
+		//在提交成功后重新加载 datagrid
+		//取出提交结果
+		var type=data.resultInfo.type;
+		if(type==1){
+			//成功结果
+			//重新加载 datagrid
+			queryNj();
+		}
+	}
+</script>
+
+</head>
+<body>
+
+  <form id="njqueryForm">
+	<!-- 查询条件 -->
+	<TABLE class="table_search" align="center">
+		<TBODY >
+			<TR>
+				<TD class="left">年级名称：</td>
+				<td>
+				<INPUT id="njname" class="easyui-textbox" type="text" name="nj.njnane" />
+				</TD>
+				<TD class="left">状态：</TD>
+				<td>
+					<input class="easyui-combobox" 
+					data-options="editable:false,data: [{
+							key: '',
+							value: '请选择',
+							selected:'true'
+						},{
+							key: '1',
+							value: '正常'
+						},{
+							key: '2',
+							value: '过期'
+						}],valueField:'key',textField:'value'" 
+					name="nj.status" >
+				</TD>
+				<td><a id="btn" href="#" onclick="queryNj()"
+					class="easyui-linkbutton" iconCls='icon-search'>查询</a></td>
+			</TR>
+		</TBODY>
+	</TABLE>
+
+	<!-- 查询列表 -->
+	<TABLE border=0 cellSpacing=0 cellPadding=0 width="99%" align=center>
+		<TBODY  align="center">
+			<TR>
+				<TD>
+					<table id="njlist"></table>
+				</TD>
+			</TR>
+		</TBODY>
+	</TABLE>
+</form>
+<form id="njupdateform" action="${baseurl}nj/updateStatus.action" method="post">
+  <input type="hidden" id="update_id" name="uuid" />
+</form>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.business.dao.mapper.StudentSjMapperCustom" >
+
+	<sql id="query_studentSj_where">
+		<if test="studentSjCustom!=null">
+			<if test="studentSjCustom.uuid!=null and studentSjCustom.uuid!=''">
+				and STUDENT_SJ.uuid = #{studentSjCustom.uuid}
+			</if>
+			<if test="studentSjCustom.studentid!=null and studentSjCustom.studentid!=''">
+				and STUDENT_SJ.studentid = #{studentSjCustom.studentid}
+			</if>
+			<if test="studentSjCustom.sjid!=null and studentSjCustom.sjid!=''">
+				and STUDENT_SJ.sjid = #{studentSjCustom.sjid}
+			</if>
+			<if test="studentSjCustom.score!=null and studentSjCustom.score!=''">
+				and STUDENT_SJ.score = #{studentSjCustom.score}
+			</if>
+			<if test="studentSjCustom.ksgluuid!=null and studentSjCustom.ksgluuid!=''">
+				and STUDENT_SJ.ksgluuid = #{studentSjCustom.ksgluuid}
+			</if>
+			
+			<if test="studentSjCustom.userid!=null and studentSjCustom.userid!=''">
+				and STUDENT_SJ.userid = #{studentSjCustom.userid}
+			</if>
+			<if test="studentSjCustom.classuuid!=null and studentSjCustom.classuuid!=''">
+				and STUDENT_SJ.classuuid = #{studentSjCustom.classuuid}
+			</if>
+			<if test="studentSjCustom.scoreMin!=null and studentSjCustom.scoreMin!=''">
+				and STUDENT_SJ.score <![CDATA[>= ]]> #{studentSjCustom.scoreMin}
+			</if>
+			<if test="studentSjCustom.scoreMax!=null and studentSjCustom.scoreMax!=''">
+				and STUDENT_SJ.score <![CDATA[<= ]]> #{studentSjCustom.scoreMax}
+			</if>
+			<if test="studentSjCustom.status!=null and studentSjCustom.status!=''">
+				and STUDENT_SJ.status = #{studentSjCustom.status}
+			</if>
+		</if>
+	</sql>
+
+<!-- 	<select id="findStudentSjList" parameterType="ytk.business.pojo.vo.StudentSjQueryVo" resultType="ytk.business.pojo.vo.StudentSjCustom">
+		SELECT * FROM(
+			SELECT student_sj.*,sysuser.userid,sysuser.classuuid,
+			(SELECT info FROM dictinfo WHERE dictcode=student_sj.status AND typecode='012') statusname
+				FROM student_sj,sysuser
+					WHERE student_sj.studentid=sysuser.uuid
+		) STUDENT_SJ
+		<where>
+			<include refid="query_studentSj_where"></include>
+		</where>
+		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if>
+	</select> -->
+	
+<!-- 	<select id="findStudentSjListCount" parameterType="ytk.business.pojo.vo.StudentSjQueryVo" resultType="int">
+		SELECT count(*) FROM(
+			SELECT student_sj.*,sysuser.userid,sysuser.classuuid,
+			(SELECT info FROM dictinfo WHERE dictcode=student_sj.status AND typecode='012') statusname
+				FROM student_sj,sysuser
+					WHERE student_sj.studentid=sysuser.uuid
+		) STUDENT_SJ
+		<where>
+			<include refid="query_studentSj_where"></include>
+		</where>
+	</select> -->
+	
+	<select id="findStudentSjList" parameterType="ytk.business.pojo.vo.StudentSjQueryVo" resultType="ytk.business.pojo.vo.StudentSjCustom">
+		SELECT * FROM(
+			SELECT student_sj.*,sysuser.userid,
+			(SELECT info FROM dictinfo WHERE dictcode=student_sj.status AND typecode='012') statusname
+				FROM student_sj,sysuser
+					WHERE student_sj.studentid=sysuser.uuid AND student_sj.studentid IN (SELECT sysuseruuid FROM ksgl_student WHERE ksgluuid=#{studentSjCustom.ksgluuid})
+		) STUDENT_SJ
+		<where>
+			<include refid="query_studentSj_where"></include>
+		</where>
+		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if>
+	</select>
+	
+	<select id="findStudentSjListCount" parameterType="ytk.business.pojo.vo.StudentSjQueryVo" resultType="int">
+		SELECT count(*) FROM(
+			SELECT student_sj.*,sysuser.userid,
+			(SELECT info FROM dictinfo WHERE dictcode=student_sj.status AND typecode='012') statusname
+				FROM student_sj,sysuser
+					WHERE student_sj.studentid=sysuser.uuid AND student_sj.studentid IN (SELECT sysuseruuid FROM ksgl_student WHERE ksgluuid=#{studentSjCustom.ksgluuid})
+		) STUDENT_SJ
+		<where>
+			<include refid="query_studentSj_where"></include>
+		</where>
+	</select>
+	
+</mapper>

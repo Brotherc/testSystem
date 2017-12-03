@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.base.dao.mapper.SysuserMapperCustom" >
+
+<resultMap id="findMenuByroleidResultMap" type="ytk.base.pojo.vo.Menu">
+    <id column="menuid" property="menuid" />
+    <result column="menuname" property="menuname" />
+    <collection property="menus" ofType="ytk.base.pojo.vo.Menu">
+        <result column="menuid_two" property="menuid" />
+         <result column="menuname_two" property="menuname" />
+         <result column="url" property="url" />
+    </collection>
+</resultMap>
+
+
+	<sql id="query_sysuser_where">
+		<if test="sysuserCustom!=null">
+			<if test="sysuserCustom.uuid!=null and sysuserCustom.uuid!=''">
+				and sysuser.uuid = #{sysuserCustom.uuid}
+			</if>
+			<if test="sysuserCustom.userid!=null and sysuserCustom.userid!=''">
+				and sysuser.userid like '%${sysuserCustom.userid}%'
+			</if>
+			<if test="sysuserCustom.username!=null and sysuserCustom.username!=''">
+				and sysuser.username = #{sysuserCustom.username}
+			</if>
+			<if test="sysuserCustom.addr!=null and sysuserCustom.addr!=''">
+				and sysuser.addr like '%${sysuserCustom.addr}%'
+			</if>
+			<if test="sysuserCustom.name!=null and sysuserCustom.name!=''">
+				and sysuser.name like '%${sysuserCustom.name}%'
+			</if>
+			<if test="sysuserCustom.email!=null and sysuserCustom.email!=''">
+				and sysuser.email like '%${sysuserCustom.email}%'
+			</if>
+			<if test="sysuserCustom.gender!=null and sysuserCustom.gender!=''">
+				and sysuser.gender = #{sysuserCustom.gender}
+			</if>
+			<if test="sysuserCustom.tele!=null and sysuserCustom.tele!=''">
+				and sysuser.tele like '%${sysuserCustom.tele}%'
+			</if>
+			<if test="sysuserCustom.groupid!=null and sysuserCustom.groupid!=''">
+				and sysuser.groupid = #{sysuserCustom.groupid}
+			</if>
+			<if test="sysuserCustom.groupname!=null and sysuserCustom.groupname!=''">
+				and sysuser.groupname = #{sysuserCustom.groupname}
+			</if>
+			<if test="sysuserCustom.userstate!=null and sysuserCustom.userstate!=''">
+				and sysuser.userstate = #{sysuserCustom.userstate}
+			</if>
+			<if test="sysuserCustom.birthdayMin!=null and sysuserCustom.birthdayMin!=''">
+				and sysuser.birthday <![CDATA[>= ]]> #{sysuserCustom.birthdayMin}
+			</if>
+			<if test="sysuserCustom.birthdayMax!=null and sysuserCustom.birthdayMax!=''">
+				and sysuser.birthday<![CDATA[<= ]]> #{sysuserCustom.birthdayMax}
+			</if>
+			<if test="sysuserCustom.xname!=null and sysuserCustom.xname!=''">
+				and sysuser.xname = #{sysuserCustom.xname}
+			</if>
+			<if test="sysuserCustom.xuuid!=null and sysuserCustom.xuuid!=''">
+				and sysuser.xuuid = #{sysuserCustom.xuuid}
+			</if>
+			<if test="sysuserCustom.classuuid!=null and sysuserCustom.classuuid!=''">
+				and sysuser.classuuid = #{sysuserCustom.classuuid}
+			</if>
+			<if test="sysuserCustom.classname!=null and sysuserCustom.classname!=''">
+				and sysuser.classname = #{sysuserCustom.classname}
+			</if>
+			<if test="sysuserCustom.zyuuid!=null and sysuserCustom.zyuuid!=''">
+				and sysuser.zyuuid = #{sysuserCustom.zyuuid}
+			</if>
+			<if test="sysuserCustom.zyname!=null and sysuserCustom.zyname!=''">
+				and sysuser.zyname = #{sysuserCustom.zyname}
+			</if>
+			<if test="sysuserCustom.njuuid!=null and sysuserCustom.njuuid!=''">
+				and sysuser.njuuid = #{sysuserCustom.njuuid}
+			</if>
+			<if test="sysuserCustom.njname!=null and sysuserCustom.njname!=''">
+				and sysuser.njname = #{sysuserCustom.njname}
+			</if>
+		</if>
+	</sql>
+
+	<select id="findSysuserList" parameterType="ytk.base.pojo.vo.SysuserQueryVo" resultType="ytk.base.pojo.vo.SysuserCustom">
+		SELECT *FROM (
+			SELECT SYSUSER.uuid,userid,username,userstate,SYSUSER.name,groupid,addr,email,gender,birthday,tele,xuuid,XI.name xname,
+			(SELECT info FROM dictinfo WHERE dictcode=SYSUSER.groupid AND typecode='s01')groupname
+			FROM SYSUSER  LEFT OUTER JOIN XI 
+			ON SYSUSER.xuuid=XI.uuid
+		) sysuser
+		
+		<where>
+			<include refid="query_sysuser_where"></include>
+		</where>
+		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if>
+		
+	</select>
+
+	<select id="findSysuserListCount" parameterType="ytk.base.pojo.vo.SysuserQueryVo" resultType="int">
+		SELECT count(*)FROM (
+			SELECT SYSUSER.uuid,userid,username,userstate,SYSUSER.name,groupid,addr,email,gender,birthday,tele,xuuid,XI.name xname,
+			(SELECT info FROM dictinfo WHERE dictcode=SYSUSER.groupid AND typecode='s01')groupname
+			FROM SYSUSER  LEFT OUTER JOIN XI 
+			ON SYSUSER.xuuid=XI.uuid
+		) sysuser
+		
+		<where>
+			<include refid="query_sysuser_where"></include>
+		</where>
+	</select>
+	
+
+  <!-- 根据角色获取菜单(一、二级) -->
+  <select id="findMenuByroleid" parameterType="java.lang.String"
+    resultMap="findMenuByroleidResultMap"
+  >
+	SELECT m1.moduleid menuid,
+       m1.name     menuname,
+       m2.moduleid menuid_two,
+       m2.name     menuname_two,
+       m2.url
+  	FROM bss_sys_module m1, bss_sys_module m2
+
+ 	WHERE m2.parentid = m1.moduleid
+   		AND m1.parentid = '0'
+   		AND m2.parentid != '0'
+   
+   		AND m2.moduleid IN(
+   
+   			SELECT bss_sys_rolemodule.moduleid FROM bss_sys_role,bss_sys_rolesys,bss_sys_rolemodule,bss_sys_roleoperate
+   
+   			WHERE bss_sys_role.roleid=bss_sys_rolesys.roleid 
+   				AND bss_sys_role.roleid=bss_sys_rolemodule.roleid
+   				AND bss_sys_role.roleid=#{roleid} 
+   		)
+   	ORDER BY m1.showorder,m2.showorder
+  </select>
+	
+  <select id="findOperatByRoleid" parameterType="java.lang.String"
+    resultType="ytk.base.pojo.vo.Operation"
+  >
+  
+	SELECT bss_sys_operate.method      actionUrl,
+			bss_sys_operate.operatename operationName,
+       		bss_sys_operate.operateid operationId
+  		FROM bss_sys_operate
+
+ 			WHERE bss_sys_operate.operateid IN(
+        
+        		SELECT bss_sys_roleoperate.operateid
+          			FROM bss_sys_role,
+                			bss_sys_rolesys,
+                			bss_sys_rolemodule,
+                			bss_sys_roleoperate
+        
+         				WHERE bss_sys_role.roleid = bss_sys_rolesys.roleid
+           					AND bss_sys_roleoperate.rmid = bss_sys_rolemodule.rmid
+           					AND bss_sys_role.roleid = #{roleid}
+           					AND bss_sys_role.roleid=bss_sys_rolemodule.roleid
+        	)
+
+  </select>
+  
+  <select id="findKsglStudentAddList" parameterType="ytk.base.pojo.vo.SysuserQueryVo" resultType="ytk.base.pojo.vo.SysuserCustom">
+	SELECT *FROM (
+		SELECT SYSUSER.uuid,SYSUSER.userid,SYSUSER.xuuid,xi.name xname,SYSUSER.classuuid,class.classname,class.zyuuid,zy.name zyname,class.njuuid,nj.njnane njname
+			FROM SYSUSER,xi,class,zy,nj
+				WHERE SYSUSER.xuuid=xi.uuid AND SYSUSER.classuuid=class.uuid AND class.zyuuid=zy.uuid AND class.njuuid=nj.uuid AND SYSUSER.groupid='3'
+				AND SYSUSER.uuid NOT IN(SELECT sysuseruuid FROM ksgl_student WHERE ksgl_student.ksgluuid=#{sysuserCustom.ksgluuid})  
+	) sysuser
+	
+		<where>
+			<include refid="query_sysuser_where"></include>
+		</where>
+		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if>
+  </select>
+  
+  <select id="findKsglStudentAddListCount" parameterType="ytk.base.pojo.vo.SysuserQueryVo" resultType="int">
+	SELECT count(*)FROM (
+		SELECT SYSUSER.uuid,SYSUSER.userid,SYSUSER.xuuid,xi.name xname,SYSUSER.classuuid,class.classname,class.zyuuid,zy.name zyname,class.njuuid,nj.njnane njname
+			FROM SYSUSER,xi,class,zy,nj
+				WHERE SYSUSER.xuuid=xi.uuid AND SYSUSER.classuuid=class.uuid AND class.zyuuid=zy.uuid AND class.njuuid=nj.uuid AND SYSUSER.groupid='3'
+				AND SYSUSER.uuid NOT IN(SELECT sysuseruuid FROM ksgl_student WHERE ksgl_student.ksgluuid=#{sysuserCustom.ksgluuid})  
+	) sysuser
+	
+		<where>
+			<include refid="query_sysuser_where"></include>
+		</where>
+  </select>
+
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.base.dao.mapper.KcZyMapperCustom" >
+
+	<sql id="query_xikczy_where">
+		<if test="kcZyCustom!=null">
+			<if test="kcZyCustom.xuuid!=null and kcZyCustom.xuuid!=''">
+				and XIZYKC.xuuid = #{kcZyCustom.xuuid}
+			</if>
+			<if test="kcZyCustom.kcname!=null and kcZyCustom.kcname!=''">
+				and XIZYKC.kcname = #{kcZyCustom.kcname}
+			</if>
+			<if test="kcZyCustom.kcuuid!=null and kcZyCustom.kcuuid!=''">
+				and XIZYKC.kcuuid = #{kcZyCustom.kcuuid}
+			</if>
+		</if>
+	</sql>
+
+	<select id="findKcZyList" parameterType="ytk.base.pojo.vo.KcZyQueryVo" resultType="ytk.base.pojo.vo.KcZyCustom">
+		SELECT *FROM (
+			SELECT DISTINCT zy.xuuid,kc_zy.kcuuid,kc.name kcname 
+				FROM 
+					zy,kc_zy,kc
+						WHERE zy.uuid=kc_zy.zyuuid AND kc.uuid=kc_zy.kcuuid
+		)XIZYKC
+		<where>
+			<include refid="query_xikczy_where"></include>
+		</where> 
+		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if>
+	</select>
+</mapper>

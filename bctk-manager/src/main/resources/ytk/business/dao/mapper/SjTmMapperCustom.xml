@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.business.dao.mapper.SjTmMapperCustom" >
+
+	<sql id="query_sjtm_where">
+		<if test="sjTmCustom!=null">
+			<if test="sjTmCustom.uuid!=null and sjTmCustom.uuid!=''">
+				and SJTM.uuid = #{sjTmCustom.uuid}
+			</if>
+			<if test="sjTmCustom.sjid!=null and sjTmCustom.sjid!=''">
+				and SJTM.sjid = #{sjTmCustom.sjid}
+			</if>
+			<if test="sjTmCustom.score!=null and sjTmCustom.score!=''">
+				and SJTM.score = #{sjTmCustom.score}
+			</if>
+			<if test="sjTmCustom.content!=null and sjTmCustom.content!=''">
+				and SJTM.content like '%${sjTmCustom.content}%'
+			</if>
+			<if test="sjTmCustom.ndtype!=null and sjTmCustom.ndtype!=''">
+				and SJTM.ndtype = #{sjTmCustom.ndtype}
+			</if>
+			<if test="sjTmCustom.type!=null and sjTmCustom.type!=''">
+				and SJTM.type = #{sjTmCustom.type}
+			</if>
+			<if test="sjTmCustom.state!=null and sjTmCustom.state!=''">
+				and SJTM.state = #{sjTmCustom.state}
+			</if>
+			<if test="sjTmCustom.zsdname!=null and sjTmCustom.zsdname!=''">
+				and SJTM.zsdname = #{sjTmCustom.zsdname}
+			</if>
+			<if test="sjTmCustom.kcname!=null and sjTmCustom.kcname!=''">
+				and SJTM.kcname = #{sjTmCustom.kcname}
+			</if>
+			<if test="sjTmCustom.tuuid!=null and sjTmCustom.tuuid!=''">
+				and SJTM.tuuid = #{sjTmCustom.tuuid}
+			</if>
+			<if test="sjTmCustom.teachername!=null and sjTmCustom.teachername!=''">
+				and SJTM.teachername = #{sjTmCustom.teachername}
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_sjtmAdd_where">
+		<if test="sjTmCustom!=null">
+			<if test="sjTmCustom.uuid!=null and sjTmCustom.uuid!=''">
+				and SJTM.uuid = #{sjTmCustom.uuid}
+			</if>
+			<if test="sjTmCustom.score!=null and sjTmCustom.score!=''">
+				and SJTM.score = #{sjTmCustom.score}
+			</if>
+			<if test="sjTmCustom.content!=null and sjTmCustom.content!=''">
+				and SJTM.content like '%${sjTmCustom.content}%'
+			</if>
+			<if test="sjTmCustom.ndtype!=null and sjTmCustom.ndtype!=''">
+				and SJTM.ndtype = #{sjTmCustom.ndtype}
+			</if>
+			<if test="sjTmCustom.type!=null and sjTmCustom.type!=''">
+				and SJTM.type = #{sjTmCustom.type}
+			</if>
+			<if test="sjTmCustom.state!=null and sjTmCustom.state!=''">
+				and SJTM.state = #{sjTmCustom.state}
+			</if>
+			<if test="sjTmCustom.zsdname!=null and sjTmCustom.zsdname!=''">
+				and SJTM.zsdname = #{sjTmCustom.zsdname}
+			</if>
+			<if test="sjTmCustom.kcname!=null and sjTmCustom.kcname!=''">
+				and SJTM.kcname = #{sjTmCustom.kcname}
+			</if>
+			<if test="sjTmCustom.tuuid!=null and sjTmCustom.tuuid!=''">
+				and SJTM.tuuid = #{sjTmCustom.tuuid}
+			</if>
+		</if>
+	</sql>
+
+	<resultMap type="ytk.business.pojo.vo.SjTmCustom" id="sjTmAddCustom">
+		
+    <id column="tuuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="sjid" property="sjid" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="sjtmid" property="sjtmid" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+
+	    
+	    <result column="kcuuid" property="kcuuid" />	    
+	    <result column="content" property="content" />
+	    <result column="ndtype" property="ndtype" />
+	    <result column="teacheruuid" property="teacheruuid" />
+	    <result column="kcname" property="kcname" />
+	    <result column="teachername" property="teachername" />
+	    <result column="typename" property="typename" />	    
+	    <result column="ndtypename" property="ndtypename" />	
+	    <result column="statusname" property="statusname" />    
+	    
+
+		<collection property="zsdList" ofType="ytk.base.pojo.po.Zsd">
+			<id column="zsduuid" property="uuid"/>
+			<result column="zsdname" property="name"/>
+		</collection>		
+		
+	</resultMap>
+	
+	<resultMap type="ytk.business.pojo.vo.SjTmCustom" id="sjTmCustom">
+		
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="sjid" property="sjid" jdbcType="VARCHAR" />
+    <result column="tuuid" property="tuuid" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="sjtmid" property="sjtmid" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+
+	    
+	    <result column="kcuuid" property="kcuuid" />	    
+	    <result column="content" property="content" />
+	    <result column="ndtype" property="ndtype" />
+	    <result column="teacheruuid" property="teacheruuid" />
+	    <result column="kcname" property="kcname" />
+	    <result column="teachername" property="teachername" />
+	    <result column="typename" property="typename" />	    
+	    <result column="ndtypename" property="ndtypename" />	
+	    <result column="statusname" property="statusname" />    
+	    
+
+		<collection property="zsdList" ofType="ytk.base.pojo.po.Zsd">
+			<id column="zsduuid" property="uuid"/>
+			<result column="zsdname" property="name"/>
+		</collection>		
+		
+	</resultMap>
+
+	<select id="findSjTmList" parameterType="ytk.business.pojo.vo.SjTmQueryVo" resultMap="sjTmCustom">
+		SELECT * FROM(
+
+			SELECT  DISTINCT sj_tm.uuid,sj_tm.sjid,sj_tm.score,sj_tm.state,sj_tm.sjtmid sjtmid,ti.*,kc.name kcname,s1.username teachername,zsd.uuid zsduuid,zsd.name zsdname,
+				(SELECT info FROM dictinfo WHERE dictcode=sj_tm.state AND typecode='007') statusname,
+				(SELECT info FROM dictinfo WHERE dictcode=ti.type AND typecode='001') typename,
+				(SELECT info FROM dictinfo WHERE dictcode=ti.ndtype AND typecode='002') ndtypename
+
+					FROM(
+
+						SELECT dxt.uuid tuuid,dxt.type,dxt.kcuuid,dxt.content,dxt.ndtype,dxt.teacheruuid
+							FROM dxt								
+
+						UNION
+
+						SELECT dxxzt.uuid tuuid,dxxzt.type,dxxzt.kcuuid,dxxzt.content,dxxzt.ndtype,dxxzt.teacheruuid
+							FROM dxxzt
+								
+						UNION
+
+						SELECT jdt.uuid tuuid,jdt.type,jdt.kcuuid,jdt.content,jdt.ndtype,jdt.teacheruuid
+							FROM jdt
+
+						UNION
+
+						SELECT tkt.uuid tuuid,tkt.type,tkt.kcuuid,tkt.content,tkt.ndtype,tkt.teacheruuid
+							FROM tkt
+					) ti,dictinfo,kc,sysuser s1,sj_tm,tm_zsd,zsd
+						WHERE ti.kcuuid=kc.uuid AND ti.teacheruuid=s1.uuid AND sj_tm.tuuid=ti.tuuid AND sj_tm.type=ti.type
+						AND ti.tuuid=tm_zsd.tmuuid AND ti.type=tm_zsd.type AND tm_zsd.zsduuid=zsd.uuid
+						
+		) SJTM 
+		<where>
+			<include refid="query_sjtm_where"></include>
+		</where>
+		ORDER BY sjtmid
+<!-- 		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if> -->
+	</select>
+	
+	<select id="findSjTmListCount" parameterType="ytk.business.pojo.vo.SjTmQueryVo" resultType="int">
+		SELECT count(*) FROM(
+
+			SELECT  DISTINCT sj_tm.uuid,sj_tm.sjid,sj_tm.score,sj_tm.state,sj_tm.sjtmid sjtmid,ti.*,kc.name kcname,s1.username teachername,
+		<if test="sjTmCustom!=null">
+			<if test="sjTmCustom.zsdname!=null and sjTmCustom.zsdname!=''">
+				zsd.uuid zsduuid,zsd.name zsdname,
+			</if>
+		</if>
+			
+				(SELECT info FROM dictinfo WHERE dictcode=sj_tm.state AND typecode='007') statusname,
+				(SELECT info FROM dictinfo WHERE dictcode=ti.type AND typecode='001') typename,
+				(SELECT info FROM dictinfo WHERE dictcode=ti.ndtype AND typecode='002') ndtypename
+
+					FROM(
+
+						SELECT dxt.uuid tuuid,dxt.type,dxt.kcuuid,dxt.content,dxt.ndtype,dxt.teacheruuid
+							FROM dxt								
+
+						UNION
+
+						SELECT dxxzt.uuid tuuid,dxxzt.type,dxxzt.kcuuid,dxxzt.content,dxxzt.ndtype,dxxzt.teacheruuid
+							FROM dxxzt
+								
+						UNION
+
+						SELECT jdt.uuid tuuid,jdt.type,jdt.kcuuid,jdt.content,jdt.ndtype,jdt.teacheruuid
+							FROM jdt
+
+						UNION
+
+						SELECT tkt.uuid tuuid,tkt.type,tkt.kcuuid,tkt.content,tkt.ndtype,tkt.teacheruuid
+							FROM tkt
+					) ti,
+		<if test="sjTmCustom!=null">
+			<if test="sjTmCustom.zsdname!=null and sjTmCustom.zsdname!=''">
+				tm_zsd,zsd,
+			</if>
+		</if>
+					dictinfo,kc,sysuser s1,sj_tm
+						WHERE ti.kcuuid=kc.uuid AND ti.teacheruuid=s1.uuid AND sj_tm.tuuid=ti.tuuid AND sj_tm.type=ti.type
+		<if test="sjTmCustom!=null">
+			<if test="sjTmCustom.zsdname!=null and sjTmCustom.zsdname!=''">
+				AND ti.tuuid=tm_zsd.tmuuid AND ti.type=tm_zsd.type AND tm_zsd.zsduuid=zsd.uuid
+			</if>
+		</if>						
+		) SJTM 
+		<where>
+			<include refid="query_sjtm_where"></include>
+		</where>
+		ORDER BY sjtmid
+	</select>
+
+	
+	
+	<select id="findSjTmScoreByType" parameterType="ytk.business.pojo.vo.SjTmQueryVo" resultType="int">
+		SELECT SUM(score) FROM
+			sj_tm 
+				WHERE sj_tm.type=#{sjTmCustom.type} AND sj_tm.sjid=#{sjTmCustom.sjid};
+	</select>
+	
+	
+	<select id="findSjTmCountByType" parameterType="ytk.business.pojo.vo.SjTmQueryVo" resultType="int">
+		SELECT count(*) FROM
+			sj_tm 
+				WHERE sj_tm.type=#{sjTmCustom.type} AND sj_tm.sjid=#{sjTmCustom.sjid};
+	</select>
+
+
+	
+	<select id="findAddSjTmListCount" parameterType="ytk.business.pojo.vo.SjTmQueryVo" resultType="int">
+		SELECT count(*) FROM(
+
+			SELECT  DISTINCT ti.*,kc.name kcname,s1.username teachername,
+		<if test="sjTmCustom!=null">
+			<if test="sjTmCustom.zsdname!=null and sjTmCustom.zsdname!=''">
+				zsd.uuid zsduuid,zsd.name zsdname,
+			</if>
+		</if>
+				(SELECT info FROM dictinfo WHERE dictcode=ti.type AND typecode='001') typename,
+				(SELECT info FROM dictinfo WHERE dictcode=ti.ndtype AND typecode='002') ndtypename
+
+					FROM(
+
+						SELECT dxt.uuid tuuid,dxt.type,dxt.kcuuid,dxt.content,dxt.ndtype,dxt.teacheruuid,dxt.status
+							FROM dxt								
+
+						UNION
+
+						SELECT dxxzt.uuid tuuid,dxxzt.type,dxxzt.kcuuid,dxxzt.content,dxxzt.ndtype,dxxzt.teacheruuid,dxxzt.status
+							FROM dxxzt
+								
+						UNION
+
+						SELECT jdt.uuid tuuid,jdt.type,jdt.kcuuid,jdt.content,jdt.ndtype,jdt.teacheruuid,jdt.status
+							FROM jdt
+
+						UNION
+
+						SELECT tkt.uuid tuuid,tkt.type,tkt.kcuuid,tkt.content,tkt.ndtype,tkt.teacheruuid,tkt.status
+							FROM tkt
+					) ti,
+		<if test="sjTmCustom!=null">
+			<if test="sjTmCustom.zsdname!=null and sjTmCustom.zsdname!=''">
+				tm_zsd,zsd,
+			</if>
+		</if>
+					dictinfo,kc,sysuser s1
+						WHERE ti.status='1' AND ti.kcuuid=kc.uuid AND ti.teacheruuid=s1.uuid
+						AND ti.tuuid NOT IN (SELECT tuuid FROM sj_tm WHERE sjid=#{sjTmCustom.sjid})
+		<if test="sjTmCustom!=null">
+			<if test="sjTmCustom.zsdname!=null and sjTmCustom.zsdname!=''">
+				AND ti.tuuid=tm_zsd.tmuuid AND ti.type=tm_zsd.type AND tm_zsd.zsduuid=zsd.uuid
+			</if>
+		</if>						
+		) SJTM
+		<where>
+			<include refid="query_sjtmAdd_where"></include>
+		</where>
+	</select>
+
+	<select id="findAddSjTmList" parameterType="ytk.business.pojo.vo.SjTmQueryVo" resultMap="sjTmAddCustom">
+		SELECT * FROM(
+
+			SELECT  DISTINCT ti.*,kc.name kcname,s1.username teachername,zsd.uuid zsduuid,zsd.name zsdname,
+				(SELECT info FROM dictinfo WHERE dictcode=ti.type AND typecode='001') typename,
+				(SELECT info FROM dictinfo WHERE dictcode=ti.ndtype AND typecode='002') ndtypename
+
+					FROM(
+
+						SELECT dxt.uuid tuuid,dxt.type,dxt.kcuuid,dxt.content,dxt.ndtype,dxt.teacheruuid,dxt.status
+							FROM dxt								
+
+						UNION
+
+						SELECT dxxzt.uuid tuuid,dxxzt.type,dxxzt.kcuuid,dxxzt.content,dxxzt.ndtype,dxxzt.teacheruuid,dxxzt.status
+							FROM dxxzt
+								
+						UNION
+
+						SELECT jdt.uuid tuuid,jdt.type,jdt.kcuuid,jdt.content,jdt.ndtype,jdt.teacheruuid,jdt.status
+							FROM jdt
+
+						UNION
+
+						SELECT tkt.uuid tuuid,tkt.type,tkt.kcuuid,tkt.content,tkt.ndtype,tkt.teacheruuid,tkt.status
+							FROM tkt
+					) ti,dictinfo,kc,sysuser s1,tm_zsd,zsd
+						WHERE ti.status='1' AND ti.kcuuid=kc.uuid AND ti.teacheruuid=s1.uuid
+						AND ti.tuuid=tm_zsd.tmuuid AND ti.type=tm_zsd.type AND tm_zsd.zsduuid=zsd.uuid
+						AND ti.tuuid NOT IN (SELECT tuuid FROM sj_tm WHERE sjid=#{sjTmCustom.sjid})
+
+		) SJTM 
+		<where>
+			<include refid="query_sjtmAdd_where"></include>
+		</where>
+<!-- 		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if> -->
+	</select>
+	
+</mapper>

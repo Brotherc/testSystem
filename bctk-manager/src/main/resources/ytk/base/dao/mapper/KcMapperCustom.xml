@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.base.dao.mapper.KcMapperCustom" >
+
+	<sql id="query_kcByQ_where">
+		<if test="kcCustom!=null">	
+			<if test="kcCustom.q!=null and kcCustom.q!=''">
+				and (KC.name  like '%${kcCustom.q}%' or KC.shortcode  like '%${kcCustom.q}%' or KC.kccode  like '%${kcCustom.q}%')
+			</if>			
+			<if test="kcCustom.zyname!=null and kcCustom.zyname!=''">
+				and KC.zyname = #{kcCustom.zyname}
+			</if>
+			<if test="kcCustom.zyuuid!=null and kcCustom.zyuuid!=''">
+				and KC.zyuuid = #{kcCustom.zyuuid}
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_teacherKc_where">
+		<if test="kcCustom!=null">	
+			<if test="kcCustom.sysuseruuid!=null and kcCustom.sysuseruuid!=''">
+				AND kc.uuid IN (SELECT kcuuid FROM teacher_kc WHERE teacheruuid=#{kcCustom.sysuseruuid})
+			</if>
+		</if>	
+	</sql>
+
+	<sql id="query_kc_where">
+		<if test="kcCustom!=null">
+			<if test="kcCustom.uuid!=null and kcCustom.uuid!=''">
+				and KC.uuid = #{kcCustom.uuid}
+			</if>
+			<if test="kcCustom.name!=null and kcCustom.name!=''">
+				and KC.name like '%${kcCustom.name}%'
+			</if>
+			<if test="kcCustom.zyuuid!=null and kcCustom.zyuuid!=''">
+				and KC.zyuuid = #{kcCustom.zyuuid}
+			</if>
+			<if test="kcCustom.zyname!=null and kcCustom.zyname!=''">
+				and KC.zyname like '%${kcCustom.zyname}%'
+			</if>
+			<if test="kcCustom.createtimeMin!=null and kcCustom.createtimeMin!=''">
+				and KC.createtime <![CDATA[>= ]]> #{kcCustom.createtimeMin}
+			</if>
+			<if test="kcCustom.createtimeMax!=null and kcCustom.createtimeMax!=''">
+				and KC.createtime<![CDATA[<= ]]> #{kcCustom.createtimeMax}
+			</if>
+		</if>
+	</sql>
+
+	<select id="findKcList" parameterType="ytk.base.pojo.vo.KcQueryVo" resultType="ytk.base.pojo.vo.KcCustom">
+		SELECT * FROM(
+			SELECT kc.*,zy.name zyname,zy.uuid zyuuid
+				FROM kc,kc_zy,zy
+					WHERE kc.uuid=kc_zy.kcuuid AND kc_zy.zyuuid=zy.uuid
+					<include refid="query_teacherKc_where"></include>
+		) KC
+		<where>
+			<include refid="query_kc_where"></include>
+		</where> 
+		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if>
+	</select>
+	
+	<select id="findKcListCount" parameterType="ytk.base.pojo.vo.KcQueryVo" resultType="int">
+		SELECT count(*) FROM(
+			SELECT kc.*,zy.name zyname,zy.uuid zyuuid
+				FROM kc,kc_zy,zy
+					WHERE kc.uuid=kc_zy.kcuuid AND kc_zy.zyuuid=zy.uuid
+					<include refid="query_teacherKc_where"></include>
+		) KC
+		<where>
+			<include refid="query_kc_where"></include>
+		</where> 
+	</select>
+	
+	<select id="findKcListByQ" parameterType="ytk.base.pojo.vo.KcQueryVo" resultType="ytk.base.pojo.vo.KcCustom">
+		SELECT * FROM(
+			SELECT kc.*,zy.name zyname,zy.uuid zyuuid
+				FROM kc,kc_zy,zy
+					WHERE kc.uuid=kc_zy.kcuuid AND kc_zy.zyuuid=zy.uuid
+					<include refid="query_teacherKc_where"></include>
+		) KC
+		<where>
+			<include refid="query_kcByQ_where"></include>
+		</where> 
+	</select>
+	
+	<select id="findKcListNoZy" parameterType="ytk.base.pojo.vo.KcQueryVo" resultType="ytk.base.pojo.vo.KcCustom">
+		SELECT * FROM KC
+		<where>
+			<include refid="query_teacherKc_where"></include>
+		</where> 
+		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if>
+	</select>
+	
+	<select id="findKcListNoZyByQ" parameterType="ytk.base.pojo.vo.KcQueryVo" resultType="ytk.base.pojo.vo.KcCustom">
+		SELECT * FROM KC
+		<where>
+			<include refid="query_teacherKc_where"></include>
+			<include refid="query_kcByQ_where"></include>
+		</where> 
+	</select>
+
+</mapper>

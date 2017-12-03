@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.business.dao.mapper.KsglMapperCustom" >
+
+	<sql id="query_ksgl_where">
+		<if test="ksglCustom!=null">
+			<if test="ksglCustom.uuid!=null and ksglCustom.uuid!=''">
+				and KSGL.uuid = #{ksglCustom.uuid}
+			</if>
+			<if test="ksglCustom.sjname!=null and ksglCustom.sjname!=''">
+				and KSGL.sjname like '%${ksglCustom.sjname}%'
+			</if>
+			<if test="ksglCustom.zyname!=null and ksglCustom.zyname!=''">
+				and KSGL.zyname like '%${ksglCustom.zyname}%'
+			</if>
+			<if test="ksglCustom.status!=null and ksglCustom.status!=''">
+				and KSGL.status = #{ksglCustom.status}
+			</if>
+			<if test="ksglCustom.teachername!=null and ksglCustom.teachername!=''">
+				and KSGL.teachername like '%${ksglCustom.teachername}%'
+			</if>
+			<if test="ksglCustom.kcname!=null and ksglCustom.kcname!=''">
+				and KSGL.kcname = #{ksglCustom.kcname}
+			</if>
+			<if test="ksglCustom.zyuuid!=null and ksglCustom.zyuuid!=''">
+				and KSGL.zyuuid = #{ksglCustom.zyuuid}
+			</if>
+			<if test="ksglCustom.classuuid!=null and ksglCustom.classuuid!=''">
+				and KSGL.classuuid = #{ksglCustom.classuuid}
+			</if>
+			<if test="ksglCustom.njname!=null and ksglCustom.njname!=''">
+				and KSGL.njname = #{ksglCustom.njname}
+			</if>
+			<if test="ksglCustom.classname!=null and ksglCustom.classname!=''">
+				and KSGL.classname = #{ksglCustom.classname}
+			</if>
+			<if test="ksglCustom.starttime!=null and ksglCustom.starttime!=''">
+				and KSGL.starttime <![CDATA[>= ]]> #{ksglCustom.starttime}
+			</if>
+			<if test="ksglCustom.endtime!=null and ksglCustom.endtime!=''">
+				and KSGL.endtime <![CDATA[<= ]]> #{ksglCustom.endtime}
+			</if>
+			<if test="ksglCustom.sjuuid!=null and ksglCustom.sjuuid!=''">
+				and KSGL.sjuuid = #{ksglCustom.sjuuid}
+			</if>
+		</if>
+	</sql>
+	<sql id="query_ksglBySysuserUuid_where">
+		<if test="ksglCustom!=null">
+			<if test="ksglCustom.sysuseruuid!=null and ksglCustom.sysuseruuid!=''">
+				and KSGL.sysuseruuid = #{ksglCustom.sysuseruuid}
+			</if>			
+		</if>
+	</sql>
+
+	
+	<sql id="query_ksglTeacherKc_where">
+		<if test="ksglCustom!=null">
+			<if test="ksglCustom.sysuseruuid!=null and ksglCustom.sysuseruuid!=''">
+				AND ksgl.kcuuid IN (SELECT kcuuid FROM teacher_kc WHERE teacheruuid=#{ksglCustom.sysuseruuid})
+			</if>
+		</if>
+	</sql>
+
+<!-- 	<select id="findKsglList" parameterType="ytk.business.pojo.vo.KsglQueryVo" resultType="ytk.business.pojo.vo.KsglCustom">
+		SELECT *FROM (
+			SELECT ksgl.*,xi.name xiname,sj.name sjname,sysuser.username teachername,kc.name kcname,nj.njnane njname,nj.uuid njuuid,zy.name zyname,zy.uuid zyuuid,class.classname classname,class.uuid classuuid,
+			(SELECT info FROM dictinfo WHERE dictcode=ksgl.status AND typecode='010') statusname
+				FROM  ksgl,xi,sj,sysuser,kc,ksgl_class,class,nj,zy
+					WHERE ksgl.xiuuid=xi.uuid AND ksgl.sjuuid=sj.uuid AND ksgl.teacherid=sysuser.uuid 
+						AND ksgl.kcuuid=kc.uuid AND ksgl_class.ksgluuid=ksgl.uuid AND ksgl_class.classuuid=class.uuid AND class.njuuid=nj.uuid AND class.zyuuid=zy.uuid
+		) KSGL
+		<where>
+			<include refid="query_ksgl_where"></include>
+		</where>
+		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if>
+		
+	</select> -->
+	
+<!-- 	<select id="findKsglListCount" parameterType="ytk.business.pojo.vo.KsglQueryVo" resultType="int">
+		SELECT count(*) FROM (
+			SELECT ksgl.*,xi.name xiname,sj.name sjname,sysuser.username teachername,kc.name kcname,nj.njnane njname,nj.uuid njuuid,zy.name zyname,zy.uuid zyuuid,class.classname classname,class.uuid classuuid,
+			(SELECT info FROM dictinfo WHERE dictcode=ksgl.status AND typecode='010') statusname
+				FROM  ksgl,xi,sj,sysuser,kc,ksgl_class,class,nj,zy
+					WHERE ksgl.xiuuid=xi.uuid AND ksgl.sjuuid=sj.uuid AND ksgl.teacherid=sysuser.uuid 
+						AND ksgl.kcuuid=kc.uuid AND ksgl_class.ksgluuid=ksgl.uuid AND ksgl_class.classuuid=class.uuid AND class.njuuid=nj.uuid AND class.zyuuid=zy.uuid
+		) KSGL
+		<where>
+			<include refid="query_ksgl_where"></include>
+		</where>
+	</select> -->
+	
+ 	<select id="findKsglMinStarttime" parameterType="ytk.business.pojo.vo.KsglQueryVo" resultType="long">
+		SELECT MIN(starttime) FROM KSGL
+		<where>
+			<include refid="query_ksgl_where"></include>
+		</where>	
+	</select>
+	
+	<select id="findKsglList" parameterType="ytk.business.pojo.vo.KsglQueryVo" resultType="ytk.business.pojo.vo.KsglCustom">
+		SELECT * FROM (
+
+			SELECT ksgl.*,sj.name sjname,sysuser.username teachername,kc.name kcname,
+			(SELECT info FROM dictinfo WHERE dictcode=ksgl.status AND typecode='010') statusname
+				FROM ksgl,sj,sysuser,kc
+					WHERE ksgl.sjuuid=sj.uuid AND ksgl.teacherid=sysuser.uuid AND ksgl.kcuuid=kc.uuid 
+					<include refid="query_ksglTeacherKc_where"></include>
+		)KSGL
+		<where>
+			<include refid="query_ksgl_where"></include>
+		</where>
+		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if>
+	</select>
+	
+	<select id="findKsglListCount" parameterType="ytk.business.pojo.vo.KsglQueryVo" resultType="int">
+		SELECT count(*) FROM (
+
+			SELECT ksgl.*,sj.name sjname,sysuser.username teachername,kc.name kcname,
+			(SELECT info FROM dictinfo WHERE dictcode=ksgl.status AND typecode='010') statusname
+				FROM ksgl,sj,sysuser,kc
+					WHERE ksgl.sjuuid=sj.uuid AND ksgl.teacherid=sysuser.uuid AND ksgl.kcuuid=kc.uuid 
+					<include refid="query_ksglTeacherKc_where"></include>
+		)KSGL
+		<where>
+			<include refid="query_ksgl_where"></include>
+		</where>
+	</select>
+	
+	<select id="findKsglListBySysuserUuid" parameterType="ytk.business.pojo.vo.KsglQueryVo" resultType="ytk.business.pojo.vo.KsglCustom">
+		SELECT *FROM(
+
+			SELECT ksgl.*,ksgl_student.sysuseruuid,kc.name kcname,sj.name sjname,
+			(SELECT info FROM dictinfo WHERE dictcode=ksgl.status AND typecode='010') statusname
+				FROM ksgl,ksgl_student,kc,sj
+					WHERE ksgl.uuid=ksgl_student.ksgluuid AND ksgl.kcuuid=kc.uuid AND ksgl.sjuuid=sj.uuid AND ksgl.status='3'
+					AND ksgl_student.status IN(1,3)
+		) KSGL
+		<where>
+			<include refid="query_ksgl_where"></include>
+			<include refid="query_ksglBySysuserUuid_where"></include>
+		</where>
+		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if>
+	</select>	
+	
+	<select id="findKsglListCountBySysuserUuid" parameterType="ytk.business.pojo.vo.KsglQueryVo" resultType="int">
+		SELECT count(*)FROM(
+
+			SELECT ksgl.*,ksgl_student.sysuseruuid,kc.name kcname,sj.name sjname,
+			(SELECT info FROM dictinfo WHERE dictcode=ksgl.status AND typecode='010') statusname
+				FROM ksgl,ksgl_student,kc,sj
+					WHERE ksgl.uuid=ksgl_student.ksgluuid AND ksgl.kcuuid=kc.uuid AND ksgl.sjuuid=sj.uuid AND ksgl.status='3'
+					AND ksgl_student.status IN(1,3)
+		) KSGL
+		<where>
+			<include refid="query_ksgl_where"></include>
+			<include refid="query_ksglBySysuserUuid_where"></include>
+		</where>
+	</select>
+	
+</mapper>

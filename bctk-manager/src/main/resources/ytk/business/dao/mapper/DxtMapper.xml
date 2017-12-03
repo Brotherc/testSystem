@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.business.dao.mapper.DxtMapper" >
+  <resultMap id="BaseResultMap" type="ytk.business.pojo.po.Dxt" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="kcuuid" property="kcuuid" jdbcType="BIGINT" />
+    <result column="optiona" property="optiona" jdbcType="VARCHAR" />
+    <result column="optionb" property="optionb" jdbcType="VARCHAR" />
+    <result column="optionc" property="optionc" jdbcType="VARCHAR" />
+    <result column="optiond" property="optiond" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="answer" property="answer" jdbcType="VARCHAR" />
+    <result column="ndtype" property="ndtype" jdbcType="INTEGER" />
+    <result column="teacheruuid" property="teacheruuid" jdbcType="BIGINT" />
+    <result column="createtime" property="createtime" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uuid, type, kcuuid, optiona, optionb, optionc, optiond, content, answer, ndtype, 
+    teacheruuid, createtime, status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="ytk.business.pojo.po.DxtExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dxt
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from dxt
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dxt
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="ytk.business.pojo.po.DxtExample" >
+    delete from dxt
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="ytk.business.pojo.po.Dxt" >
+    insert into dxt (uuid, type, kcuuid, 
+      optiona, optionb, optionc, 
+      optiond, content, answer, 
+      ndtype, teacheruuid, createtime, 
+      status)
+    values (#{uuid,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{kcuuid,jdbcType=BIGINT}, 
+      #{optiona,jdbcType=VARCHAR}, #{optionb,jdbcType=VARCHAR}, #{optionc,jdbcType=VARCHAR}, 
+      #{optiond,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, 
+      #{ndtype,jdbcType=INTEGER}, #{teacheruuid,jdbcType=BIGINT}, #{createtime,jdbcType=BIGINT}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="ytk.business.pojo.po.Dxt" >
+    insert into dxt
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="kcuuid != null" >
+        kcuuid,
+      </if>
+      <if test="optiona != null" >
+        optiona,
+      </if>
+      <if test="optionb != null" >
+        optionb,
+      </if>
+      <if test="optionc != null" >
+        optionc,
+      </if>
+      <if test="optiond != null" >
+        optiond,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+      <if test="ndtype != null" >
+        ndtype,
+      </if>
+      <if test="teacheruuid != null" >
+        teacheruuid,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="kcuuid != null" >
+        #{kcuuid,jdbcType=BIGINT},
+      </if>
+      <if test="optiona != null" >
+        #{optiona,jdbcType=VARCHAR},
+      </if>
+      <if test="optionb != null" >
+        #{optionb,jdbcType=VARCHAR},
+      </if>
+      <if test="optionc != null" >
+        #{optionc,jdbcType=VARCHAR},
+      </if>
+      <if test="optiond != null" >
+        #{optiond,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="ndtype != null" >
+        #{ndtype,jdbcType=INTEGER},
+      </if>
+      <if test="teacheruuid != null" >
+        #{teacheruuid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="ytk.business.pojo.po.DxtExample" resultType="java.lang.Integer" >
+    select count(*) from dxt
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dxt
+    <set >
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.kcuuid != null" >
+        kcuuid = #{record.kcuuid,jdbcType=BIGINT},
+      </if>
+      <if test="record.optiona != null" >
+        optiona = #{record.optiona,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optionb != null" >
+        optionb = #{record.optionb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optionc != null" >
+        optionc = #{record.optionc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optiond != null" >
+        optiond = #{record.optiond,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answer != null" >
+        answer = #{record.answer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ndtype != null" >
+        ndtype = #{record.ndtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.teacheruuid != null" >
+        teacheruuid = #{record.teacheruuid,jdbcType=BIGINT},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dxt
+    set uuid = #{record.uuid,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      kcuuid = #{record.kcuuid,jdbcType=BIGINT},
+      optiona = #{record.optiona,jdbcType=VARCHAR},
+      optionb = #{record.optionb,jdbcType=VARCHAR},
+      optionc = #{record.optionc,jdbcType=VARCHAR},
+      optiond = #{record.optiond,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      answer = #{record.answer,jdbcType=VARCHAR},
+      ndtype = #{record.ndtype,jdbcType=INTEGER},
+      teacheruuid = #{record.teacheruuid,jdbcType=BIGINT},
+      createtime = #{record.createtime,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="ytk.business.pojo.po.Dxt" >
+    update dxt
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="kcuuid != null" >
+        kcuuid = #{kcuuid,jdbcType=BIGINT},
+      </if>
+      <if test="optiona != null" >
+        optiona = #{optiona,jdbcType=VARCHAR},
+      </if>
+      <if test="optionb != null" >
+        optionb = #{optionb,jdbcType=VARCHAR},
+      </if>
+      <if test="optionc != null" >
+        optionc = #{optionc,jdbcType=VARCHAR},
+      </if>
+      <if test="optiond != null" >
+        optiond = #{optiond,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="ndtype != null" >
+        ndtype = #{ndtype,jdbcType=INTEGER},
+      </if>
+      <if test="teacheruuid != null" >
+        teacheruuid = #{teacheruuid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="ytk.business.pojo.po.Dxt" >
+    update dxt
+    set type = #{type,jdbcType=INTEGER},
+      kcuuid = #{kcuuid,jdbcType=BIGINT},
+      optiona = #{optiona,jdbcType=VARCHAR},
+      optionb = #{optionb,jdbcType=VARCHAR},
+      optionc = #{optionc,jdbcType=VARCHAR},
+      optiond = #{optiond,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
+      ndtype = #{ndtype,jdbcType=INTEGER},
+      teacheruuid = #{teacheruuid,jdbcType=BIGINT},
+      createtime = #{createtime,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

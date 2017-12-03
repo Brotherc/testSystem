@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.base.dao.mapper.ZsdMapperCustom" >
+
+	<sql id="query_zsdByQ_where">
+		<if test="zsdCustom!=null">	
+			<if test="zsdCustom.q!=null and zsdCustom.q!=''">
+				and (ZSD.name  like '%${zsdCustom.q}%' or ZSD.shortcode  like '%${zsdCustom.q}%' or ZSD.zsdcode  like '%${zsdCustom.q}%')
+			</if>			
+			<if test="zsdCustom.kcname!=null and zsdCustom.kcname!=''">
+				and ZSD.kcname = #{zsdCustom.kcname}
+			</if>
+			<if test="zsdCustom.kcuuid!=null and zsdCustom.kcuuid!=''">
+				and ZSD.kcuuid = #{zsdCustom.kcuuid}
+			</if>
+		</if>
+	</sql>
+
+	<sql id="query_zsd_where">
+		<if test="zsdCustom!=null">
+			<if test="zsdCustom.uuid!=null and zsdCustom.uuid!=''">
+				and ZSD.uuid = #{zsdCustom.uuid}
+			</if>
+			<if test="zsdCustom.name!=null and zsdCustom.name!=''">
+				and ZSD.name like '%${zsdCustom.name}%'
+			</if>
+			<if test="zsdCustom.kcuuid!=null and zsdCustom.kcuuid!=''">
+				and ZSD.kcuuid = #{zsdCustom.kcuuid}
+			</if>
+			<if test="zsdCustom.kcname!=null and zsdCustom.kcname!=''">
+				and ZSD.kcname = #{zsdCustom.kcname}
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_zsdTeacherKc_where">
+		<if test="zsdCustom!=null">
+			<if test="zsdCustom.sysuseruuid!=null and zsdCustom.sysuseruuid!=''">
+				AND zsd.kcuuid IN (SELECT kcuuid FROM teacher_kc WHERE teacheruuid=#{zsdCustom.sysuseruuid})
+			</if>
+		</if>
+	</sql>
+
+	<select id="findZsdList" parameterType="ytk.base.pojo.vo.ZsdQueryVo" resultType="ytk.base.pojo.vo.ZsdCustom">
+		SELECT *FROM(
+			SELECT zsd.*,kc.name kcname
+				FROM zsd,kc
+					WHERE zsd.kcuuid=kc.uuid
+					<include refid="query_zsdTeacherKc_where"></include>	
+		) ZSD
+		<where>
+			<include refid="query_zsd_where"></include>
+		</where>
+		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if>		
+	</select>
+	
+	<select id="findZsdListCount" parameterType="ytk.base.pojo.vo.ZsdQueryVo" resultType="int">
+		SELECT count(*)FROM(
+			SELECT zsd.*,kc.name kcname
+				FROM zsd,kc
+					WHERE zsd.kcuuid=kc.uuid
+					<include refid="query_zsdTeacherKc_where"></include>	
+		) ZSD	
+		<where>
+			<include refid="query_zsd_where"></include>
+		</where>	
+	</select>
+	
+	<select id="findZsdListByQ" parameterType="ytk.base.pojo.vo.ZsdQueryVo" resultType="ytk.base.pojo.vo.ZsdCustom">
+		SELECT *FROM(
+			SELECT zsd.*,kc.name kcname
+				FROM zsd,kc
+					WHERE zsd.kcuuid=kc.uuid
+					<include refid="query_zsdTeacherKc_where"></include>	
+		) ZSD
+		<where>
+			<include refid="query_zsdByQ_where"></include>
+		</where> 
+	</select>
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.business.dao.mapper.SjMapperCustom" >
+
+	<sql id="query_sj_where">
+		<if test="sjCustom!=null">
+			<if test="sjCustom.uuid!=null and sjCustom.uuid!=''">
+				and SJ.uuid = #{sjCustom.uuid}
+			</if>
+			<if test="sjCustom.name!=null and sjCustom.name!=''">
+				and SJ.name = #{sjCustom.name}
+			</if>
+			<if test="sjCustom.score!=null and sjCustom.score!=''">
+				and SJ.score = #{sjCustom.score}
+			</if>
+			<if test="sjCustom.ndtype!=null and sjCustom.ndtype!=''">
+				and SJ.ndtype = #{sjCustom.ndtype}
+			</if>
+			<if test="sjCustom.kcname!=null and sjCustom.kcname!=''">
+				and SJ.kcname = #{sjCustom.kcname}
+			</if>
+			<if test="sjCustom.teachername!=null and sjCustom.teachername!=''">
+				and SJ.teachername = #{sjCustom.teachername}
+			</if>
+			<if test="sjCustom.teacherid!=null and sjCustom.teacherid!=''">
+				and SJ.teacherid = #{sjCustom.teacherid}
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_sjZy_where">
+		<if test="sjCustom!=null">
+			<if test="sjCustom.zyid!=null and sjCustom.zyid!=''">
+				and sj_zy.zyuuid=#{sjCustom.zyid}
+			</if>
+		</if>
+	</sql>
+	
+
+	<select id="findSjList" parameterType="ytk.business.pojo.vo.SjQueryVo" resultType="ytk.business.pojo.vo.SjCustom">
+		SELECT *FROM (
+
+			SELECT sj.*,kc.name kcname,sysuser.username teachername,dictinfo.info ndtypename
+				FROM sj,kc,sysuser,dictinfo
+					WHERE dictinfo.typecode='006' AND dictinfo.dictcode=sj.ndtype AND sj.teacherid=sysuser.uuid 
+						AND kc.uuid=sj.kcid
+						
+		) SJ
+		<where>
+			<include refid="query_sj_where"></include>
+		</where>
+ 		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if>
+	</select>
+	
+	<select id="findSjListCount" parameterType="ytk.business.pojo.vo.SjQueryVo" resultType="int">
+		SELECT count(*) FROM (
+
+			SELECT sj.*,kc.name kcname,sysuser.username teachername,dictinfo.info ndtypename
+				FROM sj,kc,sysuser,dictinfo
+					WHERE dictinfo.typecode='006' AND dictinfo.dictcode=sj.ndtype AND sj.teacherid=sysuser.uuid 
+						 AND kc.uuid=sj.kcid 
+		) SJ
+		<where>
+			<include refid="query_sj_where"></include>
+		</where>
+	</select>
+</mapper>

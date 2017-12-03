@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.business.dao.mapper.JdtMapperCustom" >
+	
+	<sql id="query_jdt_where">
+		<if test="jdtCustom!=null">
+			<if test="jdtCustom.uuid!=null and jdtCustom.uuid!=''">
+				and JDT.uuid = #{jdtCustom.uuid}
+			</if>
+			<if test="jdtCustom.status!=null and jdtCustom.status!=''">
+				and JDT.status = #{jdtCustom.status}
+			</if>
+			<if test="jdtCustom.content!=null and jdtCustom.content!=''">
+				and JDT.content like '%${jdtCustom.content}%'
+			</if>
+			<if test="jdtCustom.teachername!=null and jdtCustom.teachername!=''">
+				and JDT.teachername like '%${jdtCustom.teachername}%'
+			</if>
+			<if test="jdtCustom.kcname!=null and jdtCustom.kcname!=''">
+				and JDT.kcname like '%${jdtCustom.kcname}%'
+			</if>
+			<if test="jdtCustom.createtime!=null and jdtCustom.createtime!=''">
+				and JDT.createtime = #{jdtCustom.createtime}
+			</if>
+			<if test="jdtCustom.answer!=null and jdtCustom.answer!=''">
+				and JDT.answer like '%${jdtCustom.answer}%'
+			</if>
+			<if test="jdtCustom.ndtype!=null and jdtCustom.ndtype!=''">
+				and JDT.ndtype = #{jdtCustom.ndtype}
+			</if>
+			<if test="jdtCustom.createtimeMin!=null and jdtCustom.createtimeMin!=''">
+				and JDT.createtime <![CDATA[>= ]]> #{jdtCustom.createtimeMin}
+			</if>
+			<if test="jdtCustom.createtimeMax!=null and jdtCustom.createtimeMax!=''">
+				and JDT.createtime <![CDATA[<= ]]> #{jdtCustom.createtimeMax}
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_jdtZy_where">
+		<if test="jdtCustom!=null">
+			<if test="jdtCustom.zyname!=null and jdtCustom.zyname!=''">
+				and zy.name like '%${jdtCustom.zyname}%'
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_jdtZsd_where">
+		<if test="jdtCustom!=null">
+			<if test="jdtCustom.zsdname!=null and jdtCustom.zsdname!=''">
+				and zsd.name like '%${jdtCustom.zsdname}%'
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_jdtTeacherKc_where">
+		<if test="jdtCustom!=null">
+			<if test="jdtCustom.sysuseruuid!=null and jdtCustom.sysuseruuid!=''">
+				AND jdt.kcuuid IN (SELECT kcuuid FROM teacher_kc WHERE teacheruuid=#{jdtCustom.sysuseruuid})
+			</if>
+		</if>
+	</sql>
+	
+	<resultMap type="ytk.business.pojo.vo.JdtCustom" id="jdtCustom">
+		
+	    <id column="uuid" property="uuid" jdbcType="BIGINT" />
+	    <result column="type" property="type" jdbcType="INTEGER" />
+	    <result column="kcuuid" property="kcuuid" jdbcType="BIGINT" />
+	    <result column="content" property="content" jdbcType="VARCHAR" />
+	    <result column="answer" property="answer" jdbcType="VARCHAR" />
+	    <result column="ndtype" property="ndtype" jdbcType="INTEGER" />
+	    <result column="teacheruuid" property="teacheruuid" jdbcType="BIGINT" />
+	    <result column="createtime" property="createtime" jdbcType="BIGINT" />
+	    <result column="status" property="status" jdbcType="INTEGER" />
+	    
+	    <result column="kcname" property="kcname" />
+	    <result column="ndname" property="ndname" />
+	    <result column="teachername" property="teachername" />
+	    <result column="statusname" property="statusname" />
+		
+		<collection property="zyList" ofType="ytk.base.pojo.po.Zy">
+			<id column="zyuuid" property="uuid"/>
+			<result column="zyname" property="name"/>
+		</collection>
+		
+		<collection property="zsdList" ofType="ytk.base.pojo.po.Zsd">
+			<id column="zsduuid" property="uuid"/>
+			<result column="zsdname" property="name"/>
+		</collection>	
+	</resultMap>
+	
+	<select id="findJdtList" parameterType="ytk.business.pojo.vo.JdtQueryVo" resultMap="jdtCustom">
+		SELECT * FROM(
+			SELECT jdt.*,kc.name kcname,zy.name zyname,dictinfo.info ndname,sysuser.username teachername,kc_zy.zyuuid zyuuid,zsd.uuid zsduuid,zsd.name zsdname,
+ 			(SELECT info FROM dictinfo WHERE dictcode=jdt.status AND typecode='008') statusname
+				FROM jdt,kc,zy,dictinfo,sysuser,kc_zy,tm_zsd,zsd
+					WHERE jdt.kcuuid=kc.uuid AND jdt.ndtype=dictinfo.dictcode AND dictinfo.typecode=002 AND jdt.teacheruuid=sysuser.uuid
+					AND kc_zy.kcuuid=jdt.kcuuid AND kc_zy.zyuuid=zy.uuid
+					AND jdt.uuid=tm_zsd.tmuuid AND jdt.type=tm_zsd.type AND tm_zsd.zsduuid=zsd.uuid	
+					<include refid="query_jdtZy_where"></include>	
+					<include refid="query_jdtZsd_where"></include>		
+					<include refid="query_jdtTeacherKc_where"></include>			
+		) JDT 
+		<where>
+			<include refid="query_jdt_where"></include>
+		</where>
+<!-- 		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if> -->
+	</select>
+	
+	<select id="findJdtListCount" parameterType="ytk.business.pojo.vo.JdtQueryVo" resultType="int">
+		SELECT count(*) FROM(
+			SELECT jdt.*,kc.name kcname,dictinfo.info ndname,sysuser.username teachername,
+		<if test="jdtCustom!=null">
+			<if test="jdtCustom.zyname!=null and jdtCustom.zyname!=''">
+							zy.name zyname,kc_zy.zyuuid zyuuid,
+			</if>
+		</if>
+		<if test="jdtCustom!=null">
+			<if test="jdtCustom.zsdname!=null and jdtCustom.zsdname!=''">
+							zsd.uuid zsduuid,zsd.name zsdname,
+			</if>
+		</if>
+ 			(SELECT info FROM dictinfo WHERE dictcode=jdt.status AND typecode='008') statusname
+				FROM 
+		<if test="jdtCustom!=null">
+			<if test="jdtCustom.zyname!=null and jdtCustom.zyname!=''">
+							zy,kc_zy,
+			</if>
+		</if>
+		<if test="jdtCustom!=null">
+			<if test="jdtCustom.zsdname!=null and jdtCustom.zsdname!=''">
+							tm_zsd,zsd,
+			</if>
+		</if>
+				jdt,kc,dictinfo,sysuser
+					WHERE jdt.kcuuid=kc.uuid AND jdt.ndtype=dictinfo.dictcode AND dictinfo.typecode=002 AND jdt.teacheruuid=sysuser.uuid
+		<if test="jdtCustom!=null">
+			<if test="jdtCustom.zyname!=null and jdtCustom.zyname!=''">
+							AND kc_zy.kcuuid=jdt.kcuuid AND kc_zy.zyuuid=zy.uuid
+			</if>
+		</if>
+		<if test="jdtCustom!=null">
+			<if test="jdtCustom.zsdname!=null and jdtCustom.zsdname!=''">
+							AND jdt.uuid=tm_zsd.tmuuid AND jdt.type=tm_zsd.type AND tm_zsd.zsduuid=zsd.uuid	
+			</if>
+		</if>
+					<include refid="query_jdtZy_where"></include>	
+					<include refid="query_jdtZsd_where"></include>
+					<include refid="query_jdtTeacherKc_where"></include>					
+		) JDT 
+		<where>
+			<include refid="query_jdt_where"></include>
+		</where>
+	</select>
+</mapper>

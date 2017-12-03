@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.base.dao.mapper.ZsdMapper" >
+  <resultMap id="BaseResultMap" type="ytk.base.pojo.po.Zsd" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="kcuuid" property="kcuuid" jdbcType="BIGINT" />
+    <result column="shortcode" property="shortcode" jdbcType="VARCHAR" />
+    <result column="zsdcode" property="zsdcode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uuid, name, kcuuid, shortcode, zsdcode
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="ytk.base.pojo.po.ZsdExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from zsd
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from zsd
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from zsd
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="ytk.base.pojo.po.ZsdExample" >
+    delete from zsd
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="ytk.base.pojo.po.Zsd" >
+    insert into zsd (uuid, name, kcuuid, 
+      shortcode, zsdcode)
+    values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{kcuuid,jdbcType=BIGINT}, 
+      #{shortcode,jdbcType=VARCHAR}, #{zsdcode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="ytk.base.pojo.po.Zsd" >
+    insert into zsd
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="kcuuid != null" >
+        kcuuid,
+      </if>
+      <if test="shortcode != null" >
+        shortcode,
+      </if>
+      <if test="zsdcode != null" >
+        zsdcode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="kcuuid != null" >
+        #{kcuuid,jdbcType=BIGINT},
+      </if>
+      <if test="shortcode != null" >
+        #{shortcode,jdbcType=VARCHAR},
+      </if>
+      <if test="zsdcode != null" >
+        #{zsdcode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="ytk.base.pojo.po.ZsdExample" resultType="java.lang.Integer" >
+    select count(*) from zsd
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update zsd
+    <set >
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.kcuuid != null" >
+        kcuuid = #{record.kcuuid,jdbcType=BIGINT},
+      </if>
+      <if test="record.shortcode != null" >
+        shortcode = #{record.shortcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zsdcode != null" >
+        zsdcode = #{record.zsdcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update zsd
+    set uuid = #{record.uuid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      kcuuid = #{record.kcuuid,jdbcType=BIGINT},
+      shortcode = #{record.shortcode,jdbcType=VARCHAR},
+      zsdcode = #{record.zsdcode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="ytk.base.pojo.po.Zsd" >
+    update zsd
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="kcuuid != null" >
+        kcuuid = #{kcuuid,jdbcType=BIGINT},
+      </if>
+      <if test="shortcode != null" >
+        shortcode = #{shortcode,jdbcType=VARCHAR},
+      </if>
+      <if test="zsdcode != null" >
+        zsdcode = #{zsdcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="ytk.base.pojo.po.Zsd" >
+    update zsd
+    set name = #{name,jdbcType=VARCHAR},
+      kcuuid = #{kcuuid,jdbcType=BIGINT},
+      shortcode = #{shortcode,jdbcType=VARCHAR},
+      zsdcode = #{zsdcode,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

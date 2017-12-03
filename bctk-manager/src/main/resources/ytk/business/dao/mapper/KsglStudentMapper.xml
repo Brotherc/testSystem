@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.business.dao.mapper.KsglStudentMapper" >
+  <resultMap id="BaseResultMap" type="ytk.business.pojo.po.KsglStudent" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="ksgluuid" property="ksgluuid" jdbcType="VARCHAR" />
+    <result column="sysuseruuid" property="sysuseruuid" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uuid, ksgluuid, sysuseruuid, status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="ytk.business.pojo.po.KsglStudentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ksgl_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ksgl_student
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ksgl_student
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="ytk.business.pojo.po.KsglStudentExample" >
+    delete from ksgl_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="ytk.business.pojo.po.KsglStudent" >
+    insert into ksgl_student (uuid, ksgluuid, sysuseruuid, 
+      status)
+    values (#{uuid,jdbcType=VARCHAR}, #{ksgluuid,jdbcType=VARCHAR}, #{sysuseruuid,jdbcType=BIGINT}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="ytk.business.pojo.po.KsglStudent" >
+    insert into ksgl_student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="ksgluuid != null" >
+        ksgluuid,
+      </if>
+      <if test="sysuseruuid != null" >
+        sysuseruuid,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="ksgluuid != null" >
+        #{ksgluuid,jdbcType=VARCHAR},
+      </if>
+      <if test="sysuseruuid != null" >
+        #{sysuseruuid,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="ytk.business.pojo.po.KsglStudentExample" resultType="java.lang.Integer" >
+    select count(*) from ksgl_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ksgl_student
+    <set >
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ksgluuid != null" >
+        ksgluuid = #{record.ksgluuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysuseruuid != null" >
+        sysuseruuid = #{record.sysuseruuid,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ksgl_student
+    set uuid = #{record.uuid,jdbcType=VARCHAR},
+      ksgluuid = #{record.ksgluuid,jdbcType=VARCHAR},
+      sysuseruuid = #{record.sysuseruuid,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="ytk.business.pojo.po.KsglStudent" >
+    update ksgl_student
+    <set >
+      <if test="ksgluuid != null" >
+        ksgluuid = #{ksgluuid,jdbcType=VARCHAR},
+      </if>
+      <if test="sysuseruuid != null" >
+        sysuseruuid = #{sysuseruuid,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="ytk.business.pojo.po.KsglStudent" >
+    update ksgl_student
+    set ksgluuid = #{ksgluuid,jdbcType=VARCHAR},
+      sysuseruuid = #{sysuseruuid,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

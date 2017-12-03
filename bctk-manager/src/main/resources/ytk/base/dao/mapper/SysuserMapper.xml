@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.base.dao.mapper.SysuserMapper" >
+  <resultMap id="BaseResultMap" type="ytk.base.pojo.po.Sysuser" >
+    <id column="uuid" property="uuid" jdbcType="BIGINT" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="groupid" property="groupid" jdbcType="CHAR" />
+    <result column="userstate" property="userstate" jdbcType="CHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="INTEGER" />
+    <result column="birthday" property="birthday" jdbcType="BIGINT" />
+    <result column="tele" property="tele" jdbcType="VARCHAR" />
+    <result column="lastLoginTime" property="lastlogintime" jdbcType="BIGINT" />
+    <result column="lastLoginIp" property="lastloginip" jdbcType="VARCHAR" />
+    <result column="xuuid" property="xuuid" jdbcType="BIGINT" />
+    <result column="classuuid" property="classuuid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uuid, userid, pwd, username, groupid, userstate, name, addr, email, gender, birthday, 
+    tele, lastLoginTime, lastLoginIp, xuuid, classuuid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="ytk.base.pojo.po.SysuserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sysuser
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sysuser
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sysuser
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="ytk.base.pojo.po.SysuserExample" >
+    delete from sysuser
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="ytk.base.pojo.po.Sysuser" >
+  	<selectKey keyProperty="uuid" order="AFTER" resultType="long">
+  		select LAST_INSERT_ID()
+  	</selectKey>
+    insert into sysuser (uuid, userid, pwd, 
+      username, groupid, userstate, 
+      name, addr, email, 
+      gender, birthday, tele, 
+      lastLoginTime, lastLoginIp, xuuid, 
+      classuuid)
+    values (#{uuid,jdbcType=BIGINT}, #{userid,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{groupid,jdbcType=CHAR}, #{userstate,jdbcType=CHAR}, 
+      #{name,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=INTEGER}, #{birthday,jdbcType=BIGINT}, #{tele,jdbcType=VARCHAR}, 
+      #{lastlogintime,jdbcType=BIGINT}, #{lastloginip,jdbcType=VARCHAR}, #{xuuid,jdbcType=BIGINT}, 
+      #{classuuid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="ytk.base.pojo.po.Sysuser" >
+  	<selectKey keyProperty="uuid" order="AFTER" resultType="long">
+  		select LAST_INSERT_ID()
+  	</selectKey>
+    insert into sysuser
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="pwd != null" >
+        pwd,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="groupid != null" >
+        groupid,
+      </if>
+      <if test="userstate != null" >
+        userstate,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="tele != null" >
+        tele,
+      </if>
+      <if test="lastlogintime != null" >
+        lastLoginTime,
+      </if>
+      <if test="lastloginip != null" >
+        lastLoginIp,
+      </if>
+      <if test="xuuid != null" >
+        xuuid,
+      </if>
+      <if test="classuuid != null" >
+        classuuid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null" >
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="groupid != null" >
+        #{groupid,jdbcType=CHAR},
+      </if>
+      <if test="userstate != null" >
+        #{userstate,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=BIGINT},
+      </if>
+      <if test="tele != null" >
+        #{tele,jdbcType=VARCHAR},
+      </if>
+      <if test="lastlogintime != null" >
+        #{lastlogintime,jdbcType=BIGINT},
+      </if>
+      <if test="lastloginip != null" >
+        #{lastloginip,jdbcType=VARCHAR},
+      </if>
+      <if test="xuuid != null" >
+        #{xuuid,jdbcType=BIGINT},
+      </if>
+      <if test="classuuid != null" >
+        #{classuuid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="ytk.base.pojo.po.SysuserExample" resultType="java.lang.Integer" >
+    select count(*) from sysuser
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sysuser
+    <set >
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null" >
+        userid = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pwd != null" >
+        pwd = #{record.pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupid != null" >
+        groupid = #{record.groupid,jdbcType=CHAR},
+      </if>
+      <if test="record.userstate != null" >
+        userstate = #{record.userstate,jdbcType=CHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addr != null" >
+        addr = #{record.addr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        gender = #{record.gender,jdbcType=INTEGER},
+      </if>
+      <if test="record.birthday != null" >
+        birthday = #{record.birthday,jdbcType=BIGINT},
+      </if>
+      <if test="record.tele != null" >
+        tele = #{record.tele,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastlogintime != null" >
+        lastLoginTime = #{record.lastlogintime,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastloginip != null" >
+        lastLoginIp = #{record.lastloginip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xuuid != null" >
+        xuuid = #{record.xuuid,jdbcType=BIGINT},
+      </if>
+      <if test="record.classuuid != null" >
+        classuuid = #{record.classuuid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sysuser
+    set uuid = #{record.uuid,jdbcType=BIGINT},
+      userid = #{record.userid,jdbcType=VARCHAR},
+      pwd = #{record.pwd,jdbcType=VARCHAR},
+      username = #{record.username,jdbcType=VARCHAR},
+      groupid = #{record.groupid,jdbcType=CHAR},
+      userstate = #{record.userstate,jdbcType=CHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      addr = #{record.addr,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=INTEGER},
+      birthday = #{record.birthday,jdbcType=BIGINT},
+      tele = #{record.tele,jdbcType=VARCHAR},
+      lastLoginTime = #{record.lastlogintime,jdbcType=BIGINT},
+      lastLoginIp = #{record.lastloginip,jdbcType=VARCHAR},
+      xuuid = #{record.xuuid,jdbcType=BIGINT},
+      classuuid = #{record.classuuid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="ytk.base.pojo.po.Sysuser" >
+    update sysuser
+    <set >
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null" >
+        pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="groupid != null" >
+        groupid = #{groupid,jdbcType=CHAR},
+      </if>
+      <if test="userstate != null" >
+        userstate = #{userstate,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=BIGINT},
+      </if>
+      <if test="tele != null" >
+        tele = #{tele,jdbcType=VARCHAR},
+      </if>
+      <if test="lastlogintime != null" >
+        lastLoginTime = #{lastlogintime,jdbcType=BIGINT},
+      </if>
+      <if test="lastloginip != null" >
+        lastLoginIp = #{lastloginip,jdbcType=VARCHAR},
+      </if>
+      <if test="xuuid != null" >
+        xuuid = #{xuuid,jdbcType=BIGINT},
+      </if>
+      <if test="classuuid != null" >
+        classuuid = #{classuuid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="ytk.base.pojo.po.Sysuser" >
+    update sysuser
+    set userid = #{userid,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      groupid = #{groupid,jdbcType=CHAR},
+      userstate = #{userstate,jdbcType=CHAR},
+      name = #{name,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=BIGINT},
+      tele = #{tele,jdbcType=VARCHAR},
+      lastLoginTime = #{lastlogintime,jdbcType=BIGINT},
+      lastLoginIp = #{lastloginip,jdbcType=VARCHAR},
+      xuuid = #{xuuid,jdbcType=BIGINT},
+      classuuid = #{classuuid,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </update>
+</mapper>

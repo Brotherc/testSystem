@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.business.dao.mapper.DxtMapperCustom" >
+	
+	<sql id="query_dxt_where">
+		<if test="dxtCustom!=null">
+			<if test="dxtCustom.uuid!=null and dxtCustom.uuid!=''">
+				and DXT.uuid = #{dxtCustom.uuid}
+			</if>
+			<if test="dxtCustom.status!=null and dxtCustom.status!=''">
+				and DXT.status = #{dxtCustom.status}
+			</if>
+			<if test="dxtCustom.content!=null and dxtCustom.content!=''">
+				and DXT.content like '%${dxtCustom.content}%'
+			</if>
+			<if test="dxtCustom.teachername!=null and dxtCustom.teachername!=''">
+				and DXT.teachername like '%${dxtCustom.teachername}%'
+			</if>
+			<if test="dxtCustom.kcname!=null and dxtCustom.kcname!=''">
+				and DXT.kcname like '%${dxtCustom.kcname}%'
+			</if>
+			<if test="dxtCustom.createtime!=null and dxtCustom.createtime!=''">
+				and DXT.createtime = #{dxtCustom.createtime}
+			</if>
+			<if test="dxtCustom.answer!=null and dxtCustom.answer!=''">
+				and DXT.answer like '%${dxtCustom.answer}%'
+			</if>
+			<if test="dxtCustom.ndtype!=null and dxtCustom.ndtype!=''">
+				and DXT.ndtype = #{dxtCustom.ndtype}
+			</if>
+			<if test="dxtCustom.createtimeMin!=null and dxtCustom.createtimeMin!=''">
+				and DXT.createtime <![CDATA[>= ]]> #{dxtCustom.createtimeMin}
+			</if>
+			<if test="dxtCustom.createtimeMax!=null and dxtCustom.createtimeMax!=''">
+				and DXT.createtime <![CDATA[<= ]]> #{dxtCustom.createtimeMax}
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_dxtZy_where">
+		<if test="dxtCustom!=null">
+			<if test="dxtCustom.zyname!=null and dxtCustom.zyname!=''">
+				and zy.name like '%${dxtCustom.zyname}%'
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_dxtTeacherKc_where">
+		<if test="dxtCustom!=null">
+			<if test="dxtCustom.sysuseruuid!=null and dxtCustom.sysuseruuid!=''">
+				AND dxt.kcuuid IN (SELECT kcuuid FROM teacher_kc WHERE teacheruuid=#{dxtCustom.sysuseruuid})
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_dxtZsd_where">
+		<if test="dxtCustom!=null">
+			<if test="dxtCustom.zsdname!=null and dxtCustom.zsdname!=''">
+				and zsd.name like '%${dxtCustom.zsdname}%'
+			</if>
+		</if>
+	</sql>
+	
+	<resultMap type="ytk.business.pojo.vo.DxtCustom" id="dxtCustom">
+		
+	    <id column="uuid" property="uuid" jdbcType="BIGINT" />
+	    <result column="type" property="type" jdbcType="INTEGER" />
+	    <result column="kcuuid" property="kcuuid" jdbcType="BIGINT" />
+	    <result column="optiona" property="optiona" jdbcType="VARCHAR" />
+	    <result column="optionb" property="optionb" jdbcType="VARCHAR" />
+	    <result column="optionc" property="optionc" jdbcType="VARCHAR" />
+	    <result column="optiond" property="optiond" jdbcType="VARCHAR" />
+	    <result column="content" property="content" jdbcType="VARCHAR" />
+	    <result column="answer" property="answer" jdbcType="VARCHAR" />
+	    <result column="ndtype" property="ndtype" jdbcType="INTEGER" />
+	    <result column="teacheruuid" property="teacheruuid" jdbcType="BIGINT" />
+	    <result column="createtime" property="createtime" jdbcType="BIGINT" />
+	    <result column="status" property="status" jdbcType="INTEGER" />
+	    
+	    <result column="kcname" property="kcname" />
+	    <result column="ndname" property="ndname" />
+	    <result column="teachername" property="teachername" />
+	    <result column="statusname" property="statusname" />
+		
+		<collection property="zyList" ofType="ytk.base.pojo.po.Zy">
+			<id column="zyuuid" property="uuid"/>
+			<result column="zyname" property="name"/>
+		</collection>
+
+		<collection property="zsdList" ofType="ytk.base.pojo.po.Zsd">
+			<id column="zsduuid" property="uuid"/>
+			<result column="zsdname" property="name"/>
+		</collection>		
+		
+	</resultMap>
+	
+	<select id="findDxtList" parameterType="ytk.business.pojo.vo.DxtQueryVo" resultMap="dxtCustom">
+		SELECT * FROM(
+			SELECT dxt.*,kc.name kcname,zy.name zyname,dictinfo.info ndname,sysuser.username teachername,kc_zy.zyuuid zyuuid,zsd.uuid zsduuid,zsd.name zsdname,
+ 			(SELECT info FROM dictinfo WHERE dictcode=dxt.status AND typecode='008') statusname
+				FROM dxt,kc,zy,dictinfo,sysuser,kc_zy,tm_zsd,zsd
+					WHERE dxt.kcuuid=kc.uuid AND dxt.ndtype=dictinfo.dictcode AND dictinfo.typecode=002 AND dxt.teacheruuid=sysuser.uuid
+					AND kc_zy.kcuuid=dxt.kcuuid AND kc_zy.zyuuid=zy.uuid
+					AND dxt.uuid=tm_zsd.tmuuid AND dxt.type=tm_zsd.type AND tm_zsd.zsduuid=zsd.uuid	
+					<include refid="query_dxtZy_where"></include>	
+					<include refid="query_dxtZsd_where"></include>
+					<include refid="query_dxtTeacherKc_where"></include>				
+		) DXT 
+		<where>
+			<include refid="query_dxt_where"></include>
+		</where>
+<!-- 		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if> -->
+	</select>
+	
+	<select id="findDxtListCount" parameterType="ytk.business.pojo.vo.DxtQueryVo" resultType="int">
+		SELECT count(*) FROM(
+			SELECT dxt.*,kc.name kcname,dictinfo.info ndname,sysuser.username teachername,
+			
+		<if test="dxtCustom!=null">
+			<if test="dxtCustom.zyname!=null and dxtCustom.zyname!=''">
+							zy.name zyname,kc_zy.zyuuid zyuuid,
+			</if>
+		</if>
+		<if test="dxtCustom!=null">
+			<if test="dxtCustom.zsdname!=null and dxtCustom.zsdname!=''">
+							zsd.uuid zsduuid,zsd.name zsdname,
+			</if>
+		</if>
+			
+ 			(SELECT info FROM dictinfo WHERE dictcode=dxt.status AND typecode='008') statusname
+				FROM
+		<if test="dxtCustom!=null">
+			<if test="dxtCustom.zyname!=null and dxtCustom.zyname!=''">
+							zy,kc_zy,
+			</if>
+		</if>
+		<if test="dxtCustom!=null">
+			<if test="dxtCustom.zsdname!=null and dxtCustom.zsdname!=''">
+							tm_zsd,zsd,
+			</if>
+		</if>
+				 dxt,kc,dictinfo,sysuser
+					WHERE dxt.kcuuid=kc.uuid AND dxt.ndtype=dictinfo.dictcode AND dictinfo.typecode=002 AND dxt.teacheruuid=sysuser.uuid
+		<if test="dxtCustom!=null">
+			<if test="dxtCustom.zyname!=null and dxtCustom.zyname!=''">
+							AND kc_zy.kcuuid=dxt.kcuuid AND kc_zy.zyuuid=zy.uuid
+			</if>
+		</if>
+		<if test="dxtCustom!=null">
+			<if test="dxtCustom.zsdname!=null and dxtCustom.zsdname!=''">
+							AND dxt.uuid=tm_zsd.tmuuid AND dxt.type=tm_zsd.type AND tm_zsd.zsduuid=zsd.uuid	
+			</if>
+		</if>
+					<include refid="query_dxtZy_where"></include>
+					<include refid="query_dxtZsd_where"></include>	
+					<include refid="query_dxtTeacherKc_where"></include>						
+		) DXT 
+		<where>
+			<include refid="query_dxt_where"></include>
+		</where>
+	</select>
+</mapper>

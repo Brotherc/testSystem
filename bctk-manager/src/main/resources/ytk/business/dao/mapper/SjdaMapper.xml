@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.business.dao.mapper.SjdaMapper" >
+  <resultMap id="BaseResultMap" type="ytk.business.pojo.po.Sjda" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="sjid" property="sjid" jdbcType="VARCHAR" />
+    <result column="sjxitmid" property="sjxitmid" jdbcType="VARCHAR" />
+    <result column="sjtmid" property="sjtmid" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="answer" property="answer" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uuid, sjid, sjxitmid, sjtmid, type, answer
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="ytk.business.pojo.po.SjdaExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sjda
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sjda
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sjda
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="ytk.business.pojo.po.SjdaExample" >
+    delete from sjda
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="ytk.business.pojo.po.Sjda" >
+    insert into sjda (uuid, sjid, sjxitmid, 
+      sjtmid, type, answer
+      )
+    values (#{uuid,jdbcType=VARCHAR}, #{sjid,jdbcType=VARCHAR}, #{sjxitmid,jdbcType=VARCHAR}, 
+      #{sjtmid,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{answer,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="ytk.business.pojo.po.Sjda" >
+    insert into sjda
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="sjid != null" >
+        sjid,
+      </if>
+      <if test="sjxitmid != null" >
+        sjxitmid,
+      </if>
+      <if test="sjtmid != null" >
+        sjtmid,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="sjid != null" >
+        #{sjid,jdbcType=VARCHAR},
+      </if>
+      <if test="sjxitmid != null" >
+        #{sjxitmid,jdbcType=VARCHAR},
+      </if>
+      <if test="sjtmid != null" >
+        #{sjtmid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="ytk.business.pojo.po.SjdaExample" resultType="java.lang.Integer" >
+    select count(*) from sjda
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sjda
+    <set >
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sjid != null" >
+        sjid = #{record.sjid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sjxitmid != null" >
+        sjxitmid = #{record.sjxitmid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sjtmid != null" >
+        sjtmid = #{record.sjtmid,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.answer != null" >
+        answer = #{record.answer,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sjda
+    set uuid = #{record.uuid,jdbcType=VARCHAR},
+      sjid = #{record.sjid,jdbcType=VARCHAR},
+      sjxitmid = #{record.sjxitmid,jdbcType=VARCHAR},
+      sjtmid = #{record.sjtmid,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
+      answer = #{record.answer,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="ytk.business.pojo.po.Sjda" >
+    update sjda
+    <set >
+      <if test="sjid != null" >
+        sjid = #{sjid,jdbcType=VARCHAR},
+      </if>
+      <if test="sjxitmid != null" >
+        sjxitmid = #{sjxitmid,jdbcType=VARCHAR},
+      </if>
+      <if test="sjtmid != null" >
+        sjtmid = #{sjtmid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="ytk.business.pojo.po.Sjda" >
+    update sjda
+    set sjid = #{sjid,jdbcType=VARCHAR},
+      sjxitmid = #{sjxitmid,jdbcType=VARCHAR},
+      sjtmid = #{sjtmid,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      answer = #{answer,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

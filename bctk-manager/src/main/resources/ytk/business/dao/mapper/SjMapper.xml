@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.business.dao.mapper.SjMapper" >
+  <resultMap id="BaseResultMap" type="ytk.business.pojo.po.Sj" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="kcid" property="kcid" jdbcType="BIGINT" />
+    <result column="ndtype" property="ndtype" jdbcType="INTEGER" />
+    <result column="teacherid" property="teacherid" jdbcType="BIGINT" />
+    <result column="createtime" property="createtime" jdbcType="BIGINT" />
+    <result column="updatetime" property="updatetime" jdbcType="BIGINT" />
+    <result column="sjmbid" property="sjmbid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uuid, name, score, kcid, ndtype, teacherid, createtime, updatetime, sjmbid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="ytk.business.pojo.po.SjExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sj
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sj
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sj
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="ytk.business.pojo.po.SjExample" >
+    delete from sj
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="ytk.business.pojo.po.Sj" >
+    insert into sj (uuid, name, score, 
+      kcid, ndtype, teacherid, 
+      createtime, updatetime, sjmbid
+      )
+    values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, 
+      #{kcid,jdbcType=BIGINT}, #{ndtype,jdbcType=INTEGER}, #{teacherid,jdbcType=BIGINT}, 
+      #{createtime,jdbcType=BIGINT}, #{updatetime,jdbcType=BIGINT}, #{sjmbid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="ytk.business.pojo.po.Sj" >
+    insert into sj
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="kcid != null" >
+        kcid,
+      </if>
+      <if test="ndtype != null" >
+        ndtype,
+      </if>
+      <if test="teacherid != null" >
+        teacherid,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="updatetime != null" >
+        updatetime,
+      </if>
+      <if test="sjmbid != null" >
+        sjmbid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="kcid != null" >
+        #{kcid,jdbcType=BIGINT},
+      </if>
+      <if test="ndtype != null" >
+        #{ndtype,jdbcType=INTEGER},
+      </if>
+      <if test="teacherid != null" >
+        #{teacherid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="sjmbid != null" >
+        #{sjmbid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="ytk.business.pojo.po.SjExample" resultType="java.lang.Integer" >
+    select count(*) from sj
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sj
+    <set >
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.score != null" >
+        score = #{record.score,jdbcType=INTEGER},
+      </if>
+      <if test="record.kcid != null" >
+        kcid = #{record.kcid,jdbcType=BIGINT},
+      </if>
+      <if test="record.ndtype != null" >
+        ndtype = #{record.ndtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.teacherid != null" >
+        teacherid = #{record.teacherid,jdbcType=BIGINT},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatetime != null" >
+        updatetime = #{record.updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.sjmbid != null" >
+        sjmbid = #{record.sjmbid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sj
+    set uuid = #{record.uuid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      score = #{record.score,jdbcType=INTEGER},
+      kcid = #{record.kcid,jdbcType=BIGINT},
+      ndtype = #{record.ndtype,jdbcType=INTEGER},
+      teacherid = #{record.teacherid,jdbcType=BIGINT},
+      createtime = #{record.createtime,jdbcType=BIGINT},
+      updatetime = #{record.updatetime,jdbcType=BIGINT},
+      sjmbid = #{record.sjmbid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="ytk.business.pojo.po.Sj" >
+    update sj
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="kcid != null" >
+        kcid = #{kcid,jdbcType=BIGINT},
+      </if>
+      <if test="ndtype != null" >
+        ndtype = #{ndtype,jdbcType=INTEGER},
+      </if>
+      <if test="teacherid != null" >
+        teacherid = #{teacherid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null" >
+        updatetime = #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="sjmbid != null" >
+        sjmbid = #{sjmbid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="ytk.business.pojo.po.Sj" >
+    update sj
+    set name = #{name,jdbcType=VARCHAR},
+      score = #{score,jdbcType=INTEGER},
+      kcid = #{kcid,jdbcType=BIGINT},
+      ndtype = #{ndtype,jdbcType=INTEGER},
+      teacherid = #{teacherid,jdbcType=BIGINT},
+      createtime = #{createtime,jdbcType=BIGINT},
+      updatetime = #{updatetime,jdbcType=BIGINT},
+      sjmbid = #{sjmbid,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

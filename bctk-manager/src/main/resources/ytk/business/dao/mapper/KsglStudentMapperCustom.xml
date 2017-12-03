@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.business.dao.mapper.KsglStudentMapperCustom" >
+
+	<sql id="query_ksglStudent_where">
+		<if test="ksglStudentCustom!=null">
+			<if test="ksglStudentCustom.uuid!=null and ksglStudentCustom.uuid!=''">
+				and KSGL_STUDENT.uuid = #{ksglStudentCustom.uuid}
+			</if>
+			
+			<if test="ksglStudentCustom.ksgluuid!=null and ksglStudentCustom.ksgluuid!=''">
+				and KSGL_STUDENT.ksgluuid = #{ksglStudentCustom.ksgluuid}
+			</if>
+			
+			<if test="ksglStudentCustom.sysuseruuid!=null and ksglStudentCustom.sysuseruuid!=''">
+				and KSGL_STUDENT.sysuseruuid = #{ksglStudentCustom.sysuseruuid}
+			</if>
+			<if test="ksglStudentCustom.userid!=null and ksglStudentCustom.userid!=''">
+				and KSGL_STUDENT.userid = #{ksglStudentCustom.userid}
+			</if>
+			<if test="ksglStudentCustom.xiuuid!=null and ksglStudentCustom.xiuuid!=''">
+				and KSGL_STUDENT.xiuuid = #{ksglStudentCustom.xiuuid}
+			</if>
+			<if test="ksglStudentCustom.xiname!=null and ksglStudentCustom.xiname!=''">
+				and KSGL_STUDENT.xiname = #{ksglStudentCustom.xiname}
+			</if>
+			<if test="ksglStudentCustom.classuuid!=null and ksglStudentCustom.classuuid!=''">
+				and KSGL_STUDENT.classuuid = #{ksglStudentCustom.classuuid}
+			</if>
+			<if test="ksglStudentCustom.classname!=null and ksglStudentCustom.classname!=''">
+				and KSGL_STUDENT.classname = #{ksglStudentCustom.classname}
+			</if>
+			<if test="ksglStudentCustom.zyuuid!=null and ksglStudentCustom.zyuuid!=''">
+				and KSGL_STUDENT.zyuuid = #{ksglStudentCustom.zyuuid}
+			</if>
+			<if test="ksglStudentCustom.zyname!=null and ksglStudentCustom.zyname!=''">
+				and KSGL_STUDENT.zyname = #{ksglStudentCustom.zyname}
+			</if>
+			<if test="ksglStudentCustom.njuuid!=null and ksglStudentCustom.njuuid!=''">
+				and KSGL_STUDENT.njuuid = #{ksglStudentCustom.njuuid}
+			</if>
+			<if test="ksglStudentCustom.njname!=null and ksglStudentCustom.njname!=''">
+				and KSGL_STUDENT.njname = #{ksglStudentCustom.njname}
+			</if>
+			<if test="ksglStudentCustom.status!=null and ksglStudentCustom.status!=''">
+				and KSGL_STUDENT.status = #{ksglStudentCustom.status}
+			</if>
+		</if>
+	</sql>
+
+	<select id="findKsglStudentList" parameterType="ytk.business.pojo.vo.KsglStudentQueryVo" resultType="ytk.business.pojo.vo.KsglStudentCustom">
+		SELECT *FROM(
+
+			SELECT ksgl_student.*,sysuser.userid,xi.uuid xiuuid,xi.name xiname,class.uuid classuuid,class.classname,zy.uuid zyuuid,zy.name zyname,nj.uuid njuuid,nj.njnane njname,
+			(SELECT info FROM dictinfo WHERE dictcode=ksgl_student.status AND typecode='010') statusname			
+				FROM ksgl_student,sysuser,class,zy,nj,xi
+					WHERE ksgl_student.sysuseruuid=sysuser.uuid AND sysuser.classuuid=class.uuid AND sysuser.xuuid=xi.uuid AND class.zyuuid=zy.uuid AND class.njuuid=nj.uuid
+
+		)KSGL_STUDENT
+		<where>
+			<include refid="query_ksglStudent_where"></include>
+		</where> 
+		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if>
+	</select>
+	
+	<select id="findKsglStudentListCount" parameterType="ytk.business.pojo.vo.KsglStudentQueryVo" resultType="int">
+		SELECT count(*)FROM(
+			SELECT ksgl_student.*,sysuser.userid,xi.uuid xiuuid,xi.name xiname,class.uuid classuuid,class.classname,zy.uuid zyuuid,zy.name zyname,nj.uuid njuuid,nj.njnane njname,
+			(SELECT info FROM dictinfo WHERE dictcode=ksgl_student.status AND typecode='010') statusname
+				FROM ksgl_student,sysuser,class,zy,nj,xi
+					WHERE ksgl_student.sysuseruuid=sysuser.uuid AND sysuser.classuuid=class.uuid AND sysuser.xuuid=xi.uuid AND class.zyuuid=zy.uuid AND class.njuuid=nj.uuid
+
+		)KSGL_STUDENT
+		<where>
+			<include refid="query_ksglStudent_where"></include>
+		</where> 
+	</select>
+</mapper>

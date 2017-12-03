@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.business.dao.mapper.TktMapperCustom" >
+	
+	<sql id="query_tkt_where">
+		<if test="tktCustom!=null">
+			<if test="tktCustom.uuid!=null and tktCustom.uuid!=''">
+				and TKT.uuid = #{tktCustom.uuid}
+			</if>
+			<if test="tktCustom.status!=null and tktCustom.status!=''">
+				and TKT.status = #{tktCustom.status}
+			</if>
+			<if test="tktCustom.content!=null and tktCustom.content!=''">
+				and TKT.content like '%${tktCustom.content}%'
+			</if>
+			<if test="tktCustom.teachername!=null and tktCustom.teachername!=''">
+				and TKT.teachername like '%${tktCustom.teachername}%'
+			</if>
+			<if test="tktCustom.kcname!=null and tktCustom.kcname!=''">
+				and TKT.kcname like '%${tktCustom.kcname}%'
+			</if>
+			<if test="tktCustom.createtime!=null and tktCustom.createtime!=''">
+				and TKT.createtime = #{tktCustom.createtime}
+			</if>
+			<if test="tktCustom.answer!=null and tktCustom.answer!=''">
+				and TKT.answer like '%${tktCustom.answer}%'
+			</if>
+			<if test="tktCustom.ndtype!=null and tktCustom.ndtype!=''">
+				and TKT.ndtype = #{tktCustom.ndtype}
+			</if>
+			<if test="tktCustom.createtimeMin!=null and tktCustom.createtimeMin!=''">
+				and TKT.createtime <![CDATA[>= ]]> #{tktCustom.createtimeMin}
+			</if>
+			<if test="tktCustom.createtimeMax!=null and tktCustom.createtimeMax!=''">
+				and TKT.createtime <![CDATA[<= ]]> #{tktCustom.createtimeMax}
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_tktZy_where">
+		<if test="tktCustom!=null">
+			<if test="tktCustom.zyname!=null and tktCustom.zyname!=''">
+				and zy.name like '%${tktCustom.zyname}%'
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_tktZsd_where">
+		<if test="tktCustom!=null">
+			<if test="tktCustom.zsdname!=null and tktCustom.zsdname!=''">
+				and zsd.name like '%${tktCustom.zsdname}%'
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_tktTeacherKc_where">
+		<if test="tktCustom!=null">
+			<if test="tktCustom.sysuseruuid!=null and tktCustom.sysuseruuid!=''">
+				AND tkt.kcuuid IN (SELECT kcuuid FROM teacher_kc WHERE teacheruuid=#{tktCustom.sysuseruuid})
+			</if>
+		</if>
+	</sql>
+	
+	<resultMap type="ytk.business.pojo.vo.TktCustom" id="tktCustom">
+		
+	    <id column="uuid" property="uuid" jdbcType="BIGINT" />
+	    <result column="type" property="type" jdbcType="INTEGER" />
+	    <result column="kcuuid" property="kcuuid" jdbcType="BIGINT" />
+	    <result column="content" property="content" jdbcType="VARCHAR" />
+	    <result column="answer" property="answer" jdbcType="VARCHAR" />
+	    <result column="ndtype" property="ndtype" jdbcType="INTEGER" />
+	    <result column="teacheruuid" property="teacheruuid" jdbcType="BIGINT" />
+	    <result column="createtime" property="createtime" jdbcType="BIGINT" />
+	    <result column="status" property="status" jdbcType="INTEGER" />
+	    <result column="answernum" property="answernum" jdbcType="INTEGER" />
+    	<result column="isprogram" property="isprogram" jdbcType="CHAR" />
+	    
+	    <result column="kcname" property="kcname" />
+	    <result column="ndname" property="ndname" />
+	    <result column="teachername" property="teachername" />
+	    <result column="statusname" property="statusname" />
+		
+		<collection property="zyList" ofType="ytk.base.pojo.po.Zy">
+			<id column="zyuuid" property="uuid"/>
+			<result column="zyname" property="name"/>
+		</collection>
+		
+		<collection property="zsdList" ofType="ytk.base.pojo.po.Zsd">
+			<id column="zsduuid" property="uuid"/>
+			<result column="zsdname" property="name"/>
+		</collection>
+	</resultMap>
+	
+	<select id="findTktList" parameterType="ytk.business.pojo.vo.TktQueryVo" resultMap="tktCustom">
+		SELECT * FROM(
+			SELECT tkt.*,kc.name kcname,zy.name zyname,dictinfo.info ndname,sysuser.username teachername,kc_zy.zyuuid zyuuid,zsd.uuid zsduuid,zsd.name zsdname,
+ 			(SELECT info FROM dictinfo WHERE dictcode=tkt.status AND typecode='008') statusname
+				FROM tkt,kc,zy,dictinfo,sysuser,kc_zy,tm_zsd,zsd
+					WHERE tkt.kcuuid=kc.uuid AND tkt.ndtype=dictinfo.dictcode AND dictinfo.typecode=002 AND tkt.teacheruuid=sysuser.uuid
+					AND kc_zy.kcuuid=tkt.kcuuid AND kc_zy.zyuuid=zy.uuid	
+					AND tkt.uuid=tm_zsd.tmuuid AND tkt.type=tm_zsd.type AND tm_zsd.zsduuid=zsd.uuid	
+					<include refid="query_tktZy_where"></include>	
+					<include refid="query_tktZsd_where"></include>	
+					<include refid="query_tktTeacherKc_where"></include>		
+		) TKT  
+		<where>
+			<include refid="query_tkt_where"></include>
+		</where>
+<!-- 		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if> -->
+	</select>
+	
+	<select id="findTktListCount" parameterType="ytk.business.pojo.vo.TktQueryVo" resultType="int">
+		SELECT count(*) FROM(
+			SELECT tkt.*,kc.name kcname,dictinfo.info ndname,sysuser.username teachername,
+		<if test="tktCustom!=null">
+			<if test="tktCustom.zyname!=null and tktCustom.zyname!=''">
+							zy.name zyname,kc_zy.zyuuid zyuuid,
+			</if>
+		</if>
+		<if test="tktCustom!=null">
+			<if test="tktCustom.zsdname!=null and tktCustom.zsdname!=''">
+							zsd.uuid zsduuid,zsd.name zsdname,
+			</if>
+		</if>
+ 			(SELECT info FROM dictinfo WHERE dictcode=tkt.status AND typecode='008') statusname
+				FROM 
+		<if test="tktCustom!=null">
+			<if test="tktCustom.zyname!=null and tktCustom.zyname!=''">
+							zy,kc_zy,
+			</if>
+		</if>
+		<if test="tktCustom!=null">
+			<if test="tktCustom.zsdname!=null and tktCustom.zsdname!=''">
+							tm_zsd,zsd,
+			</if>
+		</if>
+				tkt,kc,dictinfo,sysuser
+					WHERE tkt.kcuuid=kc.uuid AND tkt.ndtype=dictinfo.dictcode AND dictinfo.typecode=002 AND tkt.teacheruuid=sysuser.uuid
+		<if test="tktCustom!=null">
+			<if test="tktCustom.zyname!=null and tktCustom.zyname!=''">
+							AND kc_zy.kcuuid=tkt.kcuuid AND kc_zy.zyuuid=zy.uuid
+			</if>
+		</if>	
+		<if test="tktCustom!=null">
+			<if test="tktCustom.zsdname!=null and tktCustom.zsdname!=''">
+							AND tkt.uuid=tm_zsd.tmuuid AND tkt.type=tm_zsd.type AND tm_zsd.zsduuid=zsd.uuid	
+			</if>
+		</if>
+					<include refid="query_tktZy_where"></include>	
+					<include refid="query_tktZsd_where"></include>	
+					<include refid="query_tktTeacherKc_where"></include>			
+		) TKT 
+		<where>
+			<include refid="query_tkt_where"></include>
+		</where>
+	</select>
+</mapper>

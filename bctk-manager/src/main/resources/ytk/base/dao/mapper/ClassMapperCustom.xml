@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.base.dao.mapper.ClassMapperCustom" >
+
+	<sql id="query_class_where">
+		<if test="classCustom!=null">
+			<if test="classCustom.uuid!=null and classCustom.uuid!=''">
+				and CLASS.uuid = #{classCustom.uuid}
+			</if>
+			<if test="classCustom.classname!=null and classCustom.classname!=''">
+				and CLASS.classname = #{classCustom.classname}
+			</if>
+			<if test="classCustom.zyuuid!=null and classCustom.zyuuid!=''">
+				and CLASS.zyuuid = #{classCustom.zyuuid}
+			</if>
+			<if test="classCustom.njuuid!=null and classCustom.njuuid!=''">
+				and CLASS.njuuid = #{classCustom.njuuid}
+			</if>
+			<if test="classCustom.zyname!=null and classCustom.zyname!=''">
+				and CLASS.zyname = #{classCustom.zyname}
+			</if>
+			<if test="classCustom.njnane!=null and classCustom.njnane!=''">
+				and CLASS.njnane = #{classCustom.njnane}
+			</if>
+			<if test="classCustom.xiname!=null and classCustom.xiname!=''">
+				and CLASS.xiname = #{classCustom.xiname}
+			</if>
+			<if test="classCustom.xiuuid!=null and classCustom.xiuuid!=''">
+				and CLASS.xiuuid = #{classCustom.xiuuid}
+			</if>
+			<if test="classCustom.njstatus!=null and classCustom.njstatus!=''">
+				and CLASS.njstatus = #{classCustom.njstatus}
+			</if>
+		</if>
+	</sql>
+
+	<select id="findClassList" parameterType="ytk.base.pojo.vo.ClassQueryVo" resultType="ytk.base.pojo.vo.ClassCustom">
+		SELECT *FROM (
+			SELECT class.*,zy.name zyname,nj.njnane,xi.uuid xiuuid,xi.name xiname,nj.status njstatus,
+			 (SELECT info FROM dictinfo WHERE dictcode=nj.status AND typecode='014') njstatusname
+				FROM class,zy,nj,xi
+					WHERE class.zyuuid=zy.uuid AND class.njuuid=nj.uuid AND zy.xuuid=xi.uuid
+		) CLASS	
+		<where>
+			<include refid="query_class_where"></include>
+		</where>
+		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if>	
+	</select>
+	
+	<select id="findClassListCount" parameterType="ytk.base.pojo.vo.ClassQueryVo" resultType="int">
+		SELECT count(*)FROM (
+			SELECT class.*,zy.name zyname,nj.njnane,xi.uuid xiuuid,xi.name xiname,nj.status njstatus,
+			 (SELECT info FROM dictinfo WHERE dictcode=nj.status AND typecode='014') njstatusname
+				FROM class,zy,nj,xi
+					WHERE class.zyuuid=zy.uuid AND class.njuuid=nj.uuid AND zy.xuuid=xi.uuid
+		) CLASS				
+		<where>
+			<include refid="query_class_where"></include>
+		</where>	
+	</select>
+</mapper>

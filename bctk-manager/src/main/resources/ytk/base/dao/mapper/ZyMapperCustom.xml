@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.base.dao.mapper.ZyMapperCustom" >
+
+	<sql id="query_zy_where">
+		<if test="zyCustom!=null">
+			<if test="zyCustom.uuid!=null and zyCustom.uuid!=''">
+				and ZY.uuid = #{zyCustom.uuid}
+			</if>
+			<if test="zyCustom.name!=null and zyCustom.name!=''">
+				and ZY.name like '%${zyCustom.name}%'
+			</if>
+			<if test="zyCustom.xiname!=null and zyCustom.xiname!=''">
+				and ZY.xiname = #{zyCustom.xiname}
+			</if>
+			<if test="zyCustom.createimeMin!=null and zyCustom.createimeMin!=''">
+				and ZY.createime <![CDATA[>= ]]> #{zyCustom.createimeMin}
+			</if>
+			<if test="zyCustom.createimeMax!=null and zyCustom.createimeMax!=''">
+				and ZY.createime<![CDATA[<= ]]> #{zyCustom.createimeMax}
+			</if>
+			<if test="zyCustom.xuuid!=null and zyCustom.xuuid!=''">
+				and ZY.xuuid = #{zyCustom.xuuid}
+			</if>
+		</if>
+	</sql>
+	<sql id="query_zyByQ_where">
+		<if test="zyCustom!=null">	
+			<if test="zyCustom.q!=null and zyCustom.q!=''">
+				and (ZY.name  like '%${zyCustom.q}%' or ZY.shortcode  like '%${zyCustom.q}%' or ZY.zycode  like '%${zyCustom.q}%')
+			</if>			
+			<if test="zyCustom.xuuid!=null and zyCustom.xuuid!=''">
+				and ZY.xuuid = #{zyCustom.xuuid}
+			</if>
+		</if>
+	</sql>
+
+	<select id="findZyList" parameterType="ytk.base.pojo.vo.ZyQueryVo" resultType="ytk.base.pojo.vo.ZyCustom">
+		SELECT *FROM(
+			SELECT zy.*,xi.name xiname
+				FROM zy,xi
+					WHERE zy.xuuid=xi.uuid
+		) ZY
+		<where>
+			<include refid="query_zy_where"></include>
+		</where> 
+		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if>
+	</select>
+	
+	<select id="findZyListCount" parameterType="ytk.base.pojo.vo.ZyQueryVo" resultType="int">
+		SELECT COUNT(*)FROM(
+			SELECT zy.*,xi.name xiname
+				FROM zy,xi
+					WHERE zy.xuuid=xi.uuid
+		) ZY
+		<where>
+			<include refid="query_zy_where"></include>
+		</where> 
+	</select>
+	
+	<select id="findZyListByQ" parameterType="ytk.base.pojo.vo.ZyQueryVo" resultType="ytk.base.pojo.vo.ZyCustom">
+		SELECT *FROM(
+			SELECT zy.*,xi.name xiname
+				FROM zy,xi
+					WHERE zy.xuuid=xi.uuid
+		) ZY
+		<where>
+			<include refid="query_zyByQ_where"></include>
+		</where> 
+	</select>
+</mapper>

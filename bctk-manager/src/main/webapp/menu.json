@@ -1,0 +1,33 @@
+{
+   "menus" : [{"icon" : "icon-sys","menuid" : "1","menuname" : "系统管理","url" : "","menus" : [
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "用户管理","url" : "/ytkproject/sysuserList.action"
+                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "系管理","url" : "/ytkproject/xiList.action"
+                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "专业管理","url" : "/ytkproject/zyList.action"
+                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "课程管理","url" : "/ytkproject/kcList.action"
+                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "章节管理","url" : "/ytkproject/zjList.action"
+                 }] 
+               },
+               {"icon" : "icon-sys","menuid" : "1","menuname" : "题目目录","url" : "","menus" : [
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "单选题目录维护","url" : "/ytkproject/dxtList.action"
+                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "多项选择题目录维护","url" : "/ytkproject/dxxztList.action"
+                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "填空题目录维护","url" : "/ytkproject/tktList.action"
+                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "简答题目录维护","url" : "/ytkproject/jdtList.action"
+                 }] 
+               },
+               {"icon" : "icon-sys","menuid" : "1","menuname" : "系题目目录","url" : "","menus" : [
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "系题目目录维护","url" : "/ytkproject/xitmList.action"
+                 }] 
+               },
+               {"icon" : "icon-sys","menuid" : "1","menuname" : "题库管理","url" : "","menus" : [
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "题库创建","url" : "/ytkproject/tkInput.action"
+                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "题库查询","url" : "/ytkproject/tkList.action"
+                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "个人题库维护","url" : "/ytkproject/grtkList.action"
+                 }] 
+               },
+               {"icon" : "icon-sys","menuid" : "1","menuname" : "试卷管理","url" : "","menus" : [
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "组卷","url" : "/ytkproject/sjInput.action"
+                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "试卷维护","url" : "/ytkproject/sjList.action"
+                 }] 
+               }
+             ]
+}

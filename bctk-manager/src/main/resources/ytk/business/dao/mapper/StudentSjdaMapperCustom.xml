@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.business.dao.mapper.StudentSjdaMapperCustom" >
+
+	<sql id="query_studentSjda_where">
+		<if test="studentSjdaCustom!=null">
+			<if test="studentSjdaCustom.uuid!=null and studentSjdaCustom.uuid!=''">
+				and STUDENT_SJDA.uuid = #{studentSjdaCustom.uuid}
+			</if>
+			<if test="studentSjdaCustom.sjxitmid!=null and studentSjdaCustom.sjxitmid!=''">
+				and STUDENT_SJDA.sjxitmid = #{studentSjdaCustom.sjxitmid}
+			</if>
+			<if test="studentSjdaCustom.sjtmid!=null and studentSjdaCustom.sjtmid!=''">
+				and STUDENT_SJDA.sjtmid = #{studentSjdaCustom.sjtmid}
+			</if>
+			<if test="studentSjdaCustom.type!=null and studentSjdaCustom.type!=''">
+				and STUDENT_SJDA.type = #{studentSjdaCustom.type}
+			</if>
+			<if test="studentSjdaCustom.answer!=null and studentSjdaCustom.answer!=''">
+				and STUDENT_SJDA.answer = #{studentSjdaCustom.answer}
+			</if>
+			<if test="studentSjdaCustom.studentsjid!=null and studentSjdaCustom.studentsjid!=''">
+				and STUDENT_SJDA.studentsjid = #{studentSjdaCustom.studentsjid}
+			</if>
+			
+			<if test="studentSjdaCustom.scoreMin!=null and studentSjdaCustom.scoreMin!=''">
+				and STUDENT_SJDA.score <![CDATA[>= ]]> #{studentSjdaCustom.scoreMin}
+			</if>
+			<if test="studentSjdaCustom.scoreMax!=null and studentSjdaCustom.scoreMax!=''">
+				and STUDENT_SJDA.score <![CDATA[<= ]]> #{studentSjdaCustom.scoreMax}
+			</if>
+			<if test="studentSjdaCustom.status!=null and studentSjdaCustom.status!=''">
+				and STUDENT_SJDA.status = #{studentSjdaCustom.status}
+			</if>
+		</if>
+	</sql>
+
+	<select id="findStudentSjdaList" parameterType="ytk.business.pojo.vo.StudentSjdaQueryVo" resultType="ytk.business.pojo.vo.StudentSjdaCustom">
+		SELECT *FROM (
+			SELECT  student_sjda.*,
+				(SELECT info FROM dictinfo WHERE dictcode=student_sjda.status AND typecode='012') statusname,
+				(SELECT info FROM dictinfo WHERE dictcode=student_sjda.type AND typecode='001') typename
+				FROM 
+					student_sjda
+	
+		) STUDENT_SJDA
+		<where>
+			<include refid="query_studentSjda_where"></include>
+		</where>
+		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if>
+	</select>
+	
+	<select id="findStudentSjdaListCount" parameterType="ytk.business.pojo.vo.StudentSjdaQueryVo" resultType="int">
+		SELECT count(*) FROM (
+			SELECT  student_sjda.*,
+				(SELECT info FROM dictinfo WHERE dictcode=student_sjda.status AND typecode='012') statusname,
+				(SELECT info FROM dictinfo WHERE dictcode=student_sjda.type AND typecode='001') typename
+				FROM 
+					student_sjda
+	
+		) STUDENT_SJDA
+		<where>
+			<include refid="query_studentSjda_where"></include>
+		</where>
+	</select>
+</mapper>

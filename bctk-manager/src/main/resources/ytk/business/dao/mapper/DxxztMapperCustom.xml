@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.business.dao.mapper.DxxztMapperCustom" >
+	
+	<sql id="query_dxxzt_where">
+		<if test="dxxztCustom!=null">
+			<if test="dxxztCustom.uuid!=null and dxxztCustom.uuid!=''">
+				and DXXZT.uuid = #{dxxztCustom.uuid}
+			</if>
+			<if test="dxxztCustom.status!=null and dxxztCustom.status!=''">
+				and DXXZT.status = #{dxxztCustom.status}
+			</if>
+			<if test="dxxztCustom.content!=null and dxxztCustom.content!=''">
+				and DXXZT.content like '%${dxxztCustom.content}%'
+			</if>
+			<if test="dxxztCustom.teachername!=null and dxxztCustom.teachername!=''">
+				and DXXZT.teachername like '%${dxxztCustom.teachername}%'
+			</if>
+			<if test="dxxztCustom.kcname!=null and dxxztCustom.kcname!=''">
+				and DXXZT.kcname like '%${dxxztCustom.kcname}%'
+			</if>
+			<if test="dxxztCustom.createtime!=null and dxxztCustom.createtime!=''">
+				and DXXZT.createtime = #{dxxztCustom.createtime}
+			</if>
+			<if test="dxxztCustom.answer!=null and dxxztCustom.answer!=''">
+				and DXXZT.answer like '%${dxxztCustom.answer}%'
+			</if>
+			<if test="dxxztCustom.ndtype!=null and dxxztCustom.ndtype!=''">
+				and DXXZT.ndtype = #{dxxztCustom.ndtype}
+			</if>
+			<if test="dxxztCustom.createtimeMin!=null and dxxztCustom.createtimeMin!=''">
+				and DXXZT.createtime <![CDATA[>= ]]> #{dxxztCustom.createtimeMin}
+			</if>
+			<if test="dxxztCustom.createtimeMax!=null and dxxztCustom.createtimeMax!=''">
+				and DXXZT.createtime <![CDATA[<= ]]> #{dxxztCustom.createtimeMax}
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_dxxztZy_where">
+		<if test="dxxztCustom!=null">
+			<if test="dxxztCustom.zyname!=null and dxxztCustom.zyname!=''">
+				and zy.name like '%${dxxztCustom.zyname}%'
+			</if>
+		</if>
+	</sql>	
+	
+	<sql id="query_dxxztZsd_where">
+		<if test="dxxztCustom!=null">
+			<if test="dxxztCustom.zsdname!=null and dxxztCustom.zsdname!=''">
+				and zsd.name like '%${dxxztCustom.zsdname}%'
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_dxxztTeacherKc_where">
+		<if test="dxxztCustom!=null">
+			<if test="dxxztCustom.sysuseruuid!=null and dxxztCustom.sysuseruuid!=''">
+				AND dxxzt.kcuuid IN (SELECT kcuuid FROM teacher_kc WHERE teacheruuid=#{dxxztCustom.sysuseruuid})
+			</if>
+		</if>
+	</sql>
+	
+	<resultMap type="ytk.business.pojo.vo.DxxztCustom" id="dxxztCustom">
+		
+	    <id column="uuid" property="uuid" jdbcType="BIGINT" />
+	    <result column="type" property="type" jdbcType="INTEGER" />
+	    <result column="kcuuid" property="kcuuid" jdbcType="BIGINT" />
+	    <result column="optiona" property="optiona" jdbcType="VARCHAR" />
+	    <result column="optionb" property="optionb" jdbcType="VARCHAR" />
+	    <result column="optionc" property="optionc" jdbcType="VARCHAR" />
+	    <result column="optiond" property="optiond" jdbcType="VARCHAR" />
+	    <result column="optione" property="optione" jdbcType="VARCHAR" />
+	    <result column="optionf" property="optionf" jdbcType="VARCHAR" />
+	    <result column="content" property="content" jdbcType="VARCHAR" />
+	    <result column="answer" property="answer" jdbcType="VARCHAR" />
+	    <result column="ndtype" property="ndtype" jdbcType="INTEGER" />
+	    <result column="teacheruuid" property="teacheruuid" jdbcType="BIGINT" />
+	    <result column="createtime" property="createtime" jdbcType="BIGINT" />
+	    <result column="status" property="status" jdbcType="INTEGER" />
+	    
+	    <result column="kcname" property="kcname" />
+	    <result column="ndname" property="ndname" />
+	    <result column="teachername" property="teachername" />
+	    <result column="statusname" property="statusname" />
+		
+		<collection property="zyList" ofType="ytk.base.pojo.po.Zy">
+			<id column="zyuuid" property="uuid"/>
+			<result column="zyname" property="name"/>
+		</collection>
+		
+		<collection property="zsdList" ofType="ytk.base.pojo.po.Zsd">
+			<id column="zsduuid" property="uuid"/>
+			<result column="zsdname" property="name"/>
+		</collection>
+	</resultMap>
+	
+	<select id="findDxxztList" parameterType="ytk.business.pojo.vo.DxxztQueryVo" resultMap="dxxztCustom">
+		SELECT * FROM(
+			SELECT dxxzt.*,kc.name kcname,zy.name zyname,dictinfo.info ndname,sysuser.username teachername,kc_zy.zyuuid zyuuid,zsd.uuid zsduuid,zsd.name zsdname,
+ 			(SELECT info FROM dictinfo WHERE dictcode=dxxzt.status AND typecode='008') statusname
+				FROM dxxzt,kc,zy,dictinfo,sysuser,kc_zy,tm_zsd,zsd
+					WHERE dxxzt.kcuuid=kc.uuid AND dxxzt.ndtype=dictinfo.dictcode AND dictinfo.typecode=002 AND dxxzt.teacheruuid=sysuser.uuid
+					AND kc_zy.kcuuid=dxxzt.kcuuid AND kc_zy.zyuuid=zy.uuid
+					AND dxxzt.uuid=tm_zsd.tmuuid AND dxxzt.type=tm_zsd.type AND tm_zsd.zsduuid=zsd.uuid						
+					<include refid="query_dxxztZy_where"></include>
+					<include refid="query_dxxztZsd_where"></include>
+					<include refid="query_dxxztTeacherKc_where"></include>
+		) DXXZT 
+		<where>
+			<include refid="query_dxxzt_where"></include>
+		</where>
+<!-- 		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if> -->
+
+	</select>
+	
+	<select id="findDxxztListCount" parameterType="ytk.business.pojo.vo.DxxztQueryVo" resultType="int">
+		SELECT count(*) FROM(
+			SELECT dxxzt.*,kc.name kcname,dictinfo.info ndname,sysuser.username teachername,
+		<if test="dxxztCustom!=null">
+			<if test="dxxztCustom.zyname!=null and dxxztCustom.zyname!=''">
+							zy.name zyname,kc_zy.zyuuid zyuuid,
+			</if>
+		</if>
+		<if test="dxxztCustom!=null">
+			<if test="dxxztCustom.zsdname!=null and dxxztCustom.zsdname!=''">
+							zsd.uuid zsduuid,zsd.name zsdname,
+			</if>
+		</if>			
+
+ 			(SELECT info FROM dictinfo WHERE dictcode=dxxzt.status AND typecode='008') statusname
+				FROM 
+		<if test="dxxztCustom!=null">
+			<if test="dxxztCustom.zyname!=null and dxxztCustom.zyname!=''">
+							zy,kc_zy,
+			</if>
+		</if>
+		<if test="dxxztCustom!=null">
+			<if test="dxxztCustom.zsdname!=null and dxxztCustom.zsdname!=''">
+							tm_zsd,zsd,
+			</if>
+		</if>
+		dxxzt,kc,dictinfo,sysuser
+					WHERE dxxzt.kcuuid=kc.uuid AND dxxzt.ndtype=dictinfo.dictcode AND dictinfo.typecode=002 AND dxxzt.teacheruuid=sysuser.uuid
+					
+					
+		<if test="dxxztCustom!=null">
+			<if test="dxxztCustom.zyname!=null and dxxztCustom.zyname!=''">
+							AND kc_zy.kcuuid=dxxzt.kcuuid AND kc_zy.zyuuid=zy.uuid
+			</if>
+		</if>
+		<if test="dxxztCustom!=null">
+			<if test="dxxztCustom.zsdname!=null and dxxztCustom.zsdname!=''">
+							AND dxxzt.uuid=tm_zsd.tmuuid AND dxxzt.type=tm_zsd.type AND tm_zsd.zsduuid=zsd.uuid	
+			</if>
+		</if>
+					
+					<include refid="query_dxxztZy_where"></include>
+					<include refid="query_dxxztZsd_where"></include>	
+					<include refid="query_dxxztTeacherKc_where"></include>
+		) DXXZT 
+		<where>
+			<include refid="query_dxxzt_where"></include>
+		</where>
+	</select>
+</mapper>

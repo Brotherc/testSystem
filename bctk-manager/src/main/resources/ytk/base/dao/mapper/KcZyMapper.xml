@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.base.dao.mapper.KcZyMapper" >
+  <resultMap id="BaseResultMap" type="ytk.base.pojo.po.KcZy" >
+    <id column="uuid" property="uuid" jdbcType="BIGINT" />
+    <result column="kcuuid" property="kcuuid" jdbcType="BIGINT" />
+    <result column="zyuuid" property="zyuuid" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uuid, kcuuid, zyuuid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="ytk.base.pojo.po.KcZyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from kc_zy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from kc_zy
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from kc_zy
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="ytk.base.pojo.po.KcZyExample" >
+    delete from kc_zy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="ytk.base.pojo.po.KcZy" >
+    insert into kc_zy (uuid, kcuuid, zyuuid
+      )
+    values (#{uuid,jdbcType=BIGINT}, #{kcuuid,jdbcType=BIGINT}, #{zyuuid,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="ytk.base.pojo.po.KcZy" >
+    insert into kc_zy
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="kcuuid != null" >
+        kcuuid,
+      </if>
+      <if test="zyuuid != null" >
+        zyuuid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=BIGINT},
+      </if>
+      <if test="kcuuid != null" >
+        #{kcuuid,jdbcType=BIGINT},
+      </if>
+      <if test="zyuuid != null" >
+        #{zyuuid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="ytk.base.pojo.po.KcZyExample" resultType="java.lang.Integer" >
+    select count(*) from kc_zy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update kc_zy
+    <set >
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=BIGINT},
+      </if>
+      <if test="record.kcuuid != null" >
+        kcuuid = #{record.kcuuid,jdbcType=BIGINT},
+      </if>
+      <if test="record.zyuuid != null" >
+        zyuuid = #{record.zyuuid,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update kc_zy
+    set uuid = #{record.uuid,jdbcType=BIGINT},
+      kcuuid = #{record.kcuuid,jdbcType=BIGINT},
+      zyuuid = #{record.zyuuid,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="ytk.base.pojo.po.KcZy" >
+    update kc_zy
+    <set >
+      <if test="kcuuid != null" >
+        kcuuid = #{kcuuid,jdbcType=BIGINT},
+      </if>
+      <if test="zyuuid != null" >
+        zyuuid = #{zyuuid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="ytk.base.pojo.po.KcZy" >
+    update kc_zy
+    set kcuuid = #{kcuuid,jdbcType=BIGINT},
+      zyuuid = #{zyuuid,jdbcType=BIGINT}
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </update>
+</mapper>

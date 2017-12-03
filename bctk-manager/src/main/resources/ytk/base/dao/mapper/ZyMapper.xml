@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.base.dao.mapper.ZyMapper" >
+  <resultMap id="BaseResultMap" type="ytk.base.pojo.po.Zy" >
+    <id column="uuid" property="uuid" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="createime" property="createime" jdbcType="BIGINT" />
+    <result column="xuuid" property="xuuid" jdbcType="BIGINT" />
+    <result column="shortcode" property="shortcode" jdbcType="VARCHAR" />
+    <result column="zycode" property="zycode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uuid, name, createime, xuuid, shortcode, zycode
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="ytk.base.pojo.po.ZyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from zy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from zy
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from zy
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="ytk.base.pojo.po.ZyExample" >
+    delete from zy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="ytk.base.pojo.po.Zy" >
+    insert into zy (uuid, name, createime, 
+      xuuid, shortcode, zycode
+      )
+    values (#{uuid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{createime,jdbcType=BIGINT}, 
+      #{xuuid,jdbcType=BIGINT}, #{shortcode,jdbcType=VARCHAR}, #{zycode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="ytk.base.pojo.po.Zy" >
+    insert into zy
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="createime != null" >
+        createime,
+      </if>
+      <if test="xuuid != null" >
+        xuuid,
+      </if>
+      <if test="shortcode != null" >
+        shortcode,
+      </if>
+      <if test="zycode != null" >
+        zycode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createime != null" >
+        #{createime,jdbcType=BIGINT},
+      </if>
+      <if test="xuuid != null" >
+        #{xuuid,jdbcType=BIGINT},
+      </if>
+      <if test="shortcode != null" >
+        #{shortcode,jdbcType=VARCHAR},
+      </if>
+      <if test="zycode != null" >
+        #{zycode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="ytk.base.pojo.po.ZyExample" resultType="java.lang.Integer" >
+    select count(*) from zy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update zy
+    <set >
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createime != null" >
+        createime = #{record.createime,jdbcType=BIGINT},
+      </if>
+      <if test="record.xuuid != null" >
+        xuuid = #{record.xuuid,jdbcType=BIGINT},
+      </if>
+      <if test="record.shortcode != null" >
+        shortcode = #{record.shortcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zycode != null" >
+        zycode = #{record.zycode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update zy
+    set uuid = #{record.uuid,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      createime = #{record.createime,jdbcType=BIGINT},
+      xuuid = #{record.xuuid,jdbcType=BIGINT},
+      shortcode = #{record.shortcode,jdbcType=VARCHAR},
+      zycode = #{record.zycode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="ytk.base.pojo.po.Zy" >
+    update zy
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createime != null" >
+        createime = #{createime,jdbcType=BIGINT},
+      </if>
+      <if test="xuuid != null" >
+        xuuid = #{xuuid,jdbcType=BIGINT},
+      </if>
+      <if test="shortcode != null" >
+        shortcode = #{shortcode,jdbcType=VARCHAR},
+      </if>
+      <if test="zycode != null" >
+        zycode = #{zycode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="ytk.base.pojo.po.Zy" >
+    update zy
+    set name = #{name,jdbcType=VARCHAR},
+      createime = #{createime,jdbcType=BIGINT},
+      xuuid = #{xuuid,jdbcType=BIGINT},
+      shortcode = #{shortcode,jdbcType=VARCHAR},
+      zycode = #{zycode,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </update>
+</mapper>

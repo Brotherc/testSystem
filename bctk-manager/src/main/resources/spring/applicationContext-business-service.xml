@@ -1,0 +1,68 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd 
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd	"
+		>
+		
+	<!--单选题目管理  -->
+	<bean id="dxtEbo" class="ytk.business.business.impl.DxtEbi"></bean>
+	
+	<!--多项选择题目管理  -->
+	<bean id="dxxztEbo" class="ytk.business.business.impl.DxxztEbi"></bean>
+	
+	<!--填空题目管理  -->
+	<bean id="tktEbo" class="ytk.business.business.impl.TktEbi"></bean>
+	
+	<!--简答题目管理  -->
+	<bean id="jdtEbo" class="ytk.business.business.impl.JdtEbi"></bean>
+	
+	<!--题目管理  -->
+	<bean id="tmEbo" class="ytk.business.business.impl.TmEbi"></bean>
+	
+	<!--试卷系题目管理  -->
+	<bean id="sjTmEbo" class="ytk.business.business.impl.SjTmEbi"></bean>
+	<!--试卷管理  -->
+	<bean id="sjEbo" class="ytk.business.business.impl.SjEbi"></bean>
+	<!--试卷模板管理  -->
+	<bean id="sjmbEbo" class="ytk.business.business.impl.SjmbEbi"></bean>	
+	<!--考试管理  -->
+	<bean id="ksglEbo" class="ytk.business.business.impl.KsglEbi"></bean>
+	<!--学生试卷管理  -->
+	<bean id="studentSjEbo" class="ytk.business.business.impl.StudentSjEbi"></bean>
+	<!--学生试卷答案管理  -->
+	<bean id="studentSjdaEbo" class="ytk.business.business.impl.StudentSjdaEbi"></bean>
+	<!--试卷答案管理  -->
+	<bean id="sjdaEbo" class="ytk.business.business.impl.SjdaEbi"></bean>
+	<!--考试学生管理  -->
+	<bean id="ksglStudentEbo" class="ytk.business.business.impl.KsglStudentEbi"></bean>
+	
+	<!--题目导入  -->
+	<bean id="hxlsOptRowsInterface" class="ytk.business.business.impl.HxlsOptRowsInterfaceImpl"></bean>
+	
+	<!--题目导入  -->
+	<bean id="hxlsOptRowsInterfaceKsglStudent" class="ytk.business.business.impl.HxlsOptRowsInterfaceKsglStudentImpl"></bean>
+
+	<!-- <bean id="sjEbi" class="ytk.business.business.impl.SjEbi"></bean> -->
+	
+	<!-- 使用dubbo发布服务 -->
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<!-- <dubbo:application name="bctk-manager" /> -->
+	<!-- <dubbo:registry protocol="zookeeper" address="192.168.181.152:2181" /> -->
+	<!-- 用dubbo协议在20880端口暴露服务 --> 
+	<!-- <dubbo:protocol name="dubbo" port="20880" /> -->
+	<!-- 声明需要暴露的服务接口 -->
+	<!-- <dubbo:service interface="ytk.business.business.SjEbo" ref="sjEbi" timeout="300000"/> -->	
+	
+</beans>
