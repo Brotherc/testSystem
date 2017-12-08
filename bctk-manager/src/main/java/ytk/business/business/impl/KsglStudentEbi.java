@@ -385,7 +385,7 @@ public class KsglStudentEbi implements KsglStudentEbo{
 	}
 
 	@Override
-	public void addKsglStudent(String ksgluuid, Long sysuseruuid)
+	public void addKsglStudentChoose(String ksgluuid, Long sysuseruuid)
 			throws Exception {
 		//学生所属专业存在考试试卷课程
 		Sysuser sysuser = sysuserMapper.selectByPrimaryKey(sysuseruuid);
@@ -409,7 +409,7 @@ public class KsglStudentEbi implements KsglStudentEbo{
 	}
 
 	@Override
-	public SubmitResultInfo importksglStudent(String filePath) throws Exception {
+	public SubmitResultInfo importKsglStudent(String filePath) throws Exception {
 
 		
 		//调用工具类进行考试学生 导入

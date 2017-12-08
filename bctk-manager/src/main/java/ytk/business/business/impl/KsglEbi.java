@@ -231,8 +231,6 @@ public class KsglEbi implements KsglEbo{
 		if(sjList==null||sjList.size()<1)
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1104, null));
 
-		
-		//考试开始时间减去考试结束时间必须与试卷时间相同
 		Long starttime = ksglCustom.getStarttime();
 		Long endtime = ksglCustom.getEndtime();
 		
@@ -253,7 +251,7 @@ public class KsglEbi implements KsglEbo{
 	}
 
 	@Override
-	public boolean kssjPre(String ksgluuid,Long sysuseruuid) throws Exception {
+	public boolean ksPre(String ksgluuid,Long sysuseruuid) throws Exception {
 		//获取当前考试信息
 		Ksgl ksgl = ksglMapper.selectByPrimaryKey(ksgluuid);
 		//获取考试开始时间
@@ -297,7 +295,7 @@ public class KsglEbi implements KsglEbo{
 	}
 
 	@Override
-	public void ksglStart(String ksgluuid) throws Exception {
+	public void startKsgl(String ksgluuid) throws Exception {
 		
 		//启动的考试存在
 		Ksgl ksgl = ksglMapper.selectByPrimaryKey(ksgluuid);

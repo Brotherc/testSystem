@@ -90,9 +90,6 @@ public class SjTmEbi implements SjTmEbo{
 	@Override
 	public List<SjTmCustom> findSjTmList(SjTmQueryVo sjTmQueryVo)
 			throws Exception {
-		for(SjTmCustom sjtm:sjTmMapperCustom.findSjTmList(sjTmQueryVo)){
-			System.out.println(sjtm.getUuid());
-		}
 		
 		List<SjTmCustom> sjTmList = sjTmMapperCustom.findSjTmList(sjTmQueryVo);
 		

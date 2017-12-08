@@ -26,9 +26,9 @@ public interface KsglStudentEbo {
 	
 	public int findKsglStudentAddListCount(SysuserQueryVo sysuserQueryVo) throws Exception;
 	
-	public void addKsglStudent(String ksgluuid,Long sysuseruuid) throws Exception;
+	public void addKsglStudentChoose(String ksgluuid,Long sysuseruuid) throws Exception;
 	
-	public SubmitResultInfo importksglStudent(String filePath) throws Exception;
+	public SubmitResultInfo importKsglStudent(String filePath) throws Exception;
 
 	public void updateKsglStudentStatus(String ksgluuid, Long uuid,Integer status) throws Exception;
 }

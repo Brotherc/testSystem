@@ -26,10 +26,10 @@ public interface KsglEbo {
 	public void updateKsgl(String uuid, KsglCustom ksglCustom) throws Exception;
 	
 	//考试考试前时间校验(返回是否进入考试界面过)
-	public boolean kssjPre(String ksgluuid,Long sysuseruuid) throws Exception;
+	public boolean ksPre(String ksgluuid,Long sysuseruuid) throws Exception;
 	
 	//启动考试
-	public void ksglStart(String ksgluuid) throws Exception;
+	public void startKsgl(String ksgluuid) throws Exception;
 	
 	//根据条件与用户id查询考试
 	public List<KsglCustom> findKsglListBySysuserUuid(KsglQueryVo ksglQueryVo) throws Exception;

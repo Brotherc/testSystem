@@ -80,7 +80,6 @@ public class KsglStudentAction {
 	@RequestMapping("/ksglStudentInput")
 	public String toKsglStudentInput(String ksgluuid,Model model){
 		model.addAttribute("ksgluuid", ksgluuid);
-		System.out.println(ksgluuid);
 		return "/business/ksglstudent/input";
 	}
 	
@@ -88,13 +87,12 @@ public class KsglStudentAction {
 	@RequestMapping("/ksglStudent/addCustom")
 	public @ResponseBody SubmitResultInfo addKsglStudent(String ksgluuid,SysuserQueryVo sysuserQueryVo,ClassQueryVo classQueryVo) throws Exception{
 		ksglStudentEbo.addKsglStudentCustom(ksgluuid,sysuserQueryVo.getSysuserCustom(),classQueryVo.getClassCustom());
-		System.out.println(ksgluuid);
 		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(Config.MESSAGE, 906, null));
 	}
 	
 	//跳转到考试学生修改页
 	@RequestMapping("/ksglStudentEdit")
-	public String toXiEdit(String uuid,Model model) throws Exception{
+	public String toKsglStudentEdit(String uuid,Model model) throws Exception{
 		//根据uuid加载考试学生信息
 		KsglStudentCustom ksglStudentCustom = ksglStudentEbo.findKsglStudentListByUuid(uuid);
 		model.addAttribute("ksglStudentCustom",ksglStudentCustom);
@@ -141,7 +139,7 @@ public class KsglStudentAction {
 	
 	//添加考试学生信息
 	@RequestMapping("/ksglStudent/add")
-	public @ResponseBody SubmitResultInfo addKsglStudent(int[] indexs,KsglStudentQueryVo ksglStudentQueryVo,String ksgluuid) throws Exception{
+	public @ResponseBody SubmitResultInfo addKsglStudentChoose(int[] indexs,KsglStudentQueryVo ksglStudentQueryVo,String ksgluuid) throws Exception{
 		List<KsglStudent> ksglStudentList = ksglStudentQueryVo.getKsglStudentList();
 		//处理成功的数量
 		long count_success = 0;
@@ -152,7 +150,7 @@ public class KsglStudentAction {
 		for(int i=0;i<indexs.length;i++){
 			ResultInfo resultInfo = null;
 			try {
-				ksglStudentEbo.addKsglStudent(ksgluuid,ksglStudentList.get(indexs[i]).getSysuseruuid());
+				ksglStudentEbo.addKsglStudentChoose(ksgluuid,ksglStudentList.get(indexs[i]).getSysuseruuid());
 			} catch (Exception e) {
 				e.printStackTrace();
 				
@@ -213,7 +211,7 @@ public class KsglStudentAction {
 		//上传文件磁盘上路径 
 		String absolutePath = file.getAbsolutePath();
 		
-		return ksglStudentEbo.importksglStudent(absolutePath);
+		return ksglStudentEbo.importKsglStudent(absolutePath);
 /*		String[] msgs = msg.split("_");
 		System.out.println(msgs[0]+" "+msgs[1]);
 		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(Config.MESSAGE, 317, new Object[]{

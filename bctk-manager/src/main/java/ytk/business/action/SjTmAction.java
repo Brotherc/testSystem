@@ -244,9 +244,9 @@ public class SjTmAction {
 	}
 	
 	@RequestMapping("/sjDxt")
-	public String toSjDxt(SjTmQueryVo sjXitmQueryVo,Model model,HttpSession session,String ksgluuid) throws Exception{
+	public String toSjDxt(SjTmQueryVo sjTmQueryVo,Model model,HttpSession session,String ksgluuid) throws Exception{
 		//加载试卷单选题信息
-		List<Dxt> dxtList = sjTmEbo.findDxtBySjUuid(sjXitmQueryVo);
+		List<Dxt> dxtList = sjTmEbo.findDxtBySjUuid(sjTmQueryVo);
 		SysuserCustom sysuserCustom=(SysuserCustom) session.getAttribute(Config.LOGINUSER_KEY);
 		List<Integer> orderList = sjTmEbo.getSjTmOrderByType(sysuserCustom.getUuid(), ksgluuid, 1, dxtList.size());
 		Map< Integer, Dxt>dxtMap=new HashMap<Integer, Dxt>();
@@ -265,7 +265,7 @@ public class SjTmAction {
 		model.addAttribute("dxtDa", dxtDa);
 		
 		//加载试卷信息
-		SjCustom sjCustom = sjEbo.findSjCustomByUuid(sjXitmQueryVo.getSjTmCustom().getSjid());
+		SjCustom sjCustom = sjEbo.findSjCustomByUuid(sjTmQueryVo.getSjTmCustom().getSjid());
 		model.addAttribute("sjCustom", sjCustom);
 		
 		model.addAttribute("dxtSize",dxtList.size());

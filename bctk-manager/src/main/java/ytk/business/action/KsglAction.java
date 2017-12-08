@@ -141,7 +141,7 @@ public class KsglAction {
 	
 	//添加课程信息
 	@RequestMapping("/ksgl/add")
-	public @ResponseBody SubmitResultInfo addKc(KsglQueryVo ksglQueryVo,HttpSession session) throws Exception{
+	public @ResponseBody SubmitResultInfo addKsgl(KsglQueryVo ksglQueryVo,HttpSession session) throws Exception{
 		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
 		ksglEbo.addKsgl(ksglQueryVo,sysuser.getUuid());
 		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(Config.MESSAGE, 906, null));
@@ -234,7 +234,7 @@ public class KsglAction {
 	@RequestMapping("/ksglKsSjPre")
 	public @ResponseBody SubmitResultInfo toKsglKsSjPre(Model model,HttpSession session,String ksgluuid,HttpServletRequest request) throws Exception{
 		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
-		boolean isKs = ksglEbo.kssjPre(ksgluuid,sysuser.getUuid());
+		boolean isKs = ksglEbo.ksPre(ksgluuid,sysuser.getUuid());
 
 		if(isKs){
 			//判断是不是第一次在本机登录
@@ -293,8 +293,8 @@ public class KsglAction {
 	
 	//启动考试
 	@RequestMapping("/ksgl/start")
-	public @ResponseBody SubmitResultInfo KsglStart(String uuid) throws Exception{
-		ksglEbo.ksglStart(uuid);
+	public @ResponseBody SubmitResultInfo startKsgl(String uuid) throws Exception{
+		ksglEbo.startKsgl(uuid);
 		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(Config.MESSAGE, 906, null));
 	}
 	
