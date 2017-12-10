@@ -184,52 +184,62 @@ public class BssSysSysuserroleExample {
             return (Criteria) this;
         }
 
-        public Criteria andSysuseridEqualTo(Long value) {
+        public Criteria andSysuseridEqualTo(String value) {
             addCriterion("SYSUSERID =", value, "sysuserid");
             return (Criteria) this;
         }
 
-        public Criteria andSysuseridNotEqualTo(Long value) {
+        public Criteria andSysuseridNotEqualTo(String value) {
             addCriterion("SYSUSERID <>", value, "sysuserid");
             return (Criteria) this;
         }
 
-        public Criteria andSysuseridGreaterThan(Long value) {
+        public Criteria andSysuseridGreaterThan(String value) {
             addCriterion("SYSUSERID >", value, "sysuserid");
             return (Criteria) this;
         }
 
-        public Criteria andSysuseridGreaterThanOrEqualTo(Long value) {
+        public Criteria andSysuseridGreaterThanOrEqualTo(String value) {
             addCriterion("SYSUSERID >=", value, "sysuserid");
             return (Criteria) this;
         }
 
-        public Criteria andSysuseridLessThan(Long value) {
+        public Criteria andSysuseridLessThan(String value) {
             addCriterion("SYSUSERID <", value, "sysuserid");
             return (Criteria) this;
         }
 
-        public Criteria andSysuseridLessThanOrEqualTo(Long value) {
+        public Criteria andSysuseridLessThanOrEqualTo(String value) {
             addCriterion("SYSUSERID <=", value, "sysuserid");
             return (Criteria) this;
         }
 
-        public Criteria andSysuseridIn(List<Long> values) {
+        public Criteria andSysuseridLike(String value) {
+            addCriterion("SYSUSERID like", value, "sysuserid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysuseridNotLike(String value) {
+            addCriterion("SYSUSERID not like", value, "sysuserid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysuseridIn(List<String> values) {
             addCriterion("SYSUSERID in", values, "sysuserid");
             return (Criteria) this;
         }
 
-        public Criteria andSysuseridNotIn(List<Long> values) {
+        public Criteria andSysuseridNotIn(List<String> values) {
             addCriterion("SYSUSERID not in", values, "sysuserid");
             return (Criteria) this;
         }
 
-        public Criteria andSysuseridBetween(Long value1, Long value2) {
+        public Criteria andSysuseridBetween(String value1, String value2) {
             addCriterion("SYSUSERID between", value1, value2, "sysuserid");
             return (Criteria) this;
         }
 
-        public Criteria andSysuseridNotBetween(Long value1, Long value2) {
+        public Criteria andSysuseridNotBetween(String value1, String value2) {
             addCriterion("SYSUSERID not between", value1, value2, "sysuserid");
             return (Criteria) this;
         }

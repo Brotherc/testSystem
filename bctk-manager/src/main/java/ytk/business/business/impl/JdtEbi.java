@@ -213,8 +213,8 @@ public class JdtEbi implements JdtEbo{
 		//若题目状态为审核未通过，则可修改
 		if(jdtCustomDb.getStatus()==2){
 			//将登陆者的uuid与该题创建者的uuid进行比较
-			Long userid = sysuser.getUuid();
-			Long createteacherUuid=jdtCustomDb.getTeacheruuid();
+			String userid = sysuser.getUuid();
+			String createteacherUuid=jdtCustomDb.getTeacheruuid();
 			
 			//如果不相等，则无权限修改
 			if(!userid.equals(createteacherUuid))
@@ -302,7 +302,7 @@ public class JdtEbi implements JdtEbo{
 	}
 
 	@Override
-	public void deleteJdt(String uuid,Long sysuseruuid) throws Exception {
+	public void deleteJdt(String uuid,String sysuseruuid) throws Exception {
 		//获取要删除的题目信息
 		JdtCustom jdtCustomDb = findJdtByUuid(uuid);
 		
@@ -311,7 +311,7 @@ public class JdtEbi implements JdtEbo{
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 306,null));
 		
 		//必须是删除的题目的创建者，否则无权利删除
-		Long teacheruuid = jdtCustomDb.getTeacheruuid();
+		String teacheruuid = jdtCustomDb.getTeacheruuid();
 		if(!teacheruuid.equals(sysuseruuid))
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 310,null));
 		

@@ -3,7 +3,7 @@ package ytk.business.pojo.po;
 public class StudentSj {
     private String uuid;
 
-    private Long studentid;
+    private String studentUuid;
 
     private String sjid;
 
@@ -21,12 +21,12 @@ public class StudentSj {
         this.uuid = uuid == null ? null : uuid.trim();
     }
 
-    public Long getStudentid() {
-        return studentid;
+    public String getStudentUuid() {
+        return studentUuid;
     }
 
-    public void setStudentid(Long studentid) {
-        this.studentid = studentid;
+    public void setStudentUuid(String studentUuid) {
+        this.studentUuid = studentUuid == null ? null : studentUuid.trim();
     }
 
     public String getSjid() {

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="ytk.base.dao.mapper.SysuserMapper" >
   <resultMap id="BaseResultMap" type="ytk.base.pojo.po.Sysuser" >
-    <id column="uuid" property="uuid" jdbcType="BIGINT" />
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
     <result column="userid" property="userid" jdbcType="VARCHAR" />
     <result column="pwd" property="pwd" jdbcType="VARCHAR" />
     <result column="username" property="username" jdbcType="VARCHAR" />
@@ -93,15 +93,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from sysuser
-    where uuid = #{uuid,jdbcType=BIGINT}
+    where uuid = #{uuid,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from sysuser
-    where uuid = #{uuid,jdbcType=BIGINT}
+    where uuid = #{uuid,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="ytk.base.pojo.po.SysuserExample" >
     delete from sysuser
@@ -110,24 +110,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="ytk.base.pojo.po.Sysuser" >
-  	<selectKey keyProperty="uuid" order="AFTER" resultType="long">
-  		select LAST_INSERT_ID()
-  	</selectKey>
     insert into sysuser (uuid, userid, pwd, 
       username, userstate, name, 
       addr, email, gender, 
       birthday, tele, lastLoginTime, 
       lastLoginIp, xuuid)
-    values (#{uuid,jdbcType=BIGINT}, #{userid,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
+    values (#{uuid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
       #{username,jdbcType=VARCHAR}, #{userstate,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, 
       #{addr,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
       #{birthday,jdbcType=BIGINT}, #{tele,jdbcType=VARCHAR}, #{lastlogintime,jdbcType=BIGINT}, 
       #{lastloginip,jdbcType=VARCHAR}, #{xuuid,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="ytk.base.pojo.po.Sysuser" >
-  	<selectKey keyProperty="uuid" order="AFTER" resultType="long">
-  		select LAST_INSERT_ID()
-  	</selectKey>
     insert into sysuser
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="uuid != null" >
@@ -175,7 +169,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="uuid != null" >
-        #{uuid,jdbcType=BIGINT},
+        #{uuid,jdbcType=VARCHAR},
       </if>
       <if test="userid != null" >
         #{userid,jdbcType=VARCHAR},
@@ -228,7 +222,7 @@
     update sysuser
     <set >
       <if test="record.uuid != null" >
-        uuid = #{record.uuid,jdbcType=BIGINT},
+        uuid = #{record.uuid,jdbcType=VARCHAR},
       </if>
       <if test="record.userid != null" >
         userid = #{record.userid,jdbcType=VARCHAR},
@@ -276,7 +270,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update sysuser
-    set uuid = #{record.uuid,jdbcType=BIGINT},
+    set uuid = #{record.uuid,jdbcType=VARCHAR},
       userid = #{record.userid,jdbcType=VARCHAR},
       pwd = #{record.pwd,jdbcType=VARCHAR},
       username = #{record.username,jdbcType=VARCHAR},
@@ -337,7 +331,7 @@
         xuuid = #{xuuid,jdbcType=BIGINT},
       </if>
     </set>
-    where uuid = #{uuid,jdbcType=BIGINT}
+    where uuid = #{uuid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="ytk.base.pojo.po.Sysuser" >
     update sysuser
@@ -354,6 +348,6 @@
       lastLoginTime = #{lastlogintime,jdbcType=BIGINT},
       lastLoginIp = #{lastloginip,jdbcType=VARCHAR},
       xuuid = #{xuuid,jdbcType=BIGINT}
-    where uuid = #{uuid,jdbcType=BIGINT}
+    where uuid = #{uuid,jdbcType=VARCHAR}
   </update>
 </mapper>

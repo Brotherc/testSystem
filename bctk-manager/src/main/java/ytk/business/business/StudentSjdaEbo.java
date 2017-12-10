@@ -24,14 +24,14 @@ public interface StudentSjdaEbo {
 	public void pScore(String studentSjdaUuid,Integer score,Integer mscore) throws Exception;
 	
 	//添加学生试卷答案(单选题)到缓存中
-	public void addStudentSjdaDxt(Long sysuseruuid,String ksgluuid,List<String> dxtList,Integer dxtSize) throws Exception;
+	public void addStudentSjdaDxt(String sysuseruuid,String ksgluuid,List<String> dxtList,Integer dxtSize) throws Exception;
 	
 	//查询学生试卷答案（单选题）
-	public Map<Integer, String> findStudentSjDaDxt(Long sysuseruuid,String ksgluuid) throws Exception;
+	public Map<Integer, String> findStudentSjDaDxt(String sysuseruuid,String ksgluuid) throws Exception;
 
 	//添加学生试卷答案(单选题)到缓存中
-	public void addStudentSjdaTkt(Long sysuseruuid, String ksgluuid,List<List<String>> tktList) throws Exception;
+	public void addStudentSjdaTkt(String sysuseruuid, String ksgluuid,List<List<String>> tktList) throws Exception;
 
 	//查询学生试卷答案（填空题）
-	public Map<Integer, List> findStudentSjDaTkt(Long sysuseruuid, String ksgluuid);
+	public Map<Integer, List> findStudentSjDaTkt(String sysuseruuid, String ksgluuid);
 }

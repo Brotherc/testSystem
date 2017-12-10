@@ -17,7 +17,7 @@ import ytk.base.business.SystemConfigEbo;
 import ytk.base.business.XiEbo;
 import ytk.base.business.ZyEbo;
 import ytk.base.pojo.vo.PageQuery;
-import ytk.base.pojo.vo.SysuserCustom;
+import ytk.base.pojo.vo.StudentCustom;
 import ytk.base.process.context.Config;
 import ytk.base.process.result.DataGridResultInfo;
 import ytk.base.process.result.ExceptionResultInfo;
@@ -247,8 +247,8 @@ public class SjTmAction {
 	public String toSjDxt(SjTmQueryVo sjTmQueryVo,Model model,HttpSession session,String ksgluuid) throws Exception{
 		//加载试卷单选题信息
 		List<Dxt> dxtList = sjTmEbo.findDxtBySjUuid(sjTmQueryVo);
-		SysuserCustom sysuserCustom=(SysuserCustom) session.getAttribute(Config.LOGINUSER_KEY);
-		List<Integer> orderList = sjTmEbo.getSjTmOrderByType(sysuserCustom.getUuid(), ksgluuid, 1, dxtList.size());
+		StudentCustom studentCustom=(StudentCustom) session.getAttribute(Config.LOGINSTUDENT_KEY);
+		List<Integer> orderList = sjTmEbo.getSjTmOrderByType(studentCustom.getUuid(), ksgluuid, 1, dxtList.size());
 		Map< Integer, Dxt>dxtMap=new HashMap<Integer, Dxt>();
 		
 		//为题目随机生成顺序
@@ -261,7 +261,7 @@ public class SjTmAction {
 		model.addAttribute("ksgluuid", ksgluuid);
 		
 		//加载学生试卷单选题答案
-		Map<Integer, String> dxtDa = studentSjdaEbo.findStudentSjDaDxt(sysuserCustom.getUuid(), ksgluuid);
+		Map<Integer, String> dxtDa = studentSjdaEbo.findStudentSjDaDxt(studentCustom.getUuid(), ksgluuid);
 		model.addAttribute("dxtDa", dxtDa);
 		
 		//加载试卷信息
@@ -281,8 +281,8 @@ public class SjTmAction {
 	public String toSjTkt(SjTmQueryVo sjTmQueryVo,Model model,HttpSession session,String ksgluuid) throws Exception{
 		//加载试卷填空题信息
 		List<Tkt> tktList = sjTmEbo.findTktBySjUuid(sjTmQueryVo);
-		SysuserCustom sysuserCustom=(SysuserCustom) session.getAttribute(Config.LOGINUSER_KEY);
-		List<Integer> orderList = sjTmEbo.getSjTmOrderByType(sysuserCustom.getUuid(), ksgluuid, 3, tktList.size());
+		StudentCustom studentCustom=(StudentCustom) session.getAttribute(Config.LOGINSTUDENT_KEY);
+		List<Integer> orderList = sjTmEbo.getSjTmOrderByType(studentCustom.getUuid(), ksgluuid, 3, tktList.size());
 		Map< Integer, Tkt>tktMap=new HashMap<Integer, Tkt>();
 		
 		//为题目随机生成顺序
@@ -295,7 +295,7 @@ public class SjTmAction {
 		model.addAttribute("ksgluuid", ksgluuid);
 		
 		//加载学生试卷填空题答案
-		Map<Integer, List> tktDa = studentSjdaEbo.findStudentSjDaTkt(sysuserCustom.getUuid(), ksgluuid);
+		Map<Integer, List> tktDa = studentSjdaEbo.findStudentSjDaTkt(studentCustom.getUuid(), ksgluuid);
 		model.addAttribute("tktDa", tktDa);
 		
 		//加载试卷信息
@@ -311,24 +311,24 @@ public class SjTmAction {
 	}	
 	@RequestMapping("/sjDxtSubmit")
 	public @ResponseBody SubmitResultInfo sjDxtSubmit(String sjuuid,String ksgluuid,HttpSession session, StudentSjdaQueryVo studentSjdaQueryVo,Integer dxtSize) throws Exception{
-		SysuserCustom sysuserCustom=(SysuserCustom) session.getAttribute(Config.LOGINUSER_KEY);
+		StudentCustom studentCustom=(StudentCustom) session.getAttribute(Config.LOGINSTUDENT_KEY);
 		//获取学生试卷单选题答案
 		List<String> dxtList=studentSjdaQueryVo.getDxtList();
 		
 		//保存学生试卷单选题答案
-		studentSjdaEbo.addStudentSjdaDxt(sysuserCustom.getUuid(),ksgluuid,dxtList,dxtSize);
+		studentSjdaEbo.addStudentSjdaDxt(studentCustom.getUuid(),ksgluuid,dxtList,dxtSize);
 			
 		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(Config.MESSAGE, 906, null));
 	}
 	
 	@RequestMapping("/sjTktSubmit")
 	public @ResponseBody SubmitResultInfo sjTktSubmit(String sjuuid,String ksgluuid,HttpSession session, StudentSjdaQueryVo studentSjdaQueryVo) throws Exception{
-		SysuserCustom sysuserCustom=(SysuserCustom) session.getAttribute(Config.LOGINUSER_KEY);
+		StudentCustom studentCustom=(StudentCustom) session.getAttribute(Config.LOGINSTUDENT_KEY);
 		//获取学生试卷填空题答案
 		List<List<String>> tktList = studentSjdaQueryVo.getTktList();
 		
 		//保存学生试卷填空题答案
-		studentSjdaEbo.addStudentSjdaTkt(sysuserCustom.getUuid(),ksgluuid,tktList);
+		studentSjdaEbo.addStudentSjdaTkt(studentCustom.getUuid(),ksgluuid,tktList);
 
 		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(Config.MESSAGE, 906, null));
 	}

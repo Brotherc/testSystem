@@ -14,7 +14,7 @@
 
 	<resultMap type="ytk.base.pojo.vo.SysuserCustom" id="sysuserCustom">
 		
-	    <id column="uuid" property="uuid" jdbcType="BIGINT" />
+	    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
 	    <result column="userid" property="userid" jdbcType="VARCHAR" />
 	    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
 	    <result column="username" property="username" jdbcType="VARCHAR" />
@@ -180,33 +180,4 @@
 
   </select>
   
-  <select id="findKsglStudentAddList" parameterType="ytk.base.pojo.vo.SysuserQueryVo" resultType="ytk.base.pojo.vo.SysuserCustom">
-	SELECT *FROM (
-		SELECT SYSUSER.uuid,SYSUSER.userid,SYSUSER.xuuid,xi.name xname,SYSUSER.classuuid,class.classname,class.zyuuid,zy.name zyname,class.njuuid,nj.njnane njname
-			FROM SYSUSER,xi,class,zy,nj
-				WHERE SYSUSER.xuuid=xi.uuid AND SYSUSER.classuuid=class.uuid AND class.zyuuid=zy.uuid AND class.njuuid=nj.uuid AND SYSUSER.groupid='3'
-				AND SYSUSER.uuid NOT IN(SELECT sysuseruuid FROM ksgl_student WHERE ksgl_student.ksgluuid=#{sysuserCustom.ksgluuid})  
-	) sysuser
-	
-		<where>
-			<include refid="query_sysuser_where"></include>
-		</where>
-		<if test="pageQuery!=null">
-			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
-		</if>
-  </select>
-  
-  <select id="findKsglStudentAddListCount" parameterType="ytk.base.pojo.vo.SysuserQueryVo" resultType="int">
-	SELECT count(*)FROM (
-		SELECT SYSUSER.uuid,SYSUSER.userid,SYSUSER.xuuid,xi.name xname,SYSUSER.classuuid,class.classname,class.zyuuid,zy.name zyname,class.njuuid,nj.njnane njname
-			FROM SYSUSER,xi,class,zy,nj
-				WHERE SYSUSER.xuuid=xi.uuid AND SYSUSER.classuuid=class.uuid AND class.zyuuid=zy.uuid AND class.njuuid=nj.uuid AND SYSUSER.groupid='3'
-				AND SYSUSER.uuid NOT IN(SELECT sysuseruuid FROM ksgl_student WHERE ksgl_student.ksgluuid=#{sysuserCustom.ksgluuid})  
-	) sysuser
-	
-		<where>
-			<include refid="query_sysuser_where"></include>
-		</where>
-  </select>
-
 </mapper>

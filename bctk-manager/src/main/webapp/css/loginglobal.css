@@ -1,0 +1,31 @@
+@charset "utf-8";
+/* CSS Document */
+html{background:#fdffe9;}
+body{background:url(images/bigbg.jpg) repeat-x;height:540px;}
+
+
+.l_main{background:url(images/mainbg.png) no-repeat bottom;height:600px;}
+.l_main .loginbox{width:491px;min-height:450px;background:#ffffff;border:1px solid #e8e8ea;border-top:4px solid #35caa0;border-bottom:6px solid #e8e9e4;margin-top:48px;float:right;overflow:hidden;}
+.l_main .dlnav li{float:left;}
+.l_main .dlnav li a{display:block;width:341px;height:47px;font:20px "Microsoft YaHei";color:#666666;border-bottom:1px solid #dedede;line-height:47px;padding-left:150px;}
+.l_main .dlnav li em{display:block;float:left;background:url(images/login_big_bg.png) no-repeat;margin:16px 4px 0 33px;}
+.l_main .dlnav .dl_shouji em{background-position:-148px 0;width:11px;height:18px;}
+.l_main .dlnav li.on a,.l_main .dlnav li a:hover{color:#37caa0;}
+.l_main .dlnav .dl_shouji.on em{background-position:-136px 0;}
+
+.mobile_login{padding:62px 0 0 54px;}
+.mobile_number{margin-bottom:11px;}
+.mobile_number .requiredpic{display:block;width:7px;height:8px;background:url(images/login_big_bg.png) no-repeat -195px 0;float:left;margin:17px 12px 0 0;}
+.mobile_number .m_nunmber_con{width:342px;height:40px;background:#f9f9f9;border:1px solid #dedede;float:left;}
+.mobile_number .m_nunmber_con span,
+.mobile_number .m_password_con span{display:block;background:url(images/login_big_bg.png) no-repeat 0 0;width:26px;height:26px;float:left;margin:6px 0 0 9px;border-right:1px solid #ebebeb;padding-right:10px;display:inline;}
+.mobile_number .m_nunmber_con input{width:287px;height:40px;float:left;border:none;background:#f9f9f9;font-size:14px;color:#939393;padding-left:9px;line-height:40px;}
+.mobile_number .right_pic{display:block;float:left;background:url(images/login_big_bg.png) no-repeat -176px 0;width:18px;height:17px;margin:12px 0 0 9px;display:inline}
+.mobile_number .error_tishi{color:#fd0003;margin:4px 0 0 75px;height:14px;}
+.mobile_number .error_tishi em{display:block;float:left;width:14px;height:14px;background:url(images/login_big_bg.png) no-repeat -160px 0;margin-right:5px;}
+.mobile_number .m_password_con span{background-position:-208px 0;}
+
+.yanzhengma .yanzhengma_box{display:block;width:151px;height:40px;background:#f9f9f9;border:1px solid #dedede;float:left;padding-left:11px;font-size:14px;color:#929292;margin:0 16px 0 0px;display:inline;line-height:40px;}
+.yanzhengma img{display:block;width:162px;height:40px;border:1px solid #dedede;float:left;}
+
+.footertext{color:#99989e;text-align:center;line-height:20px;margin-top:19px;}

@@ -23,7 +23,7 @@ public interface JdtEbo {
 	public void updateJdt(String uuid,JdtCustom jdtCustom,Sysuser sysuser,String[] zsdList) throws Exception;
 	
 	//删除简答题
-	public void deleteJdt(String uuid,Long sysuseruuid) throws Exception;
+	public void deleteJdt(String uuid,String sysuseruuid) throws Exception;
 	
 	//审核通过题目
 	public void checkJdt(JdtQueryVo jdtQueryVo,Sysuser sysuser) throws Exception;

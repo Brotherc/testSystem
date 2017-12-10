@@ -235,8 +235,8 @@ public class DxxztEbi implements DxxztEbo{
 		//若题目状态为审核未通过，则可修改
 		if(dxxztCustomDb.getStatus()==2){
 			//将登陆者的uuid与该题创建者的uuid进行比较
-			Long userid = sysuser.getUuid();
-			Long createteacherUuid=dxxztCustomDb.getTeacheruuid();
+			String userid = sysuser.getUuid();
+			String createteacherUuid=dxxztCustomDb.getTeacheruuid();
 			
 			//如果不相等，则无权限修改
 			if(!userid.equals(createteacherUuid))
@@ -344,7 +344,7 @@ public class DxxztEbi implements DxxztEbo{
 	}
 
 	@Override
-	public void deleteDxxzt(String uuid,Long sysuseruuid) throws Exception {
+	public void deleteDxxzt(String uuid,String sysuseruuid) throws Exception {
 		//获取要删除的题目信息
 		DxxztCustom dxxztCustomDb = findDxxztByUuid(uuid);
 		
@@ -353,7 +353,7 @@ public class DxxztEbi implements DxxztEbo{
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 306,null));
 		
 		//必须是删除的题目的创建者，否则无权利删除
-		Long teacheruuid = dxxztCustomDb.getTeacheruuid();
+		String teacheruuid = dxxztCustomDb.getTeacheruuid();
 		if(!teacheruuid.equals(sysuseruuid))
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 310,null));
 		

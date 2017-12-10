@@ -3,7 +3,8 @@ package ytk.business.pojo.vo;
 import ytk.business.pojo.po.KsglStudent;
 
 public class KsglStudentCustom extends KsglStudent{
-	private String userid;
+	private String studentId;
+	private String studentName;
 	private Long xiuuid;
 	private String xiname;
 	private String classuuid;
@@ -13,11 +14,12 @@ public class KsglStudentCustom extends KsglStudent{
 	private Long njuuid;
 	private String njname;
 	private String statusname;
-	public String getUserid() {
-		return userid;
+	
+	public String getStudentId() {
+		return studentId;
 	}
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
 	}
 	public Long getXiuuid() {
 		return xiuuid;
@@ -72,6 +74,12 @@ public class KsglStudentCustom extends KsglStudent{
 	}
 	public void setStatusname(String statusname) {
 		this.statusname = statusname;
+	}
+	public String getStudentName() {
+		return studentName;
+	}
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
 	}
 	
 }

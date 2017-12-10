@@ -11,7 +11,7 @@ public class Sj {
 
     private Integer ndtype;
 
-    private Long teacherid;
+    private String teacherid;
 
     private Long createtime;
 
@@ -59,12 +59,12 @@ public class Sj {
         this.ndtype = ndtype;
     }
 
-    public Long getTeacherid() {
+    public String getTeacherid() {
         return teacherid;
     }
 
-    public void setTeacherid(Long teacherid) {
-        this.teacherid = teacherid;
+    public void setTeacherid(String teacherid) {
+        this.teacherid = teacherid == null ? null : teacherid.trim();
     }
 
     public Long getCreatetime() {

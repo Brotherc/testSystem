@@ -129,13 +129,19 @@ function toLogin(){
 						<TR>
 							<TD height=30 width="15%" align=right >学号：</TD>
 							<TD class=category width="35%">
-								<input type="text" class="easyui-textbox" data-options="required:true" id="sysuser_userid" name="sysuserCustom.userid"  />
+								<input type="text" class="easyui-textbox" data-options="required:true" id="sysuser_userid" name="studentCustom.studentId"  />
+							</TD>	
+						</TR>
+						<TR>
+							<TD height=30 width="15%" align=right >姓名：</TD>
+							<TD class=category width="35%">
+								<input type="text" class="easyui-textbox" data-options="required:true" id="sysuser_userid" name="studentCustom.studentName"  />
 							</TD>	
 						</TR>
 						<tr>
 							<TD height=30 width="15%" align=right >系名称：</TD>
 							<TD class=category width="35%">
-								<input id="xuuid" class="easyui-combobox" data-options="required:true,editable:false,url:'${baseurl}xi/jsonList.action',valueField:'uuid',textField:'name'" name="sysuserCustom.xuuid" >
+								<input id="xuuid" class="easyui-combobox" data-options="required:true,editable:false,url:'${baseurl}xi/jsonList.action',valueField:'uuid',textField:'name'" name="studentCustom.xiUuid" >
 							</TD>						
 						</tr>
 						<tr>

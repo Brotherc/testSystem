@@ -8,29 +8,32 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ytk.base.dao.mapper.BssSysSysuserroleMapper;
 import ytk.base.dao.mapper.ClassMapper;
 import ytk.base.dao.mapper.ClassMapperCustom;
 import ytk.base.dao.mapper.KcZyMapper;
 import ytk.base.dao.mapper.NjMapper;
+import ytk.base.dao.mapper.StudentMapper;
+import ytk.base.dao.mapper.StudentMapperCustom;
 import ytk.base.dao.mapper.SysuserMapper;
 import ytk.base.dao.mapper.SysuserMapperCustom;
 import ytk.base.dao.mapper.XiMapper;
 import ytk.base.dao.mapper.ZyMapper;
+import ytk.base.pojo.po.BssSysSysuserrole;
 import ytk.base.pojo.po.Class;
 import ytk.base.pojo.po.KcZy;
 import ytk.base.pojo.po.KcZyExample;
 import ytk.base.pojo.po.Nj;
 import ytk.base.pojo.po.NjExample;
-import ytk.base.pojo.po.Sysuser;
-import ytk.base.pojo.po.SysuserExample;
-import ytk.base.pojo.po.SysuserExample.Criteria;
+import ytk.base.pojo.po.Student;
+import ytk.base.pojo.po.StudentExample;
 import ytk.base.pojo.po.Xi;
 import ytk.base.pojo.po.Zy;
 import ytk.base.pojo.po.ZyExample;
 import ytk.base.pojo.vo.ClassCustom;
 import ytk.base.pojo.vo.ClassQueryVo;
-import ytk.base.pojo.vo.SysuserCustom;
-import ytk.base.pojo.vo.SysuserQueryVo;
+import ytk.base.pojo.vo.StudentCustom;
+import ytk.base.pojo.vo.StudentQueryVo;
 import ytk.base.process.context.Config;
 import ytk.base.process.result.ResultInfo;
 import ytk.base.process.result.ResultUtil;
@@ -51,7 +54,6 @@ import ytk.business.pojo.vo.KsglStudentCustom;
 import ytk.business.pojo.vo.KsglStudentQueryVo;
 import ytk.util.HxlsOptRowsInterface;
 import ytk.util.HxlsRead;
-import ytk.util.MD5;
 import ytk.util.MyUtil;
 import ytk.util.UUIDBuild;
 
@@ -83,6 +85,12 @@ public class KsglStudentEbi implements KsglStudentEbo{
 	private StudentSjMapper studentSjMapper;
 	@Autowired
 	private StudentSjdaMapper studentSjdaMapper;
+	@Autowired
+	private StudentMapper studentMapper;
+	@Autowired
+	private StudentMapperCustom studentMapperCustom;
+	@Autowired
+	private BssSysSysuserroleMapper bssSysSysuserroleMapper;
 	
 	@Autowired
 	private HxlsOptRowsInterface hxlsOptRowsInterfaceKsglStudent;
@@ -109,7 +117,7 @@ public class KsglStudentEbi implements KsglStudentEbo{
 			if(status==3)
 				ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1118, null));
 		}
-		Long studentUuid = ksglStudentMapper.selectByPrimaryKey(uuid).getSysuseruuid();
+		String studentUuid = ksglStudentMapper.selectByPrimaryKey(uuid).getStudentUuid();
 		
 		ksglStudentMapper.deleteByPrimaryKey(uuid);
 
@@ -117,7 +125,7 @@ public class KsglStudentEbi implements KsglStudentEbo{
 		StudentSjExample studentSjExample=new StudentSjExample();
 		StudentSjExample.Criteria studentSjCriteria = studentSjExample.createCriteria();
 		studentSjCriteria.andKsgluuidEqualTo(ksgluuid);
-		studentSjCriteria.andStudentidEqualTo(studentUuid);
+		studentSjCriteria.andStudentUuidEqualTo(studentUuid);
 		List<StudentSj> studentSjList = studentSjMapper.selectByExample(studentSjExample);
 		if(studentSjList!=null&&studentSjList.size()>0){
 			String studentSjUuid = studentSjList.get(0).getUuid();
@@ -132,14 +140,18 @@ public class KsglStudentEbi implements KsglStudentEbo{
 	}
 
 	@Override
-	public void addKsglStudentCustom(String ksgluuid,SysuserCustom sysuserCustom,
-			ClassCustom classCustom) throws Exception {
+	public void addKsglStudentCustom(String ksgluuid,StudentCustom studentCustom,
+			ClassCustom classCustom,String roleId) throws Exception {
 		//非空判断
-		String userid = sysuserCustom.getUserid();
-		if(!MyUtil.isNotNullAndEmptyByTrim(userid))
+		String studentId = studentCustom.getStudentId();
+		if(!MyUtil.isNotNullAndEmptyByTrim(studentId))
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 912, new Object[]{"学号"}));
 		
-		Long xuuid = sysuserCustom.getXuuid();
+		String name = studentCustom.getStudentName();
+		if(!MyUtil.isNotNullAndEmptyByTrim(name))
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 912, new Object[]{"姓名"}));
+		
+		Long xuuid = studentCustom.getXiUuid();
 		if(xuuid==null)
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 912, new Object[]{"系"}));
 		
@@ -162,11 +174,11 @@ public class KsglStudentEbi implements KsglStudentEbo{
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1308, null));
 		
 		//添加的学号不允许重复
-		SysuserExample sysuserExample=new SysuserExample();
-		Criteria createCriteria = sysuserExample.createCriteria();
-		createCriteria.andUseridEqualTo(userid);
-		List<Sysuser> sysuserList = sysuserMapper.selectByExample(sysuserExample);
-		if(sysuserList!=null&&sysuserList.size()>0)
+		StudentExample studentExample=new StudentExample();
+		StudentExample.Criteria studentCriteria = studentExample.createCriteria();
+		studentCriteria.andStudentIdEqualTo(studentId);
+		List<Student> studentList = studentMapper.selectByExample(studentExample);
+		if(studentList!=null&&studentList.size()>0)
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1301, null));
 		
 		//添加的系信息必须存在
@@ -218,22 +230,21 @@ public class KsglStudentEbi implements KsglStudentEbo{
 		if(kcZyList==null||kcZyList.size()<1)
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1307, null));
 		
-		
-		//补全密码（初始化123456）
-		//加密
-		String md5Pwd=new MD5().getMD5ofStr("123456");
-		sysuserCustom.setPwd(md5Pwd);
-		//补全用户名（初始化学号）
-		sysuserCustom.setUsername(userid);
-		//补全分组（学生）
-/*		sysuserCustom.setGroupid("3");*/
-		//补全状态（正常）
-		sysuserCustom.setUserstate("1");
-		//补全系uuid
-		sysuserCustom.setXuuid(xuuid);
+		//补全uuid
+		String studentUuid = UUIDBuild.getUUID();
+		studentCustom.setUuid(studentUuid);
 		//补全班级信息
-/*		sysuserCustom.setClassuuid(classCustom.getUuid());*/
-		sysuserMapper.insert(sysuserCustom);
+		studentCustom.setClassUuid(classCustom.getUuid());
+		studentMapper.insert(studentCustom);
+		
+		//添加用户角色信息
+		BssSysSysuserrole bssSysSysuserrole=new BssSysSysuserrole();
+		bssSysSysuserrole.setSrid(UUIDBuild.getUUID());
+		bssSysSysuserrole.setSysuserid(studentUuid);
+		bssSysSysuserrole.setRoleid(roleId);
+		
+		//添加用户角色信息
+		bssSysSysuserroleMapper.insert(bssSysSysuserrole);
 		
 		//添加考试学生信息
 		
@@ -242,7 +253,7 @@ public class KsglStudentEbi implements KsglStudentEbo{
 		ksglStudent.setUuid(uuid);
 		ksglStudent.setKsgluuid(ksgluuid);
 		ksglStudent.setStatus(1);
-		ksglStudent.setSysuseruuid(sysuserCustom.getUuid());
+		ksglStudent.setStudentUuid(studentUuid);
 		ksglStudentMapper.insert(ksglStudent);
 	}
 
@@ -262,14 +273,18 @@ public class KsglStudentEbi implements KsglStudentEbo{
 	}
 
 	@Override
-	public void updateKsglStudent(String uuid, SysuserCustom sysuserCustom,
+	public void updateKsglStudent(String uuid, StudentCustom studentCustom,
 			ClassCustom classCustom) throws Exception {
 		//非空判断
-		String userid = sysuserCustom.getUserid();
-		if(!MyUtil.isNotNullAndEmptyByTrim(userid))
+		String studentId = studentCustom.getStudentId();
+		if(!MyUtil.isNotNullAndEmptyByTrim(studentId))
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 912, new Object[]{"学号"}));
 		
-		Long xuuid = sysuserCustom.getXuuid();
+		String name = studentCustom.getStudentName();
+		if(!MyUtil.isNotNullAndEmptyByTrim(name))
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 912, new Object[]{"姓名"}));
+		
+		Long xuuid = studentCustom.getXiUuid();
 		if(xuuid==null)
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 912, new Object[]{"系"}));
 		
@@ -300,17 +315,18 @@ public class KsglStudentEbi implements KsglStudentEbo{
 		if(status==2||status==3)
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1309, null));
 		
-		Sysuser sysuser = sysuserMapper.selectByPrimaryKey(ksglStudent.getSysuseruuid());
+		Student student = studentMapper.selectByPrimaryKey(ksglStudent.getStudentUuid());
 		//如果修改了学号，则修改的学号不允许重复
-		if(!ksglStudent.getUserid().equals(sysuserCustom.getUserid())){
-			SysuserExample sysuserExample=new SysuserExample();
-			Criteria createCriteria = sysuserExample.createCriteria();
-			createCriteria.andUseridEqualTo(userid);
-			List<Sysuser> sysuserList = sysuserMapper.selectByExample(sysuserExample);
-			if(sysuserList!=null&&sysuserList.size()>0)
+		if(!ksglStudent.getStudentId().equals(studentCustom.getStudentId())){
+			StudentExample studentExample=new StudentExample();
+			StudentExample.Criteria studentCriteria = studentExample.createCriteria();
+			studentCriteria.andStudentIdEqualTo(studentId);
+			List<Student> studentList = studentMapper.selectByExample(studentExample);
+			if(studentList!=null&&studentList.size()>0)
 				ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1310, null));
+			
 			//修改学号
-			sysuser.setUserid(userid);
+			student.setStudentId(studentId);
 		}
 
 		
@@ -353,7 +369,6 @@ public class KsglStudentEbi implements KsglStudentEbo{
 		
 		
 		//学生所属专业必须有相应考试课程信息
-
 		Long kcuuid = ksgl.getKcuuid();
 		KcZyExample kcZyExample=new KcZyExample();
 		KcZyExample.Criteria kczyCriteria = kcZyExample.createCriteria();
@@ -363,37 +378,38 @@ public class KsglStudentEbi implements KsglStudentEbo{
 		if(kcZyList==null||kcZyList.size()<1)
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1307, null));
 		
-		//修改系uuid
-		sysuser.setXuuid(xuuid);
+		//修改学生姓名
+		student.setStudentName(name);
 		
-		sysuserMapper.updateByPrimaryKey(sysuser);
+		//修改学生班级信息
+		student.setClassUuid(classCustom.getUuid());
 		
-
+		studentMapper.updateByPrimaryKey(student);
 	}
 
 	@Override
-	public List<SysuserCustom> findKsglStudentAddList(
-			SysuserQueryVo sysuserQueryVo) throws Exception {
-		return sysuserMapperCustom.findKsglStudentAddList(sysuserQueryVo);
+	public List<StudentCustom> findKsglStudentAddList(
+			StudentQueryVo studentQueryVo) throws Exception {
+		return studentMapperCustom.findKsglStudentAddList(studentQueryVo);
 	}
 
 	@Override
-	public int findKsglStudentAddListCount(SysuserQueryVo sysuserQueryVo)
+	public int findKsglStudentAddListCount(StudentQueryVo studentQueryVo)
 			throws Exception {
-		return sysuserMapperCustom.findKsglStudentAddListCount(sysuserQueryVo);
+		return studentMapperCustom.findKsglStudentAddListCount(studentQueryVo);
 	}
 
 	@Override
-	public void addKsglStudentChoose(String ksgluuid, Long sysuseruuid)
+	public void addKsglStudentChoose(String ksgluuid, String studentUuid)
 			throws Exception {
 		//学生所属专业存在考试试卷课程
-		Sysuser sysuser = sysuserMapper.selectByPrimaryKey(sysuseruuid);
-/*		Class classCustom = classMapper.selectByPrimaryKey(sysuser.getClassuuid());*/
+		Student student = studentMapper.selectByPrimaryKey(studentUuid);
+		Class classCustom = classMapper.selectByPrimaryKey(student.getClassUuid());
 		Ksgl ksgl = ksglMapper.selectByPrimaryKey(ksgluuid);
 		KcZyExample kcZyExample=new KcZyExample();
 		KcZyExample.Criteria kcZyCriteria = kcZyExample.createCriteria();
 		kcZyCriteria.andKcuuidEqualTo(ksgl.getKcuuid());
-/*		kcZyCriteria.andZyuuidEqualTo(classCustom.getZyuuid());*/
+		kcZyCriteria.andZyuuidEqualTo(classCustom.getZyuuid());
 		List<KcZy> kcZyList = kcZyMapper.selectByExample(kcZyExample);
 		if(kcZyList==null||kcZyList.size()<1)
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1307, null));
@@ -402,7 +418,7 @@ public class KsglStudentEbi implements KsglStudentEbo{
 		String uuid = UUIDBuild.getUUID();
 		ksglStudent.setUuid(uuid);
 		ksglStudent.setKsgluuid(ksgluuid);
-		ksglStudent.setSysuseruuid(sysuseruuid);
+		ksglStudent.setStudentUuid(studentUuid);
 		ksglStudent.setStatus(1);
 		ksglStudentMapper.insert(ksglStudent);
 	}
@@ -464,12 +480,12 @@ public class KsglStudentEbi implements KsglStudentEbo{
 	}
 
 	@Override
-	public void updateKsglStudentStatus(String ksgluuid, Long uuid,Integer status)
+	public void updateKsglStudentStatus(String ksgluuid, String studentUuid,Integer status)
 			throws Exception {
 		KsglStudentExample ksglStudentExample=new KsglStudentExample();
 		KsglStudentExample.Criteria ksglStudentCriteria = ksglStudentExample.createCriteria();
 		ksglStudentCriteria.andKsgluuidEqualTo(ksgluuid);
-		ksglStudentCriteria.andSysuseruuidEqualTo(uuid);
+		ksglStudentCriteria.andStudentUuidEqualTo(studentUuid);
 		List<KsglStudent> ksglStudentList = ksglStudentMapper.selectByExample(ksglStudentExample);
 		KsglStudent ksglStudent=null;
 		if(ksglStudentList!=null&&ksglStudentList.size()>0)

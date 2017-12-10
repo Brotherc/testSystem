@@ -7,7 +7,7 @@
     <result column="endtime" property="endtime" jdbcType="BIGINT" />
     <result column="sjuuid" property="sjuuid" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="teacherid" property="teacherid" jdbcType="BIGINT" />
+    <result column="teacherid" property="teacherid" jdbcType="VARCHAR" />
     <result column="createtime" property="createtime" jdbcType="BIGINT" />
     <result column="kcuuid" property="kcuuid" jdbcType="BIGINT" />
     <result column="time" property="time" jdbcType="BIGINT" />
@@ -112,7 +112,7 @@
       createtime, kcuuid, time, 
       kspwd, jkpwd)
     values (#{uuid,jdbcType=VARCHAR}, #{starttime,jdbcType=BIGINT}, #{endtime,jdbcType=BIGINT}, 
-      #{sjuuid,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{teacherid,jdbcType=BIGINT}, 
+      #{sjuuid,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{teacherid,jdbcType=VARCHAR}, 
       #{createtime,jdbcType=BIGINT}, #{kcuuid,jdbcType=BIGINT}, #{time,jdbcType=BIGINT}, 
       #{kspwd,jdbcType=VARCHAR}, #{jkpwd,jdbcType=VARCHAR})
   </insert>
@@ -170,7 +170,7 @@
         #{status,jdbcType=INTEGER},
       </if>
       <if test="teacherid != null" >
-        #{teacherid,jdbcType=BIGINT},
+        #{teacherid,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=BIGINT},
@@ -214,7 +214,7 @@
         status = #{record.status,jdbcType=INTEGER},
       </if>
       <if test="record.teacherid != null" >
-        teacherid = #{record.teacherid,jdbcType=BIGINT},
+        teacherid = #{record.teacherid,jdbcType=VARCHAR},
       </if>
       <if test="record.createtime != null" >
         createtime = #{record.createtime,jdbcType=BIGINT},
@@ -243,7 +243,7 @@
       endtime = #{record.endtime,jdbcType=BIGINT},
       sjuuid = #{record.sjuuid,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
-      teacherid = #{record.teacherid,jdbcType=BIGINT},
+      teacherid = #{record.teacherid,jdbcType=VARCHAR},
       createtime = #{record.createtime,jdbcType=BIGINT},
       kcuuid = #{record.kcuuid,jdbcType=BIGINT},
       time = #{record.time,jdbcType=BIGINT},
@@ -269,7 +269,7 @@
         status = #{status,jdbcType=INTEGER},
       </if>
       <if test="teacherid != null" >
-        teacherid = #{teacherid,jdbcType=BIGINT},
+        teacherid = #{teacherid,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null" >
         createtime = #{createtime,jdbcType=BIGINT},
@@ -295,7 +295,7 @@
       endtime = #{endtime,jdbcType=BIGINT},
       sjuuid = #{sjuuid,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
-      teacherid = #{teacherid,jdbcType=BIGINT},
+      teacherid = #{teacherid,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=BIGINT},
       kcuuid = #{kcuuid,jdbcType=BIGINT},
       time = #{time,jdbcType=BIGINT},

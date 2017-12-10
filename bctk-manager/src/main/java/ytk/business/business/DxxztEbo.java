@@ -23,7 +23,7 @@ public interface DxxztEbo {
 	public void updateDxxzt(String uuid,DxxztCustom dxxztCustom,Sysuser sysuser,String[] zsdList) throws Exception;
 	
 	//删除多项选择题
-	public void deleteDxxzt(String uuid,Long sysuseruuid) throws Exception;
+	public void deleteDxxzt(String uuid,String sysuseruuid) throws Exception;
 	
 	//审核通过题目
 	public void checkDxxzt(DxxztQueryVo dxxztQueryVo,Sysuser sysuser) throws Exception;

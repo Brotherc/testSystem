@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import ytk.base.pojo.vo.StudentCustom;
 import ytk.base.pojo.vo.SysuserCustom;
 import ytk.base.process.context.Config;
 import ytk.base.process.result.ResultUtil;
@@ -25,11 +26,21 @@ public class LoginInterceptor implements HandlerInterceptor{
 		
 		//校验用户身份是否合法
 		HttpSession session = request.getSession();
-		SysuserCustom sysuserCustom =(SysuserCustom) session.getAttribute(Config.LOGINUSER_KEY);
-		if(sysuserCustom != null){
-             //用户已经登陆，放行
-			return true;
-		}
+		String loginType =(String)session.getAttribute(Config.LOGINTYPE_KEY);
+		if(loginType!=null)
+			if(loginType.equals("1")){
+				SysuserCustom sysuserCustom =(SysuserCustom) session.getAttribute(Config.LOGINUSER_KEY);
+				if(sysuserCustom != null){
+		             //用户已经登陆，放行
+					return true;
+				}
+			}else if(loginType.equals("3")){
+				StudentCustom studentCustom =(StudentCustom) session.getAttribute(Config.LOGINSTUDENT_KEY);
+				if(studentCustom!=null){
+		             //用户已经登陆，放行
+					return true;
+				}
+			}
 		
 		//校验用户访问是否是公开资源 地址
 		List<String> open_urls = ResourcesUtil.gekeyList(Config.ANONYMOUS_ACTIONS);

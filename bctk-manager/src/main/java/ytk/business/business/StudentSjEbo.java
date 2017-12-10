@@ -7,7 +7,7 @@ import ytk.business.pojo.vo.StudentSjQueryVo;
 
 public interface StudentSjEbo {
 	//添加学生考试信息,返回uuid
-	public String addStudentSj(Long studentid,String sjid,String ksgluuid) throws Exception;
+	public String addStudentSj(String studentUuid,String sjid,String ksgluuid) throws Exception;
 	
 	//根据条件查询学生考试信息
 	public List<StudentSjCustom> findStudentSjList(StudentSjQueryVo studentSjQueryVo) throws Exception;

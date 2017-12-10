@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ytk.base.business.ClassEbo;
 import ytk.base.dao.mapper.ClassMapper;
 import ytk.base.dao.mapper.ClassMapperCustom;
-import ytk.base.dao.mapper.SysuserMapper;
+import ytk.base.dao.mapper.StudentMapper;
 import ytk.base.dao.mapper.ZyMapper;
 import ytk.base.pojo.po.Class;
 import ytk.base.pojo.po.ClassExample;
+import ytk.base.pojo.po.Student;
+import ytk.base.pojo.po.StudentExample;
 import ytk.base.pojo.po.Zy;
 import ytk.base.pojo.po.ZyExample;
 import ytk.base.pojo.po.ZyExample.Criteria;
@@ -30,7 +32,7 @@ public class ClassEbi implements ClassEbo{
 	@Autowired
 	private ZyMapper zyMapper;
 	@Autowired
-	private SysuserMapper sysuserMapper;
+	private StudentMapper studentMapper;
 	
 	@Override
 	public List<ClassCustom> findClassList(ClassQueryVo classQueryVo)
@@ -63,12 +65,12 @@ public class ClassEbi implements ClassEbo{
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1501, null));
 		
 		//如果删除的班级存在学生，则不允许删除
-/*		SysuserExample sysuserExample=new SysuserExample();
-		SysuserExample.Criteria sysuserCriteria = sysuserExample.createCriteria();
-		sysuserCriteria.andClassuuidEqualTo(uuid);
-		List<Sysuser> sysuserList = sysuserMapper.selectByExample(sysuserExample);
-		if(sysuserList!=null&&sysuserList.size()>0)
-			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1504, null));*/
+		StudentExample studentExample=new StudentExample();
+		StudentExample.Criteria studentCriteria = studentExample.createCriteria();
+		studentCriteria.andClassUuidEqualTo(uuid);
+		List<Student> studentList = studentMapper.selectByExample(studentExample);
+		if(studentList!=null&&studentList.size()>0)
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1504, null));
 		
 		//删除班级
 		classMapper.deleteByPrimaryKey(uuid);		

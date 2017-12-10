@@ -58,6 +58,16 @@ public class Config {
 	public static final String LOGINUSER_KEY = "loginUser";
 	
 	/**
+	 * session中存放登录学生用户的key名称
+	 */
+	public static final String LOGINSTUDENT_KEY = "loginStudent";
+	
+	/**
+	 * session中存放登录用户类型的key名称
+	 */
+	public static final String LOGINTYPE_KEY = "loginType";
+	
+	/**
 	 * 配置文件中系统基础url的key名称
 	 */
 	public static final String BASEURL_KEY = "baseurl";

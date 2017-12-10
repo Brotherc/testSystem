@@ -19,9 +19,11 @@ import ytk.base.business.SystemConfigEbo;
 import ytk.base.business.XiEbo;
 import ytk.base.business.ZyEbo;
 import ytk.base.pojo.po.Dictinfo;
+import ytk.base.pojo.po.Student;
 import ytk.base.pojo.po.Sysuser;
 import ytk.base.pojo.vo.Menu;
 import ytk.base.pojo.vo.PageQuery;
+import ytk.base.pojo.vo.StudentCustom;
 import ytk.base.process.context.Config;
 import ytk.base.process.result.DataGridResultInfo;
 import ytk.base.process.result.ResultInfo;
@@ -170,8 +172,8 @@ public class KsglAction {
 	//跳转到考试列表页
 	@RequestMapping("/ksglKsList")
 	public String toKsglKsList(Model model,HttpSession session) throws Exception{
-		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
-		model.addAttribute("sysuseruuid",sysuser.getUuid());
+		StudentCustom studentCustom=(StudentCustom) session.getAttribute(Config.LOGINSTUDENT_KEY);
+		model.addAttribute("sysuseruuid",studentCustom.getUuid());
 		return "/business/ksgl/ks";
 	}
 	
@@ -179,8 +181,8 @@ public class KsglAction {
 	@RequestMapping("/ksglKsSj2")
 	public String toKsglKsSj2(Model model,HttpSession session,SjTmQueryVo sjTmQueryVo,String ksgluuid) throws Exception{
 		//修改学生该门考试的状态
-		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
-		ksglStudentEbo.updateKsglStudentStatus(ksgluuid,sysuser.getUuid(),3);
+		Student student=(Student) session.getAttribute(Config.LOGINSTUDENT_KEY);
+		ksglStudentEbo.updateKsglStudentStatus(ksgluuid,student.getUuid(),3);
 		
 		//题目类型编号
 		Integer tmTypeId=1;
@@ -233,12 +235,12 @@ public class KsglAction {
 	//跳转到考试试卷页
 	@RequestMapping("/ksglKsSjPre")
 	public @ResponseBody SubmitResultInfo toKsglKsSjPre(Model model,HttpSession session,String ksgluuid,HttpServletRequest request) throws Exception{
-		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
-		boolean isKs = ksglEbo.ksPre(ksgluuid,sysuser.getUuid());
+		Student student=(Student) session.getAttribute(Config.LOGINSTUDENT_KEY);
+		boolean isKs = ksglEbo.ksPre(ksgluuid,student.getUuid());
 
 		if(isKs){
 			//判断是不是第一次在本机登录
-			if(CookieUtils.getCookValue(request, sysuser.getUuid()+"_"+ksgluuid)!=null){
+			if(CookieUtils.getCookValue(request, student.getUuid()+"_"+ksgluuid)!=null){
 				return ResultUtil.createSubmitResult(new ResultInfo(1, 0, "操作成功"));
 			}
 			//在另一台机器进行登录
@@ -253,10 +255,10 @@ public class KsglAction {
 	@RequestMapping("/ksgl/ks")
 	public @ResponseBody SubmitResultInfo KsglKs(HttpSession session,StudentSjdaQueryVo studentSjdaQueryVo,String sjuuid,String ksgluuid) throws Exception{
 		//修改学生该门考试的状态
-		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
-		ksglStudentEbo.updateKsglStudentStatus(ksgluuid,sysuser.getUuid(),2);
+		Student student=(Student) session.getAttribute(Config.LOGINSTUDENT_KEY);
+		ksglStudentEbo.updateKsglStudentStatus(ksgluuid,student.getUuid(),2);
 		//添加学生考试信息
-		studentSjEbo.addStudentSj(sysuser.getUuid(), sjuuid,ksgluuid);
+		studentSjEbo.addStudentSj(student.getUuid(), sjuuid,ksgluuid);
 		
 		//获取学生试卷单选题答案
 /*		List<StudentSjdaCustom> dxtList = studentSjdaQueryVo.getDxtList();
@@ -323,30 +325,30 @@ public class KsglAction {
 	public @ResponseBody Menu toKsglKsSj(Model model,HttpSession session,SjTmQueryVo sjTmQueryVo,String ksgluuid,
 			HttpServletRequest request,HttpServletResponse response) throws Exception{
 		//修改学生该门考试的状态
-		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
-		ksglStudentEbo.updateKsglStudentStatus(ksgluuid,sysuser.getUuid(),3);
+		Student student=(Student) session.getAttribute(Config.LOGINSTUDENT_KEY);
+		ksglStudentEbo.updateKsglStudentStatus(ksgluuid,student.getUuid(),3);
 
 		//加载试卷信息
 		SjCustom sjCustom = sjEbo.findSjCustomByUuid(sjTmQueryVo.getSjTmCustom().getSjid());
 		model.addAttribute("sjCustom", sjCustom);
 		
 		//添加学生进入考试cookie，并保存本地
-		String studentKsglCookie = CookieUtils.getCookValue(request, sysuser.getUuid()+"_"+ksgluuid);
+		String studentKsglCookie = CookieUtils.getCookValue(request, student.getUuid()+"_"+ksgluuid);
 		if(studentKsglCookie!=null){
 			int num=Integer.valueOf(studentKsglCookie)+1;
-			Cookie cookie=new Cookie(sysuser.getUuid()+"_"+ksgluuid, num+"");
+			Cookie cookie=new Cookie(student.getUuid()+"_"+ksgluuid, num+"");
 			cookie.setMaxAge(60*60*3);
 			cookie.setPath("/");
 			response.addCookie(cookie);
 		}else{
-			Cookie cookie=new Cookie(sysuser.getUuid()+"_"+ksgluuid, "1");
+			Cookie cookie=new Cookie(student.getUuid()+"_"+ksgluuid, "1");
 			cookie.setMaxAge(60*60*3);
 			cookie.setPath("/");
 			response.addCookie(cookie);
 		}
 		
 		//添加学生试卷信息
-		studentSjEbo.addStudentSj(sysuser.getUuid(), sjTmQueryVo.getSjTmCustom().getSjid(),ksgluuid);
+		studentSjEbo.addStudentSj(student.getUuid(), sjTmQueryVo.getSjTmCustom().getSjid(),ksgluuid);
 		
 		//加载考试管理uuid
 		model.addAttribute("ksgluuid", ksgluuid);
@@ -378,13 +380,13 @@ public class KsglAction {
 	public @ResponseBody SubmitResultInfo sjSubmit(HttpSession session,String sjuuid,String ksgluuid,
 			HttpServletRequest request,HttpServletResponse response) throws Exception{
 
-		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
+		Student student=(Student) session.getAttribute(Config.LOGINSTUDENT_KEY);
 		
 		//修改学生该门考试的状态
-		ksglStudentEbo.updateKsglStudentStatus(ksgluuid,sysuser.getUuid(),2);
+		ksglStudentEbo.updateKsglStudentStatus(ksgluuid,student.getUuid(),2);
 		
 		//将学生考试cookie删除
-		Cookie cookie = CookieUtils.getCook(request, sysuser.getUuid()+"_"+ksgluuid);
+		Cookie cookie = CookieUtils.getCook(request, student.getUuid()+"_"+ksgluuid);
 		if(cookie!=null){
 			cookie.setValue(null);
 			cookie.setMaxAge(0);
@@ -393,7 +395,7 @@ public class KsglAction {
 		}
 		
 		//将缓存中学生试卷题目保存到数据库并删除缓存中的信息
-		ksglEbo.sjSubmit(sysuser.getUuid(), ksgluuid, sjuuid);
+		ksglEbo.sjSubmit(student.getUuid(), ksgluuid, sjuuid);
 		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(Config.MESSAGE, 906, null));
 	}		
 	@RequestMapping("/ksglKsPwdList")

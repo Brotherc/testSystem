@@ -434,52 +434,62 @@ public class KsglExample {
             return (Criteria) this;
         }
 
-        public Criteria andTeacheridEqualTo(Long value) {
+        public Criteria andTeacheridEqualTo(String value) {
             addCriterion("teacherid =", value, "teacherid");
             return (Criteria) this;
         }
 
-        public Criteria andTeacheridNotEqualTo(Long value) {
+        public Criteria andTeacheridNotEqualTo(String value) {
             addCriterion("teacherid <>", value, "teacherid");
             return (Criteria) this;
         }
 
-        public Criteria andTeacheridGreaterThan(Long value) {
+        public Criteria andTeacheridGreaterThan(String value) {
             addCriterion("teacherid >", value, "teacherid");
             return (Criteria) this;
         }
 
-        public Criteria andTeacheridGreaterThanOrEqualTo(Long value) {
+        public Criteria andTeacheridGreaterThanOrEqualTo(String value) {
             addCriterion("teacherid >=", value, "teacherid");
             return (Criteria) this;
         }
 
-        public Criteria andTeacheridLessThan(Long value) {
+        public Criteria andTeacheridLessThan(String value) {
             addCriterion("teacherid <", value, "teacherid");
             return (Criteria) this;
         }
 
-        public Criteria andTeacheridLessThanOrEqualTo(Long value) {
+        public Criteria andTeacheridLessThanOrEqualTo(String value) {
             addCriterion("teacherid <=", value, "teacherid");
             return (Criteria) this;
         }
 
-        public Criteria andTeacheridIn(List<Long> values) {
+        public Criteria andTeacheridLike(String value) {
+            addCriterion("teacherid like", value, "teacherid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeacheridNotLike(String value) {
+            addCriterion("teacherid not like", value, "teacherid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeacheridIn(List<String> values) {
             addCriterion("teacherid in", values, "teacherid");
             return (Criteria) this;
         }
 
-        public Criteria andTeacheridNotIn(List<Long> values) {
+        public Criteria andTeacheridNotIn(List<String> values) {
             addCriterion("teacherid not in", values, "teacherid");
             return (Criteria) this;
         }
 
-        public Criteria andTeacheridBetween(Long value1, Long value2) {
+        public Criteria andTeacheridBetween(String value1, String value2) {
             addCriterion("teacherid between", value1, value2, "teacherid");
             return (Criteria) this;
         }
 
-        public Criteria andTeacheridNotBetween(Long value1, Long value2) {
+        public Criteria andTeacheridNotBetween(String value1, String value2) {
             addCriterion("teacherid not between", value1, value2, "teacherid");
             return (Criteria) this;
         }

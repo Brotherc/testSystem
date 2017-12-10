@@ -164,6 +164,10 @@ public class SysuserEbi implements SysuserEbo{
 			sysuserCustom.setXuuid(null);
 		}
 
+		//设置uuid
+		String sysuserUuid = UUIDBuild.getUUID();
+		sysuserCustom.setUuid(sysuserUuid);
+		
 		//添加用户
 		sysuserMapper.insert(sysuserCustom);
 		
@@ -180,7 +184,7 @@ public class SysuserEbi implements SysuserEbo{
 	}
 
 	@Override
-	public SysuserCustom findSysuserByUuid(Long uuid) throws Exception {
+	public SysuserCustom findSysuserByUuid(String uuid) throws Exception {
 		SysuserQueryVo sysuserQueryVo=new SysuserQueryVo();
 		SysuserCustom sysuserCustom=new SysuserCustom();
 		sysuserCustom.setUuid(uuid);
@@ -203,7 +207,7 @@ public class SysuserEbi implements SysuserEbo{
 	}
 
 	@Override
-	public void updateSysuser(Long uuid, SysuserCustom sysuserCustom,String[] roleList,String teacherRoleUuid)
+	public void updateSysuser(String uuid, SysuserCustom sysuserCustom,String[] roleList,String teacherRoleUuid)
 			throws Exception {
 		boolean isTeacher = checkIsTeacher(roleList, teacherRoleUuid);
 		
@@ -277,7 +281,7 @@ public class SysuserEbi implements SysuserEbo{
 	}
 
 	@Override
-	public void deleteSysuserByUuid(Long uuid,String teacherRoleUuid) throws Exception {
+	public void deleteSysuserByUuid(String uuid,String teacherRoleUuid) throws Exception {
 		//删除的用户账号信息必须存在
 		SysuserCustom sysuserCustom = findSysuserByUuid(uuid);
 

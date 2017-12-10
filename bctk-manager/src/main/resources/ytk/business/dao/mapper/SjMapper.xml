@@ -7,7 +7,7 @@
     <result column="score" property="score" jdbcType="INTEGER" />
     <result column="kcid" property="kcid" jdbcType="BIGINT" />
     <result column="ndtype" property="ndtype" jdbcType="INTEGER" />
-    <result column="teacherid" property="teacherid" jdbcType="BIGINT" />
+    <result column="teacherid" property="teacherid" jdbcType="VARCHAR" />
     <result column="createtime" property="createtime" jdbcType="BIGINT" />
     <result column="updatetime" property="updatetime" jdbcType="BIGINT" />
     <result column="sjmbid" property="sjmbid" jdbcType="VARCHAR" />
@@ -109,7 +109,7 @@
       createtime, updatetime, sjmbid
       )
     values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, 
-      #{kcid,jdbcType=BIGINT}, #{ndtype,jdbcType=INTEGER}, #{teacherid,jdbcType=BIGINT}, 
+      #{kcid,jdbcType=BIGINT}, #{ndtype,jdbcType=INTEGER}, #{teacherid,jdbcType=VARCHAR}, 
       #{createtime,jdbcType=BIGINT}, #{updatetime,jdbcType=BIGINT}, #{sjmbid,jdbcType=VARCHAR}
       )
   </insert>
@@ -161,7 +161,7 @@
         #{ndtype,jdbcType=INTEGER},
       </if>
       <if test="teacherid != null" >
-        #{teacherid,jdbcType=BIGINT},
+        #{teacherid,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=BIGINT},
@@ -199,7 +199,7 @@
         ndtype = #{record.ndtype,jdbcType=INTEGER},
       </if>
       <if test="record.teacherid != null" >
-        teacherid = #{record.teacherid,jdbcType=BIGINT},
+        teacherid = #{record.teacherid,jdbcType=VARCHAR},
       </if>
       <if test="record.createtime != null" >
         createtime = #{record.createtime,jdbcType=BIGINT},
@@ -222,7 +222,7 @@
       score = #{record.score,jdbcType=INTEGER},
       kcid = #{record.kcid,jdbcType=BIGINT},
       ndtype = #{record.ndtype,jdbcType=INTEGER},
-      teacherid = #{record.teacherid,jdbcType=BIGINT},
+      teacherid = #{record.teacherid,jdbcType=VARCHAR},
       createtime = #{record.createtime,jdbcType=BIGINT},
       updatetime = #{record.updatetime,jdbcType=BIGINT},
       sjmbid = #{record.sjmbid,jdbcType=VARCHAR}
@@ -246,7 +246,7 @@
         ndtype = #{ndtype,jdbcType=INTEGER},
       </if>
       <if test="teacherid != null" >
-        teacherid = #{teacherid,jdbcType=BIGINT},
+        teacherid = #{teacherid,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null" >
         createtime = #{createtime,jdbcType=BIGINT},
@@ -266,7 +266,7 @@
       score = #{score,jdbcType=INTEGER},
       kcid = #{kcid,jdbcType=BIGINT},
       ndtype = #{ndtype,jdbcType=INTEGER},
-      teacherid = #{teacherid,jdbcType=BIGINT},
+      teacherid = #{teacherid,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=BIGINT},
       updatetime = #{updatetime,jdbcType=BIGINT},
       sjmbid = #{sjmbid,jdbcType=VARCHAR}

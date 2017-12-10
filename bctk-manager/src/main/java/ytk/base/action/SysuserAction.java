@@ -86,7 +86,7 @@ public class SysuserAction {
 	
 	//进入系统用户修改页，根据uuid加载用户信息
 	@RequestMapping("/sysuserEdit")
-	public String toSysuserEdit(Long uuid,Model model) throws Exception{
+	public String toSysuserEdit(String uuid,Model model) throws Exception{
 		
 		//查询修改用户信息
 		SysuserCustom sysuserCustom = sysuserEbo.findSysuserByUuid(uuid);
@@ -109,7 +109,7 @@ public class SysuserAction {
 	}
 	//根据页面传递的数据，修改用户信息
 	@RequestMapping("/sysuser/edit")
-	public @ResponseBody SubmitResultInfo editSysuser(Long uuid,SysuserQueryVo sysuserQueryVo,String[] roleList) throws Exception{
+	public @ResponseBody SubmitResultInfo editSysuser(String uuid,SysuserQueryVo sysuserQueryVo,String[] roleList) throws Exception{
 		
 		//查询教师角色的uuid
 		String teacherRoleUuid=systemConfigEbo.findDictinfoByDictcode("s01", "1").getRemark();
@@ -121,7 +121,7 @@ public class SysuserAction {
 	}
 	
 	@RequestMapping("/sysuser/delete")
-	public @ResponseBody SubmitResultInfo deleteSysuser(Long uuid) throws Exception{
+	public @ResponseBody SubmitResultInfo deleteSysuser(String uuid) throws Exception{
 		//查询教师角色的uuid
 		String teacherRoleUuid=systemConfigEbo.findDictinfoByDictcode("s01", "1").getRemark();
 		

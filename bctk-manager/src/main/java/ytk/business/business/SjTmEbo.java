@@ -59,7 +59,7 @@ public interface SjTmEbo {
 	public void deleteSjTmBySjUuidAndStatus(String sjUuid) throws Exception;
 	
 	//根据题目类型获取该类型题目的顺序
-	public List<Integer> getSjTmOrderByType(Long sysuseruuid,String ksgluuid,Integer type,Integer size) throws Exception;
+	public List<Integer> getSjTmOrderByType(String sysuseruuid,String ksgluuid,Integer type,Integer size) throws Exception;
 
 	//根据uuid修改试卷题目编号
 	public void updateSjTmSjtmid(String uuid, SjTmQueryVo sjTmQueryVo) throws Exception;

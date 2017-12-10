@@ -3,7 +3,7 @@
 <mapper namespace="ytk.business.dao.mapper.StudentSjMapper" >
   <resultMap id="BaseResultMap" type="ytk.business.pojo.po.StudentSj" >
     <id column="uuid" property="uuid" jdbcType="VARCHAR" />
-    <result column="studentid" property="studentid" jdbcType="BIGINT" />
+    <result column="student_uuid" property="studentUuid" jdbcType="VARCHAR" />
     <result column="sjid" property="sjid" jdbcType="VARCHAR" />
     <result column="score" property="score" jdbcType="INTEGER" />
     <result column="ksgluuid" property="ksgluuid" jdbcType="VARCHAR" />
@@ -68,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    uuid, studentid, sjid, score, ksgluuid, status
+    uuid, student_uuid, sjid, score, ksgluuid, status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="ytk.business.pojo.po.StudentSjExample" >
     select
@@ -101,10 +101,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="ytk.business.pojo.po.StudentSj" >
-    insert into student_sj (uuid, studentid, sjid, 
+    insert into student_sj (uuid, student_uuid, sjid, 
       score, ksgluuid, status
       )
-    values (#{uuid,jdbcType=VARCHAR}, #{studentid,jdbcType=BIGINT}, #{sjid,jdbcType=VARCHAR}, 
+    values (#{uuid,jdbcType=VARCHAR}, #{studentUuid,jdbcType=VARCHAR}, #{sjid,jdbcType=VARCHAR}, 
       #{score,jdbcType=INTEGER}, #{ksgluuid,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
       )
   </insert>
@@ -114,8 +114,8 @@
       <if test="uuid != null" >
         uuid,
       </if>
-      <if test="studentid != null" >
-        studentid,
+      <if test="studentUuid != null" >
+        student_uuid,
       </if>
       <if test="sjid != null" >
         sjid,
@@ -134,8 +134,8 @@
       <if test="uuid != null" >
         #{uuid,jdbcType=VARCHAR},
       </if>
-      <if test="studentid != null" >
-        #{studentid,jdbcType=BIGINT},
+      <if test="studentUuid != null" >
+        #{studentUuid,jdbcType=VARCHAR},
       </if>
       <if test="sjid != null" >
         #{sjid,jdbcType=VARCHAR},
@@ -163,8 +163,8 @@
       <if test="record.uuid != null" >
         uuid = #{record.uuid,jdbcType=VARCHAR},
       </if>
-      <if test="record.studentid != null" >
-        studentid = #{record.studentid,jdbcType=BIGINT},
+      <if test="record.studentUuid != null" >
+        student_uuid = #{record.studentUuid,jdbcType=VARCHAR},
       </if>
       <if test="record.sjid != null" >
         sjid = #{record.sjid,jdbcType=VARCHAR},
@@ -186,7 +186,7 @@
   <update id="updateByExample" parameterType="map" >
     update student_sj
     set uuid = #{record.uuid,jdbcType=VARCHAR},
-      studentid = #{record.studentid,jdbcType=BIGINT},
+      student_uuid = #{record.studentUuid,jdbcType=VARCHAR},
       sjid = #{record.sjid,jdbcType=VARCHAR},
       score = #{record.score,jdbcType=INTEGER},
       ksgluuid = #{record.ksgluuid,jdbcType=VARCHAR},
@@ -198,8 +198,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="ytk.business.pojo.po.StudentSj" >
     update student_sj
     <set >
-      <if test="studentid != null" >
-        studentid = #{studentid,jdbcType=BIGINT},
+      <if test="studentUuid != null" >
+        student_uuid = #{studentUuid,jdbcType=VARCHAR},
       </if>
       <if test="sjid != null" >
         sjid = #{sjid,jdbcType=VARCHAR},
@@ -218,7 +218,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="ytk.business.pojo.po.StudentSj" >
     update student_sj
-    set studentid = #{studentid,jdbcType=BIGINT},
+    set student_uuid = #{studentUuid,jdbcType=VARCHAR},
       sjid = #{sjid,jdbcType=VARCHAR},
       score = #{score,jdbcType=INTEGER},
       ksgluuid = #{ksgluuid,jdbcType=VARCHAR},

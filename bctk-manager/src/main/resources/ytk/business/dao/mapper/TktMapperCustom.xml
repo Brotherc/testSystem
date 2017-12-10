@@ -63,17 +63,17 @@
 	
 	<resultMap type="ytk.business.pojo.vo.TktCustom" id="tktCustom">
 		
-	    <id column="uuid" property="uuid" jdbcType="BIGINT" />
+	    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
 	    <result column="type" property="type" jdbcType="INTEGER" />
 	    <result column="kcuuid" property="kcuuid" jdbcType="BIGINT" />
 	    <result column="content" property="content" jdbcType="VARCHAR" />
 	    <result column="answer" property="answer" jdbcType="VARCHAR" />
 	    <result column="ndtype" property="ndtype" jdbcType="INTEGER" />
-	    <result column="teacheruuid" property="teacheruuid" jdbcType="BIGINT" />
+	    <result column="teacheruuid" property="teacheruuid" jdbcType="VARCHAR" />
 	    <result column="createtime" property="createtime" jdbcType="BIGINT" />
 	    <result column="status" property="status" jdbcType="INTEGER" />
 	    <result column="answernum" property="answernum" jdbcType="INTEGER" />
-    	<result column="isprogram" property="isprogram" jdbcType="CHAR" />
+	    <result column="isprogram" property="isprogram" jdbcType="CHAR" />
 	    
 	    <result column="kcname" property="kcname" />
 	    <result column="ndname" property="ndname" />

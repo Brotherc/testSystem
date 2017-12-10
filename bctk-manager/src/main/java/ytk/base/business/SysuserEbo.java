@@ -24,16 +24,16 @@ public interface SysuserEbo {
 	public void addSysuser(SysuserCustom sysuserCustom,String[] roleList,String teacherRoleUuid) throws Exception;
 	
 	//根据uuid查询用户
-	public SysuserCustom findSysuserByUuid(Long uuid) throws Exception;
+	public SysuserCustom findSysuserByUuid(String uuid) throws Exception;
 	
 	//根据用户账号查询用户
 	public Sysuser findSysuserByUserid(String userid) throws Exception;
 	
 	//跟新用户信息
-	public void updateSysuser(Long uuid,SysuserCustom sysuserCustom,String[] roleList,String teacherRoleUuid) throws Exception;
+	public void updateSysuser(String uuid,SysuserCustom sysuserCustom,String[] roleList,String teacherRoleUuid) throws Exception;
 	
 	//根据uuid删除用户
-	public void deleteSysuserByUuid(Long uuid,String teacherRoleUuid) throws Exception;
+	public void deleteSysuserByUuid(String uuid,String teacherRoleUuid) throws Exception;
 	
 	//进行用户登录身份校验
 	public SysuserCustom loginCheck(String userid,String pwd) throws Exception;

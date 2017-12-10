@@ -12,11 +12,8 @@ public interface SysuserMapperCustom {
 	
 	public int findSysuserListCount(SysuserQueryVo sysuserQueryVo) throws Exception;
 	
-	public List<Menu> findMenuBySysuserUuid(Long sysuserUuid) throws Exception;
+	public List<Menu> findMenuBySysuserUuid(String sysuserUuid) throws Exception;
 	
-	public List<Operation> findOperatBySysuserUuid(Long sysuserUuid) throws Exception;
+	public List<Operation> findOperatBySysuserUuid(String sysuserUuid) throws Exception;
 	
-	public List<SysuserCustom> findKsglStudentAddList(SysuserQueryVo sysuserQueryVo) throws Exception;
-	
-	public int findKsglStudentAddListCount(SysuserQueryVo sysuserQueryVo) throws Exception;
 }

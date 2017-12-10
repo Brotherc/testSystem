@@ -174,63 +174,73 @@ public class StudentSjExample {
             return (Criteria) this;
         }
 
-        public Criteria andStudentidIsNull() {
-            addCriterion("studentid is null");
+        public Criteria andStudentUuidIsNull() {
+            addCriterion("student_uuid is null");
             return (Criteria) this;
         }
 
-        public Criteria andStudentidIsNotNull() {
-            addCriterion("studentid is not null");
+        public Criteria andStudentUuidIsNotNull() {
+            addCriterion("student_uuid is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStudentidEqualTo(Long value) {
-            addCriterion("studentid =", value, "studentid");
+        public Criteria andStudentUuidEqualTo(String value) {
+            addCriterion("student_uuid =", value, "studentUuid");
             return (Criteria) this;
         }
 
-        public Criteria andStudentidNotEqualTo(Long value) {
-            addCriterion("studentid <>", value, "studentid");
+        public Criteria andStudentUuidNotEqualTo(String value) {
+            addCriterion("student_uuid <>", value, "studentUuid");
             return (Criteria) this;
         }
 
-        public Criteria andStudentidGreaterThan(Long value) {
-            addCriterion("studentid >", value, "studentid");
+        public Criteria andStudentUuidGreaterThan(String value) {
+            addCriterion("student_uuid >", value, "studentUuid");
             return (Criteria) this;
         }
 
-        public Criteria andStudentidGreaterThanOrEqualTo(Long value) {
-            addCriterion("studentid >=", value, "studentid");
+        public Criteria andStudentUuidGreaterThanOrEqualTo(String value) {
+            addCriterion("student_uuid >=", value, "studentUuid");
             return (Criteria) this;
         }
 
-        public Criteria andStudentidLessThan(Long value) {
-            addCriterion("studentid <", value, "studentid");
+        public Criteria andStudentUuidLessThan(String value) {
+            addCriterion("student_uuid <", value, "studentUuid");
             return (Criteria) this;
         }
 
-        public Criteria andStudentidLessThanOrEqualTo(Long value) {
-            addCriterion("studentid <=", value, "studentid");
+        public Criteria andStudentUuidLessThanOrEqualTo(String value) {
+            addCriterion("student_uuid <=", value, "studentUuid");
             return (Criteria) this;
         }
 
-        public Criteria andStudentidIn(List<Long> values) {
-            addCriterion("studentid in", values, "studentid");
+        public Criteria andStudentUuidLike(String value) {
+            addCriterion("student_uuid like", value, "studentUuid");
             return (Criteria) this;
         }
 
-        public Criteria andStudentidNotIn(List<Long> values) {
-            addCriterion("studentid not in", values, "studentid");
+        public Criteria andStudentUuidNotLike(String value) {
+            addCriterion("student_uuid not like", value, "studentUuid");
             return (Criteria) this;
         }
 
-        public Criteria andStudentidBetween(Long value1, Long value2) {
-            addCriterion("studentid between", value1, value2, "studentid");
+        public Criteria andStudentUuidIn(List<String> values) {
+            addCriterion("student_uuid in", values, "studentUuid");
             return (Criteria) this;
         }
 
-        public Criteria andStudentidNotBetween(Long value1, Long value2) {
-            addCriterion("studentid not between", value1, value2, "studentid");
+        public Criteria andStudentUuidNotIn(List<String> values) {
+            addCriterion("student_uuid not in", values, "studentUuid");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentUuidBetween(String value1, String value2) {
+            addCriterion("student_uuid between", value1, value2, "studentUuid");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentUuidNotBetween(String value1, String value2) {
+            addCriterion("student_uuid not between", value1, value2, "studentUuid");
             return (Criteria) this;
         }
 

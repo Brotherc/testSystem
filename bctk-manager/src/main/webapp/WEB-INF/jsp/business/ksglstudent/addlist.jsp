@@ -71,26 +71,30 @@ var ksglStudentImport=function(){
 		hidden : true,//该列隐藏
 		formatter: function(value,row,index){
 			//gysypmls对应action接收对象中list的名称，[]括号中是从0开始序号,id是list中对象属性
-			return '<input type="hidden" name="ksglStudentList['+index+'].sysuseruuid" value="'+value+'" />';
+			return '<input type="hidden" name="ksglStudentList['+index+'].studentUuid" value="'+value+'" />';
 		}
 	},{
-		field : 'userid',//对应json中的key
+		field : 'studentId',//对应json中的key
 		title : '学号',
 		width : 100
 	},{
-		field : 'xname',//对应json中的key
+		field : 'studentName',//对应json中的key
+		title : '姓名',
+		width : 100
+	},{
+		field : 'xiName',//对应json中的key
 		title : '系',
 		width : 100
 	}, {
-		field : 'zyname',//对应json中的key
+		field : 'zyName',//对应json中的key
 		title : '专业',
 		width : 100
 	},{
-		field : 'njname',//对应json中的key
+		field : 'njName',//对应json中的key
 		title : '年级',
 		width : 100
 	},{
-		field : 'classname',//对应json中的key
+		field : 'className',//对应json中的key
 		title : '班级',
 		width : 100
 	} ] ];
@@ -147,7 +151,7 @@ var ksglStudentImport=function(){
 			title : '考试学生查询',//数据列表标题
 			nowrap : true,//单元格中的数据不换行，如果为true表示不换行，不换行情况下数据加载性能高，如果为false就是换行，换行数据加载性能不高
 			striped : true,//条纹显示效果
-			url : '${baseurl}ksglStudentAdd/query.action?sysuserCustom.ksgluuid=${ksgluuid}',//加载数据的连接，引连接请求过来是json数据
+			url : '${baseurl}ksglStudentAdd/query.action?studentCustom.ksglUuid=${ksgluuid}',//加载数据的连接，引连接请求过来是json数据
 			idField : 'uuid',//此字段很重要，数据结果集的唯一约束(重要)，如果写错影响 获取当前选中行的方法执行
 			loadMsg : '',
 			columns : columns_v,
@@ -205,29 +209,33 @@ var ksglStudentImport=function(){
 			<TR>
 				<TD class="left">学号：</td>
 				<td>
-				<INPUT class="easyui-textbox" type="text" name="sysuserCustom.userid" />
+				<INPUT class="easyui-textbox" type="text" name="studentCustom.studentId" />
+				</TD>
+				<TD class="left">姓名：</td>
+				<td>
+				<input id="studentname" class="easyui-textbox" name="studentCustom.studentName" >
 				</TD>
 				<TD class="left">系：</td>
 				<td>
-					<input id="xuuid" class="easyui-combobox" data-options="editable:false,url:'${baseurl}xi/jsonList.action',valueField:'uuid',textField:'name'" name="sysuserCustom.xuuid" >
-				</TD>
-				<TD class="left">专业：</td>
-				<td>
-					<input id="zyname" class="easyui-combobox" data-options="editable:true,mode:'remote',url:'${baseurl}zy/jsonList.action',valueField:'name',textField:'name'" name="sysuserCustom.zyname" >
-				</TD>
-				<TD class="left">年级：</td>
-				<td>
-				<input id="njname" class="easyui-textbox" name="sysuserCustom.njname" >
-				</TD>
-				<TD class="left">班级：</td>
-				<td>
-				<input id="classname" class="easyui-textbox" name="sysuserCustom.classname" >
+					<input id="xuuid" class="easyui-combobox" data-options="editable:false,url:'${baseurl}xi/jsonList.action',valueField:'uuid',textField:'name'" name="studentCustom.xiUuid" >
 				</TD>
 				<td><a id="btn" href="#" onclick="queryKsglStudent()"
 					class="easyui-linkbutton" iconCls='icon-search'>查询</a></td>
 			</TR>
-
-
+			<tr>
+				<TD class="left">专业：</td>
+				<td>
+					<input id="zyname" class="easyui-combobox" data-options="editable:true,mode:'remote',url:'${baseurl}zy/jsonList.action',valueField:'name',textField:'name'" name="studentCustom.zyName" >
+				</TD>
+				<TD class="left">年级：</td>
+				<td>
+				<input id="njname" class="easyui-textbox" name="studentCustom.njName" >
+				</TD>
+				<TD class="left">班级：</td>
+				<td>
+				<input id="classname" class="easyui-textbox" name="studentCustom.className" >
+				</TD>			
+			</tr>
 		</TBODY>
 	</TABLE>
 

@@ -48,7 +48,7 @@
 	<sql id="query_ksglBySysuserUuid_where">
 		<if test="ksglCustom!=null">
 			<if test="ksglCustom.sysuseruuid!=null and ksglCustom.sysuseruuid!=''">
-				and KSGL.sysuseruuid = #{ksglCustom.sysuseruuid}
+				and KSGL.studentUuid = #{ksglCustom.sysuseruuid}
 			</if>			
 		</if>
 	</sql>
@@ -133,7 +133,7 @@
 	<select id="findKsglListBySysuserUuid" parameterType="ytk.business.pojo.vo.KsglQueryVo" resultType="ytk.business.pojo.vo.KsglCustom">
 		SELECT *FROM(
 
-			SELECT ksgl.*,ksgl_student.sysuseruuid,kc.name kcname,sj.name sjname,
+			SELECT ksgl.*,ksgl_student.student_uuid studentUuid,kc.name kcname,sj.name sjname,
 			(SELECT info FROM dictinfo WHERE dictcode=ksgl.status AND typecode='010') statusname
 				FROM ksgl,ksgl_student,kc,sj
 					WHERE ksgl.uuid=ksgl_student.ksgluuid AND ksgl.kcuuid=kc.uuid AND ksgl.sjuuid=sj.uuid AND ksgl.status='3'
@@ -151,7 +151,7 @@
 	<select id="findKsglListCountBySysuserUuid" parameterType="ytk.business.pojo.vo.KsglQueryVo" resultType="int">
 		SELECT count(*)FROM(
 
-			SELECT ksgl.*,ksgl_student.sysuseruuid,kc.name kcname,sj.name sjname,
+			SELECT ksgl.*,ksgl_student.student_uuid studentUuid,kc.name kcname,sj.name sjname,
 			(SELECT info FROM dictinfo WHERE dictcode=ksgl.status AND typecode='010') statusname
 				FROM ksgl,ksgl_student,kc,sj
 					WHERE ksgl.uuid=ksgl_student.ksgluuid AND ksgl.kcuuid=kc.uuid AND ksgl.sjuuid=sj.uuid AND ksgl.status='3'

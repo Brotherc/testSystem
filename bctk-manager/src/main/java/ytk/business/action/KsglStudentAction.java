@@ -16,8 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import ytk.base.business.SystemConfigEbo;
 import ytk.base.pojo.vo.ClassQueryVo;
 import ytk.base.pojo.vo.PageQuery;
-import ytk.base.pojo.vo.SysuserCustom;
-import ytk.base.pojo.vo.SysuserQueryVo;
+import ytk.base.pojo.vo.StudentCustom;
+import ytk.base.pojo.vo.StudentQueryVo;
 import ytk.base.process.context.Config;
 import ytk.base.process.result.DataGridResultInfo;
 import ytk.base.process.result.ExceptionResultInfo;
@@ -85,8 +85,12 @@ public class KsglStudentAction {
 	
 	//添加考试学生信息
 	@RequestMapping("/ksglStudent/addCustom")
-	public @ResponseBody SubmitResultInfo addKsglStudent(String ksgluuid,SysuserQueryVo sysuserQueryVo,ClassQueryVo classQueryVo) throws Exception{
-		ksglStudentEbo.addKsglStudentCustom(ksgluuid,sysuserQueryVo.getSysuserCustom(),classQueryVo.getClassCustom());
+	public @ResponseBody SubmitResultInfo addKsglStudent(String ksgluuid,StudentQueryVo studentQueryVo,ClassQueryVo classQueryVo) throws Exception{
+		
+		//查询学生角色的uuid
+		String teacherRoleUuid=systemConfigEbo.findDictinfoByDictcode("s01", "3").getRemark();
+		
+		ksglStudentEbo.addKsglStudentCustom(ksgluuid,studentQueryVo.getStudentCustom(),classQueryVo.getClassCustom(),teacherRoleUuid);
 		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(Config.MESSAGE, 906, null));
 	}
 	
@@ -101,8 +105,8 @@ public class KsglStudentAction {
 	
 	//修改考试学生信息
 	@RequestMapping("/ksglStudent/edit")
-	public @ResponseBody SubmitResultInfo editKsglStudent(String uuid,SysuserQueryVo sysuserQueryVo,ClassQueryVo classQueryVo) throws Exception{
-		ksglStudentEbo.updateKsglStudent(uuid, sysuserQueryVo.getSysuserCustom(),classQueryVo.getClassCustom());
+	public @ResponseBody SubmitResultInfo editKsglStudent(String uuid,StudentQueryVo studentQueryVo,ClassQueryVo classQueryVo) throws Exception{
+		ksglStudentEbo.updateKsglStudent(uuid, studentQueryVo.getStudentCustom(),classQueryVo.getClassCustom());
 		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(Config.MESSAGE, 906, null));
 	}
 	
@@ -116,19 +120,19 @@ public class KsglStudentAction {
 	
 	//将查询考试学生可添加信息返回列表页
 	@RequestMapping("/ksglStudentAdd/query")
-	public @ResponseBody DataGridResultInfo queryKsglStudentAdd(SysuserQueryVo sysuserQueryVo,int page,int rows) throws Exception{
+	public @ResponseBody DataGridResultInfo queryKsglStudentAdd(StudentQueryVo studentQueryVo,int page,int rows) throws Exception{
 		
 		//非空校验
-		sysuserQueryVo=sysuserQueryVo==null?new SysuserQueryVo():sysuserQueryVo;
+		studentQueryVo=studentQueryVo==null?new StudentQueryVo():studentQueryVo;
 		
 		//查询列表的总数
-		int total = ksglStudentEbo.findKsglStudentAddListCount(sysuserQueryVo);
+		int total = ksglStudentEbo.findKsglStudentAddListCount(studentQueryVo);
 		PageQuery pageQuery=new PageQuery();
 		pageQuery.setPageParams(total, rows, page);
 		
-		sysuserQueryVo.setPageQuery(pageQuery);
+		studentQueryVo.setPageQuery(pageQuery);
 
-		List<SysuserCustom> ksglStudentAddList = ksglStudentEbo.findKsglStudentAddList(sysuserQueryVo);
+		List<StudentCustom> ksglStudentAddList = ksglStudentEbo.findKsglStudentAddList(studentQueryVo); 
 		//最终DataGridResultInfo通过@ResponseBody将java对象转成json
 		DataGridResultInfo dataGridResultInfo=new DataGridResultInfo();
 		dataGridResultInfo.setTotal(total);
@@ -150,7 +154,7 @@ public class KsglStudentAction {
 		for(int i=0;i<indexs.length;i++){
 			ResultInfo resultInfo = null;
 			try {
-				ksglStudentEbo.addKsglStudentChoose(ksgluuid,ksglStudentList.get(indexs[i]).getSysuseruuid());
+				ksglStudentEbo.addKsglStudentChoose(ksgluuid,ksglStudentList.get(indexs[i]).getStudentUuid());
 			} catch (Exception e) {
 				e.printStackTrace();
 				

@@ -12,7 +12,7 @@
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="answer" property="answer" jdbcType="VARCHAR" />
     <result column="ndtype" property="ndtype" jdbcType="INTEGER" />
-    <result column="teacheruuid" property="teacheruuid" jdbcType="BIGINT" />
+    <result column="teacheruuid" property="teacheruuid" jdbcType="VARCHAR" />
     <result column="createtime" property="createtime" jdbcType="BIGINT" />
     <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
@@ -117,7 +117,7 @@
     values (#{uuid,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{kcuuid,jdbcType=BIGINT}, 
       #{optiona,jdbcType=VARCHAR}, #{optionb,jdbcType=VARCHAR}, #{optionc,jdbcType=VARCHAR}, 
       #{optiond,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, 
-      #{ndtype,jdbcType=INTEGER}, #{teacheruuid,jdbcType=BIGINT}, #{createtime,jdbcType=BIGINT}, 
+      #{ndtype,jdbcType=INTEGER}, #{teacheruuid,jdbcType=VARCHAR}, #{createtime,jdbcType=BIGINT}, 
       #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="ytk.business.pojo.po.Dxt" >
@@ -195,7 +195,7 @@
         #{ndtype,jdbcType=INTEGER},
       </if>
       <if test="teacheruuid != null" >
-        #{teacheruuid,jdbcType=BIGINT},
+        #{teacheruuid,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=BIGINT},
@@ -245,7 +245,7 @@
         ndtype = #{record.ndtype,jdbcType=INTEGER},
       </if>
       <if test="record.teacheruuid != null" >
-        teacheruuid = #{record.teacheruuid,jdbcType=BIGINT},
+        teacheruuid = #{record.teacheruuid,jdbcType=VARCHAR},
       </if>
       <if test="record.createtime != null" >
         createtime = #{record.createtime,jdbcType=BIGINT},
@@ -270,7 +270,7 @@
       content = #{record.content,jdbcType=VARCHAR},
       answer = #{record.answer,jdbcType=VARCHAR},
       ndtype = #{record.ndtype,jdbcType=INTEGER},
-      teacheruuid = #{record.teacheruuid,jdbcType=BIGINT},
+      teacheruuid = #{record.teacheruuid,jdbcType=VARCHAR},
       createtime = #{record.createtime,jdbcType=BIGINT},
       status = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null" >
@@ -308,7 +308,7 @@
         ndtype = #{ndtype,jdbcType=INTEGER},
       </if>
       <if test="teacheruuid != null" >
-        teacheruuid = #{teacheruuid,jdbcType=BIGINT},
+        teacheruuid = #{teacheruuid,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null" >
         createtime = #{createtime,jdbcType=BIGINT},
@@ -330,7 +330,7 @@
       content = #{content,jdbcType=VARCHAR},
       answer = #{answer,jdbcType=VARCHAR},
       ndtype = #{ndtype,jdbcType=INTEGER},
-      teacheruuid = #{teacheruuid,jdbcType=BIGINT},
+      teacheruuid = #{teacheruuid,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=BIGINT},
       status = #{status,jdbcType=INTEGER}
     where uuid = #{uuid,jdbcType=VARCHAR}

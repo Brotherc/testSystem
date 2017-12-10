@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="ytk.business.pojo.po.KsglStudent" >
     <id column="uuid" property="uuid" jdbcType="VARCHAR" />
     <result column="ksgluuid" property="ksgluuid" jdbcType="VARCHAR" />
-    <result column="sysuseruuid" property="sysuseruuid" jdbcType="BIGINT" />
+    <result column="student_uuid" property="studentUuid" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -66,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    uuid, ksgluuid, sysuseruuid, status
+    uuid, ksgluuid, student_uuid, status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="ytk.business.pojo.po.KsglStudentExample" >
     select
@@ -99,9 +99,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="ytk.business.pojo.po.KsglStudent" >
-    insert into ksgl_student (uuid, ksgluuid, sysuseruuid, 
+    insert into ksgl_student (uuid, ksgluuid, student_uuid, 
       status)
-    values (#{uuid,jdbcType=VARCHAR}, #{ksgluuid,jdbcType=VARCHAR}, #{sysuseruuid,jdbcType=BIGINT}, 
+    values (#{uuid,jdbcType=VARCHAR}, #{ksgluuid,jdbcType=VARCHAR}, #{studentUuid,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="ytk.business.pojo.po.KsglStudent" >
@@ -113,8 +113,8 @@
       <if test="ksgluuid != null" >
         ksgluuid,
       </if>
-      <if test="sysuseruuid != null" >
-        sysuseruuid,
+      <if test="studentUuid != null" >
+        student_uuid,
       </if>
       <if test="status != null" >
         status,
@@ -127,8 +127,8 @@
       <if test="ksgluuid != null" >
         #{ksgluuid,jdbcType=VARCHAR},
       </if>
-      <if test="sysuseruuid != null" >
-        #{sysuseruuid,jdbcType=BIGINT},
+      <if test="studentUuid != null" >
+        #{studentUuid,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
@@ -150,8 +150,8 @@
       <if test="record.ksgluuid != null" >
         ksgluuid = #{record.ksgluuid,jdbcType=VARCHAR},
       </if>
-      <if test="record.sysuseruuid != null" >
-        sysuseruuid = #{record.sysuseruuid,jdbcType=BIGINT},
+      <if test="record.studentUuid != null" >
+        student_uuid = #{record.studentUuid,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null" >
         status = #{record.status,jdbcType=INTEGER},
@@ -165,7 +165,7 @@
     update ksgl_student
     set uuid = #{record.uuid,jdbcType=VARCHAR},
       ksgluuid = #{record.ksgluuid,jdbcType=VARCHAR},
-      sysuseruuid = #{record.sysuseruuid,jdbcType=BIGINT},
+      student_uuid = #{record.studentUuid,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -177,8 +177,8 @@
       <if test="ksgluuid != null" >
         ksgluuid = #{ksgluuid,jdbcType=VARCHAR},
       </if>
-      <if test="sysuseruuid != null" >
-        sysuseruuid = #{sysuseruuid,jdbcType=BIGINT},
+      <if test="studentUuid != null" >
+        student_uuid = #{studentUuid,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
@@ -189,7 +189,7 @@
   <update id="updateByPrimaryKey" parameterType="ytk.business.pojo.po.KsglStudent" >
     update ksgl_student
     set ksgluuid = #{ksgluuid,jdbcType=VARCHAR},
-      sysuseruuid = #{sysuseruuid,jdbcType=BIGINT},
+      student_uuid = #{studentUuid,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER}
     where uuid = #{uuid,jdbcType=VARCHAR}
   </update>

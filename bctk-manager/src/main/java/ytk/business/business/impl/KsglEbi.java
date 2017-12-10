@@ -131,7 +131,7 @@ public class KsglEbi implements KsglEbo{
 	}
 
 	@Override
-	public void addKsgl(KsglQueryVo ksglQueryVo, Long teacherUuid)
+	public void addKsgl(KsglQueryVo ksglQueryVo, String teacherUuid)
 			throws Exception {
 		KsglCustom ksglCustom = ksglQueryVo.getKsglCustom();
 		//非空校验,有效性检验
@@ -251,7 +251,7 @@ public class KsglEbi implements KsglEbo{
 	}
 
 	@Override
-	public boolean ksPre(String ksgluuid,Long sysuseruuid) throws Exception {
+	public boolean ksPre(String ksgluuid,String sysuseruuid) throws Exception {
 		//获取当前考试信息
 		Ksgl ksgl = ksglMapper.selectByPrimaryKey(ksgluuid);
 		//获取考试开始时间
@@ -340,8 +340,8 @@ public class KsglEbi implements KsglEbo{
 	}
 
 	@Override
-	public void sjSubmit(Long sysuseruuid, String ksgluuid,String sjid) throws Exception {
-		String key=sysuseruuid+"_"+ksgluuid;
+	public void sjSubmit(String studentUuid, String ksgluuid,String sjid) throws Exception {
+		String key=studentUuid+"_"+ksgluuid;
 		String studentSjUuid = jedisClient.hget(key, STUDENT_SJ);
 		String dxt_order = jedisClient.hget(key, DXT_ORDER);
 		List<Integer> dxtOrder=null;

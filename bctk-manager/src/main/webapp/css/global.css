@@ -1,0 +1,12 @@
+@charset "utf-8";
+/* CSS Document */
+/*=====默认样式=======*/
+body,p,ul,li,dl,dt,dd,span,input,h1,h2,h3,h4,h5,h6,strong,fieldset,select,option,textarea{margin:0;padding:0;list-style:none;font-size:12px;font-family:"SimSun";}
+img{border:none;}
+.clear{clear:both;height:0;width:0;padding:0;margin:0;border:0;}
+a{text-decoration:none;}
+.showgrid{width:1002px;margin:0px auto;}
+mark{background:none;}
+button{cursor: pointer;}
+
+.mobile_login .login_button{display:block;width:345px;height:44px;background:#38caa3;font:18px "Microsoft YaHei";color:#ffffff;text-align:center;line-height:44px;margin:40px 0 0 0px;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;-o-border-radius:5px;}

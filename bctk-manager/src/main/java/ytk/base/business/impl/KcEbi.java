@@ -137,7 +137,7 @@ public class KcEbi implements KcEbo{
 			String uuid2 = UUIDBuild.getUUID();
 			teacherKc.setUuid(uuid2);
 			teacherKc.setKcuuid(kcuuid);
-			teacherKc.setTeacheruuid(Long.valueOf(uuid));
+			teacherKc.setTeacheruuid(uuid);
 			teacherKcMapper.insert(teacherKc);
 		}
 	}
@@ -203,7 +203,7 @@ public class KcEbi implements KcEbo{
 			String uuid2 = UUIDBuild.getUUID();
 			teacherKc.setUuid(uuid2);
 			teacherKc.setKcuuid(uuid);
-			teacherKc.setTeacheruuid(Long.valueOf(teacheruuid));
+			teacherKc.setTeacheruuid(teacheruuid);
 			teacherKcMapper.insert(teacherKc);
 		}
 	}

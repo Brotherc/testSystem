@@ -63,7 +63,7 @@
 	
 	<resultMap type="ytk.business.pojo.vo.DxtCustom" id="dxtCustom">
 		
-	    <id column="uuid" property="uuid" jdbcType="BIGINT" />
+	    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
 	    <result column="type" property="type" jdbcType="INTEGER" />
 	    <result column="kcuuid" property="kcuuid" jdbcType="BIGINT" />
 	    <result column="optiona" property="optiona" jdbcType="VARCHAR" />
@@ -73,7 +73,7 @@
 	    <result column="content" property="content" jdbcType="VARCHAR" />
 	    <result column="answer" property="answer" jdbcType="VARCHAR" />
 	    <result column="ndtype" property="ndtype" jdbcType="INTEGER" />
-	    <result column="teacheruuid" property="teacheruuid" jdbcType="BIGINT" />
+	    <result column="teacheruuid" property="teacheruuid" jdbcType="VARCHAR" />
 	    <result column="createtime" property="createtime" jdbcType="BIGINT" />
 	    <result column="status" property="status" jdbcType="INTEGER" />
 	    

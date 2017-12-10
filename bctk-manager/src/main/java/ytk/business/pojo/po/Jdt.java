@@ -13,7 +13,7 @@ public class Jdt {
 
     private Integer ndtype;
 
-    private Long teacheruuid;
+    private String teacheruuid;
 
     private Long createtime;
 
@@ -67,12 +67,12 @@ public class Jdt {
         this.ndtype = ndtype;
     }
 
-    public Long getTeacheruuid() {
+    public String getTeacheruuid() {
         return teacheruuid;
     }
 
-    public void setTeacheruuid(Long teacheruuid) {
-        this.teacheruuid = teacheruuid;
+    public void setTeacheruuid(String teacheruuid) {
+        this.teacheruuid = teacheruuid == null ? null : teacheruuid.trim();
     }
 
     public Long getCreatetime() {

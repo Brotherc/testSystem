@@ -3,7 +3,7 @@
 <mapper namespace="ytk.base.dao.mapper.TeacherKcMapper" >
   <resultMap id="BaseResultMap" type="ytk.base.pojo.po.TeacherKc" >
     <id column="uuid" property="uuid" jdbcType="VARCHAR" />
-    <result column="teacheruuid" property="teacheruuid" jdbcType="BIGINT" />
+    <result column="teacheruuid" property="teacheruuid" jdbcType="VARCHAR" />
     <result column="kcuuid" property="kcuuid" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -100,7 +100,7 @@
   <insert id="insert" parameterType="ytk.base.pojo.po.TeacherKc" >
     insert into teacher_kc (uuid, teacheruuid, kcuuid
       )
-    values (#{uuid,jdbcType=VARCHAR}, #{teacheruuid,jdbcType=BIGINT}, #{kcuuid,jdbcType=BIGINT}
+    values (#{uuid,jdbcType=VARCHAR}, #{teacheruuid,jdbcType=VARCHAR}, #{kcuuid,jdbcType=BIGINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="ytk.base.pojo.po.TeacherKc" >
@@ -121,7 +121,7 @@
         #{uuid,jdbcType=VARCHAR},
       </if>
       <if test="teacheruuid != null" >
-        #{teacheruuid,jdbcType=BIGINT},
+        #{teacheruuid,jdbcType=VARCHAR},
       </if>
       <if test="kcuuid != null" >
         #{kcuuid,jdbcType=BIGINT},
@@ -141,7 +141,7 @@
         uuid = #{record.uuid,jdbcType=VARCHAR},
       </if>
       <if test="record.teacheruuid != null" >
-        teacheruuid = #{record.teacheruuid,jdbcType=BIGINT},
+        teacheruuid = #{record.teacheruuid,jdbcType=VARCHAR},
       </if>
       <if test="record.kcuuid != null" >
         kcuuid = #{record.kcuuid,jdbcType=BIGINT},
@@ -154,7 +154,7 @@
   <update id="updateByExample" parameterType="map" >
     update teacher_kc
     set uuid = #{record.uuid,jdbcType=VARCHAR},
-      teacheruuid = #{record.teacheruuid,jdbcType=BIGINT},
+      teacheruuid = #{record.teacheruuid,jdbcType=VARCHAR},
       kcuuid = #{record.kcuuid,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -164,7 +164,7 @@
     update teacher_kc
     <set >
       <if test="teacheruuid != null" >
-        teacheruuid = #{teacheruuid,jdbcType=BIGINT},
+        teacheruuid = #{teacheruuid,jdbcType=VARCHAR},
       </if>
       <if test="kcuuid != null" >
         kcuuid = #{kcuuid,jdbcType=BIGINT},
@@ -174,7 +174,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="ytk.base.pojo.po.TeacherKc" >
     update teacher_kc
-    set teacheruuid = #{teacheruuid,jdbcType=BIGINT},
+    set teacheruuid = #{teacheruuid,jdbcType=VARCHAR},
       kcuuid = #{kcuuid,jdbcType=BIGINT}
     where uuid = #{uuid,jdbcType=VARCHAR}
   </update>

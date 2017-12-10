@@ -3,7 +3,7 @@ package ytk.base.pojo.po;
 public class TeacherKc {
     private String uuid;
 
-    private Long teacheruuid;
+    private String teacheruuid;
 
     private Long kcuuid;
 
@@ -15,12 +15,12 @@ public class TeacherKc {
         this.uuid = uuid == null ? null : uuid.trim();
     }
 
-    public Long getTeacheruuid() {
+    public String getTeacheruuid() {
         return teacheruuid;
     }
 
-    public void setTeacheruuid(Long teacheruuid) {
-        this.teacheruuid = teacheruuid;
+    public void setTeacheruuid(String teacheruuid) {
+        this.teacheruuid = teacheruuid == null ? null : teacheruuid.trim();
     }
 
     public Long getKcuuid() {

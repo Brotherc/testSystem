@@ -5,7 +5,7 @@ public class KsglStudent {
 
     private String ksgluuid;
 
-    private Long sysuseruuid;
+    private String studentUuid;
 
     private Integer status;
 
@@ -25,12 +25,12 @@ public class KsglStudent {
         this.ksgluuid = ksgluuid == null ? null : ksgluuid.trim();
     }
 
-    public Long getSysuseruuid() {
-        return sysuseruuid;
+    public String getStudentUuid() {
+        return studentUuid;
     }
 
-    public void setSysuseruuid(Long sysuseruuid) {
-        this.sysuseruuid = sysuseruuid;
+    public void setStudentUuid(String studentUuid) {
+        this.studentUuid = studentUuid == null ? null : studentUuid.trim();
     }
 
     public Integer getStatus() {

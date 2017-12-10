@@ -17,7 +17,7 @@ public interface KsglEbo {
 	public void deleteKsgl(String uuid) throws Exception;
 	
 	//添加考试
-	public void addKsgl(KsglQueryVo ksglQueryVo,Long teacherUuid) throws Exception;
+	public void addKsgl(KsglQueryVo ksglQueryVo,String teacherUuid) throws Exception;
 	
 	//根据条件与uuid查询考试信息
 	public KsglCustom findKsglByUuid(KsglQueryVo ksglQueryVo) throws Exception;
@@ -26,7 +26,7 @@ public interface KsglEbo {
 	public void updateKsgl(String uuid, KsglCustom ksglCustom) throws Exception;
 	
 	//考试考试前时间校验(返回是否进入考试界面过)
-	public boolean ksPre(String ksgluuid,Long sysuseruuid) throws Exception;
+	public boolean ksPre(String ksgluuid,String sysuseruuid) throws Exception;
 	
 	//启动考试
 	public void startKsgl(String ksgluuid) throws Exception;
@@ -38,7 +38,7 @@ public interface KsglEbo {
 	public int findKsglListCountBySysuserUuid(KsglQueryVo ksglQueryVo) throws Exception;
 	
 	//提交试卷
-	public void sjSubmit(Long sysuseruuid,String ksgluuid,String sjid) throws Exception;
+	public void sjSubmit(String studentUuid,String ksgluuid,String sjid) throws Exception;
 	
 	//检测考试密码是否正确
 	public void checkKsPwd(String ksgluuid,String ksPwd) throws Exception;

@@ -3,7 +3,7 @@ package ytk.base.pojo.po;
 public class BssSysSysuserrole {
     private String srid;
 
-    private Long sysuserid;
+    private String sysuserid;
 
     private String roleid;
 
@@ -15,12 +15,12 @@ public class BssSysSysuserrole {
         this.srid = srid == null ? null : srid.trim();
     }
 
-    public Long getSysuserid() {
+    public String getSysuserid() {
         return sysuserid;
     }
 
-    public void setSysuserid(Long sysuserid) {
-        this.sysuserid = sysuserid;
+    public void setSysuserid(String sysuserid) {
+        this.sysuserid = sysuserid == null ? null : sysuserid.trim();
     }
 
     public String getRoleid() {

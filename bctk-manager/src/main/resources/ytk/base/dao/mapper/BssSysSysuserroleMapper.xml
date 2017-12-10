@@ -3,7 +3,7 @@
 <mapper namespace="ytk.base.dao.mapper.BssSysSysuserroleMapper" >
   <resultMap id="BaseResultMap" type="ytk.base.pojo.po.BssSysSysuserrole" >
     <id column="SRID" property="srid" jdbcType="VARCHAR" />
-    <result column="SYSUSERID" property="sysuserid" jdbcType="BIGINT" />
+    <result column="SYSUSERID" property="sysuserid" jdbcType="VARCHAR" />
     <result column="ROLEID" property="roleid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -100,7 +100,7 @@
   <insert id="insert" parameterType="ytk.base.pojo.po.BssSysSysuserrole" >
     insert into bss_sys_sysuserrole (SRID, SYSUSERID, ROLEID
       )
-    values (#{srid,jdbcType=VARCHAR}, #{sysuserid,jdbcType=BIGINT}, #{roleid,jdbcType=VARCHAR}
+    values (#{srid,jdbcType=VARCHAR}, #{sysuserid,jdbcType=VARCHAR}, #{roleid,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="ytk.base.pojo.po.BssSysSysuserrole" >
@@ -121,7 +121,7 @@
         #{srid,jdbcType=VARCHAR},
       </if>
       <if test="sysuserid != null" >
-        #{sysuserid,jdbcType=BIGINT},
+        #{sysuserid,jdbcType=VARCHAR},
       </if>
       <if test="roleid != null" >
         #{roleid,jdbcType=VARCHAR},
@@ -141,7 +141,7 @@
         SRID = #{record.srid,jdbcType=VARCHAR},
       </if>
       <if test="record.sysuserid != null" >
-        SYSUSERID = #{record.sysuserid,jdbcType=BIGINT},
+        SYSUSERID = #{record.sysuserid,jdbcType=VARCHAR},
       </if>
       <if test="record.roleid != null" >
         ROLEID = #{record.roleid,jdbcType=VARCHAR},
@@ -154,7 +154,7 @@
   <update id="updateByExample" parameterType="map" >
     update bss_sys_sysuserrole
     set SRID = #{record.srid,jdbcType=VARCHAR},
-      SYSUSERID = #{record.sysuserid,jdbcType=BIGINT},
+      SYSUSERID = #{record.sysuserid,jdbcType=VARCHAR},
       ROLEID = #{record.roleid,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -164,7 +164,7 @@
     update bss_sys_sysuserrole
     <set >
       <if test="sysuserid != null" >
-        SYSUSERID = #{sysuserid,jdbcType=BIGINT},
+        SYSUSERID = #{sysuserid,jdbcType=VARCHAR},
       </if>
       <if test="roleid != null" >
         ROLEID = #{roleid,jdbcType=VARCHAR},
@@ -174,7 +174,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="ytk.base.pojo.po.BssSysSysuserrole" >
     update bss_sys_sysuserrole
-    set SYSUSERID = #{sysuserid,jdbcType=BIGINT},
+    set SYSUSERID = #{sysuserid,jdbcType=VARCHAR},
       ROLEID = #{roleid,jdbcType=VARCHAR}
     where SRID = #{srid,jdbcType=VARCHAR}
   </update>

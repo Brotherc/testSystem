@@ -257,8 +257,8 @@ public class TktEbi implements TktEbo{
 		//若题目状态为审核未通过，则可修改
 		if(tktCustomDb.getStatus()==2){
 			//将登陆者的uuid与该题创建者的uuid进行比较
-			Long userid = sysuser.getUuid();
-			Long createteacherUuid=tktCustomDb.getTeacheruuid();
+			String userid = sysuser.getUuid();
+			String createteacherUuid=tktCustomDb.getTeacheruuid();
 			
 			//如果不相等，则无权限修改
 			if(!userid.equals(createteacherUuid))
@@ -385,7 +385,7 @@ public class TktEbi implements TktEbo{
 	}
 
 	@Override
-	public void deleteTkt(String uuid,Long sysuseruuid) throws Exception {
+	public void deleteTkt(String uuid,String sysuseruuid) throws Exception {
 		//获取要删除的题目信息
 		TktCustom tktCustomDb = findTktByUuid(uuid);
 		
@@ -394,7 +394,7 @@ public class TktEbi implements TktEbo{
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 306,null));
 		
 		//必须是删除的题目的创建者，否则无权利删除
-		Long teacheruuid = tktCustomDb.getTeacheruuid();
+		String teacheruuid = tktCustomDb.getTeacheruuid();
 		if(!teacheruuid.equals(sysuseruuid))
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 310,null));
 		

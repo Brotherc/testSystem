@@ -12,11 +12,14 @@
 				and KSGL_STUDENT.ksgluuid = #{ksglStudentCustom.ksgluuid}
 			</if>
 			
-			<if test="ksglStudentCustom.sysuseruuid!=null and ksglStudentCustom.sysuseruuid!=''">
-				and KSGL_STUDENT.sysuseruuid = #{ksglStudentCustom.sysuseruuid}
+			<if test="ksglStudentCustom.studentUuid!=null and ksglStudentCustom.studentUuid!=''">
+				and KSGL_STUDENT.studentUuid = #{ksglStudentCustom.studentUuid}
 			</if>
-			<if test="ksglStudentCustom.userid!=null and ksglStudentCustom.userid!=''">
-				and KSGL_STUDENT.userid = #{ksglStudentCustom.userid}
+			<if test="ksglStudentCustom.studentId!=null and ksglStudentCustom.studentId!=''">
+				and KSGL_STUDENT.studentId = #{ksglStudentCustom.studentId}
+			</if>
+			<if test="ksglStudentCustom.studentName!=null and ksglStudentCustom.studentName!=''">
+				and KSGL_STUDENT.studentName = #{ksglStudentCustom.studentName}
 			</if>
 			<if test="ksglStudentCustom.xiuuid!=null and ksglStudentCustom.xiuuid!=''">
 				and KSGL_STUDENT.xiuuid = #{ksglStudentCustom.xiuuid}
@@ -51,10 +54,10 @@
 	<select id="findKsglStudentList" parameterType="ytk.business.pojo.vo.KsglStudentQueryVo" resultType="ytk.business.pojo.vo.KsglStudentCustom">
 		SELECT *FROM(
 
-			SELECT ksgl_student.*,sysuser.userid,xi.uuid xiuuid,xi.name xiname,class.uuid classuuid,class.classname,zy.uuid zyuuid,zy.name zyname,nj.uuid njuuid,nj.njnane njname,
+			SELECT ksgl_student.uuid,ksgl_student.ksgluuid,ksgl_student.student_uuid studentUuid,ksgl_student.status,student.student_id studentId,student.student_name studentName,xi.uuid xiuuid,xi.name xiname,class.uuid classuuid,class.classname,zy.uuid zyuuid,zy.name zyname,nj.uuid njuuid,nj.njnane njname,
 			(SELECT info FROM dictinfo WHERE dictcode=ksgl_student.status AND typecode='010') statusname			
-				FROM ksgl_student,sysuser,class,zy,nj,xi
-					WHERE ksgl_student.sysuseruuid=sysuser.uuid AND sysuser.classuuid=class.uuid AND sysuser.xuuid=xi.uuid AND class.zyuuid=zy.uuid AND class.njuuid=nj.uuid
+				FROM ksgl_student,student,class,zy,nj,xi
+					WHERE ksgl_student.student_uuid=student.uuid AND student.class_uuid=class.uuid AND zy.xuuid=xi.uuid AND class.zyuuid=zy.uuid AND class.njuuid=nj.uuid
 
 		)KSGL_STUDENT
 		<where>
@@ -67,10 +70,11 @@
 	
 	<select id="findKsglStudentListCount" parameterType="ytk.business.pojo.vo.KsglStudentQueryVo" resultType="int">
 		SELECT count(*)FROM(
-			SELECT ksgl_student.*,sysuser.userid,xi.uuid xiuuid,xi.name xiname,class.uuid classuuid,class.classname,zy.uuid zyuuid,zy.name zyname,nj.uuid njuuid,nj.njnane njname,
-			(SELECT info FROM dictinfo WHERE dictcode=ksgl_student.status AND typecode='010') statusname
-				FROM ksgl_student,sysuser,class,zy,nj,xi
-					WHERE ksgl_student.sysuseruuid=sysuser.uuid AND sysuser.classuuid=class.uuid AND sysuser.xuuid=xi.uuid AND class.zyuuid=zy.uuid AND class.njuuid=nj.uuid
+
+			SELECT ksgl_student.uuid,ksgl_student.ksgluuid,ksgl_student.student_uuid studentUuid,ksgl_student.status,student.student_id studentId,student.student_name studentName,xi.uuid xiuuid,xi.name xiname,class.uuid classuuid,class.classname,zy.uuid zyuuid,zy.name zyname,nj.uuid njuuid,nj.njnane njname,
+			(SELECT info FROM dictinfo WHERE dictcode=ksgl_student.status AND typecode='010') statusname			
+				FROM ksgl_student,student,class,zy,nj,xi
+					WHERE ksgl_student.student_uuid=student.uuid AND student.class_uuid=class.uuid AND zy.xuuid=xi.uuid AND class.zyuuid=zy.uuid AND class.njuuid=nj.uuid
 
 		)KSGL_STUDENT
 		<where>

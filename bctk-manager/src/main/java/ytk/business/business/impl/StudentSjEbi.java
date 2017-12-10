@@ -50,21 +50,21 @@ public class StudentSjEbi implements StudentSjEbo{
 	private String STUDENT_SJ;
 	
 	@Override
-	public String addStudentSj(Long studentid, String sjid,String ksgluuid) throws Exception { 
+	public String addStudentSj(String studentUuid, String sjid,String ksgluuid) throws Exception { 
 		StudentSj studentSj=new StudentSj();
 		String uuid = UUIDBuild.getUUID();
 		studentSj.setUuid(uuid);
-		studentSj.setStudentid(studentid);
+		studentSj.setStudentUuid(studentUuid);
 		studentSj.setSjid(sjid);
 		studentSj.setKsgluuid(ksgluuid);
 		studentSj.setScore(0);
 		studentSj.setStatus(1);
 
 		//判断redis中是否有该studentSjuuid，如果没有，则添加
-		String json = jedisClient.hget(studentid+"_"+ksgluuid, STUDENT_SJ);
+		String json = jedisClient.hget(studentUuid+"_"+ksgluuid, STUDENT_SJ);
 		if(!StringUtils.isNotBlank(json)){
 			studentSjMapper.insert(studentSj);
-			jedisClient.hset(studentid+"_"+ksgluuid, STUDENT_SJ, uuid);
+			jedisClient.hset(studentUuid+"_"+ksgluuid, STUDENT_SJ, uuid);
 		}
 
 		return uuid;

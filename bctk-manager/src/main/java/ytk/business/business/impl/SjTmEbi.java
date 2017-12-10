@@ -968,7 +968,7 @@ public class SjTmEbi implements SjTmEbo{
 	}
 
 	@Override
-	public List<Integer> getSjTmOrderByType(Long sysuseruuid, String ksgluuid,
+	public List<Integer> getSjTmOrderByType(String sysuseruuid, String ksgluuid,
 			Integer type,Integer size) throws Exception {
 		String tm_order="";
 		if(type==1)

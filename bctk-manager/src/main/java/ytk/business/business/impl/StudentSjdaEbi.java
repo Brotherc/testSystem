@@ -131,7 +131,7 @@ public class StudentSjdaEbi implements StudentSjdaEbo{
 	}
 
 	@Override
-	public void addStudentSjdaDxt(Long sysuseruuid, String ksgluuid,List<String> dxtList,Integer dxtSize)
+	public void addStudentSjdaDxt(String sysuseruuid, String ksgluuid,List<String> dxtList,Integer dxtSize)
 			throws Exception {
 
 		Map< Integer, String> map=new LinkedHashMap<Integer, String>();
@@ -169,7 +169,7 @@ public class StudentSjdaEbi implements StudentSjdaEbo{
 	}
 
 	@Override
-	public Map<Integer, String> findStudentSjDaDxt(Long sysuseruuid,
+	public Map<Integer, String> findStudentSjDaDxt(String sysuseruuid,
 			String ksgluuid) throws Exception {
 		String json = jedisClient.hget(sysuseruuid+"_"+ksgluuid, DXT_ANSWER);
 		if(StringUtils.isNoneBlank(json)){
@@ -179,7 +179,7 @@ public class StudentSjdaEbi implements StudentSjdaEbo{
 	}
 
 	@Override
-	public void addStudentSjdaTkt(Long sysuseruuid, String ksgluuid,
+	public void addStudentSjdaTkt(String sysuseruuid, String ksgluuid,
 			List<List<String>> tktList) throws Exception {
 		Map< Integer, List> map=new LinkedHashMap<Integer, List>();
 		
@@ -191,7 +191,7 @@ public class StudentSjdaEbi implements StudentSjdaEbo{
 	}
 
 	@Override
-	public Map<Integer, List> findStudentSjDaTkt(Long sysuseruuid,
+	public Map<Integer, List> findStudentSjDaTkt(String sysuseruuid,
 			String ksgluuid) {
 		String json = jedisClient.hget(sysuseruuid+"_"+ksgluuid, TKT_ANSWER);
 		System.out.println(json);

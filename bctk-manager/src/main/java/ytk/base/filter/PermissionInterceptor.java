@@ -18,6 +18,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import ytk.base.pojo.vo.Operation;
+import ytk.base.pojo.vo.StudentCustom;
 import ytk.base.pojo.vo.SysuserCustom;
 import ytk.base.process.context.Config;
 import ytk.base.process.result.ExceptionResultInfo;
@@ -72,9 +73,26 @@ public class PermissionInterceptor implements HandlerInterceptor {
 		//从session中拿到用户的操作权限
 		//获取session
 		HttpSession session = request.getSession();
-		//用户身份信息
-		SysuserCustom sysuserCustom = (SysuserCustom)session.getAttribute(Config.LOGINUSER_KEY);
-		List<Operation> operations = sysuserCustom.getOperationList();
+		
+		List<Operation> operations=null;
+
+		//获取登录用户类型
+		String loginType =(String)session.getAttribute(Config.LOGINTYPE_KEY);
+		if(loginType!=null)
+			if(loginType.equals("1")){
+				//用户身份信息
+				SysuserCustom sysuserCustom =(SysuserCustom) session.getAttribute(Config.LOGINUSER_KEY);
+				if(sysuserCustom!=null){
+					operations= sysuserCustom.getOperationList();
+				}
+			}else if(loginType.equals("3")){
+				//用户身份信息
+				StudentCustom studentCustom =(StudentCustom) session.getAttribute(Config.LOGINSTUDENT_KEY);
+				if(studentCustom!=null){
+					operations= studentCustom.getOperationList();
+				}
+			}
+		 
 		
 		//校验请求的url是否在用户操作权限地址内
 		for(Operation operation_index:operations){

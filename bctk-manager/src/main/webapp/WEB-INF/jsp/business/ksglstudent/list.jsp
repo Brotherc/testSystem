@@ -23,8 +23,12 @@
 <script type="text/javascript">
 	//datagrid列定义
 	var columns_v = [ [ {
-		field : 'userid',//对应json中的key
+		field : 'studentId',//对应json中的key
 		title : '学号',
+		width : 100
+	},{
+		field : 'studentName',//对应json中的key
+		title : '姓名',
 		width : 100
 	},{
 		field : 'xiname',//对应json中的key
@@ -182,7 +186,11 @@
 			<TR>
 				<TD class="left">学号：</td>
 				<td>
-				<INPUT class="easyui-textbox" type="text" name="ksglStudentCustom.userid" />
+				<INPUT class="easyui-textbox" type="text" name="ksglStudentCustom.studentId" />
+				</TD>
+				<TD class="left">姓名：</td>
+				<td>
+				<input id="studentname" class="easyui-textbox" name="ksglStudentCustom.studentName" >
 				</TD>
 				<TD class="left">系：</td>
 				<td>
@@ -190,14 +198,10 @@
 				</TD>
 				<TD class="left">班级：</td>
 				<td>
-
 				<input id="classname" class="easyui-textbox" name="ksglStudentCustom.classname" >
 				</TD>
-				<td><a id="btn" href="#" onclick="queryKsglStudent()"
-					class="easyui-linkbutton" iconCls='icon-search'>查询</a></td>
 			</TR>
-
-<tr>
+			<tr>
 				<TD class="left">专业：</td>
 				<td>
 					<input id="zyname" class="easyui-combobox" data-options="editable:true,mode:'remote',url:'${baseurl}zy/jsonList.action',valueField:'name',textField:'name'" name="ksglStudentCustom.zyname" >
@@ -226,7 +230,9 @@
 						}],valueField:'key',textField:'value'" 
 					name="ksglStudentCustom.status" >
 				</TD>
-</tr>
+				<td><a id="btn" href="#" onclick="queryKsglStudent()"
+					class="easyui-linkbutton" iconCls='icon-search'>查询</a></td>
+			</tr>
 
 		</TBODY>
 	</TABLE>

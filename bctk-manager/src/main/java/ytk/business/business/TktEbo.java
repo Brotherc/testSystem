@@ -23,7 +23,7 @@ public interface TktEbo {
 	public void updateTkt(String uuid,TktCustom tktCustom,Sysuser sysuser,String[] zsdList) throws Exception;
 	
 	//删除填空题
-	public void deleteTkt(String uuid,Long sysuseruuid) throws Exception;
+	public void deleteTkt(String uuid,String sysuseruuid) throws Exception;
 	
 	//审核通过题目
 	public void checkTkt(TktQueryVo tktQueryVo,Sysuser sysuser) throws Exception;

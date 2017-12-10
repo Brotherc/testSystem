@@ -1,16 +1,10 @@
 package ytk.business.business.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import ytk.base.dao.mapper.KcMapper;
-import ytk.base.dao.mapper.KcZyMapper;
-import ytk.base.dao.mapper.KcZyMapperCustom;
-import ytk.base.dao.mapper.SysuserMapper;
 import ytk.base.dao.mapper.TeacherKcMapper;
 import ytk.base.dao.mapper.ZsdMapper;
-import ytk.base.dao.mapper.ZyMapper;
 import ytk.base.pojo.po.Kc;
 import ytk.base.pojo.po.KcExample;
 import ytk.base.pojo.po.Sysuser;
@@ -45,17 +39,9 @@ public class DxtEbi implements DxtEbo{
 	@Autowired 
 	private KcMapper kcMapper;
 	@Autowired
-	private KcZyMapper kcZyMapper;
-	@Autowired
 	private DxtMapper dxtMapper;
 	@Autowired
-	private ZyMapper zyMapper;
-	@Autowired
-	private SysuserMapper sysuserMapper;
-	@Autowired
 	private SjTmMapper sjTmMapper;
-	@Autowired
-	private KcZyMapperCustom kcZyMapperCustom;
 	@Autowired
 	private TmZsdMapper tmZsdMapper;
 	@Autowired
@@ -222,8 +208,8 @@ public class DxtEbi implements DxtEbo{
 		//若题目状态为审核未通过，则可修改
 		if(dxtCustomDb.getStatus()==2){
 			//将登陆者的uuid与该题创建者的uuid进行比较
-			Long userid = sysuser.getUuid();
-			Long createteacherUuid=dxtCustomDb.getTeacheruuid();
+			String userid = sysuser.getUuid();
+			String createteacherUuid=dxtCustomDb.getTeacheruuid();
 			
 			//如果不相等，则无权限修改
 			if(!userid.equals(createteacherUuid))
@@ -331,7 +317,7 @@ public class DxtEbi implements DxtEbo{
 	}
 
 	@Override
-	public void deleteDxt(String uuid,Long sysuseruuid) throws Exception {
+	public void deleteDxt(String uuid,String sysuseruuid) throws Exception {
 		//获取要删除的题目信息
 		DxtCustom dxtCustomDb = findDxtByUuid(uuid);
 		
@@ -340,7 +326,7 @@ public class DxtEbi implements DxtEbo{
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 306,null));
 		
 		//必须是删除的题目的创建者，否则无权利删除
-		Long teacheruuid = dxtCustomDb.getTeacheruuid();
+		String teacheruuid = dxtCustomDb.getTeacheruuid();
 		if(!teacheruuid.equals(sysuseruuid))
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 310,null));
 		

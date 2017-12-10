@@ -504,52 +504,62 @@ public class JdtExample {
             return (Criteria) this;
         }
 
-        public Criteria andTeacheruuidEqualTo(Long value) {
+        public Criteria andTeacheruuidEqualTo(String value) {
             addCriterion("teacheruuid =", value, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andTeacheruuidNotEqualTo(Long value) {
+        public Criteria andTeacheruuidNotEqualTo(String value) {
             addCriterion("teacheruuid <>", value, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andTeacheruuidGreaterThan(Long value) {
+        public Criteria andTeacheruuidGreaterThan(String value) {
             addCriterion("teacheruuid >", value, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andTeacheruuidGreaterThanOrEqualTo(Long value) {
+        public Criteria andTeacheruuidGreaterThanOrEqualTo(String value) {
             addCriterion("teacheruuid >=", value, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andTeacheruuidLessThan(Long value) {
+        public Criteria andTeacheruuidLessThan(String value) {
             addCriterion("teacheruuid <", value, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andTeacheruuidLessThanOrEqualTo(Long value) {
+        public Criteria andTeacheruuidLessThanOrEqualTo(String value) {
             addCriterion("teacheruuid <=", value, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andTeacheruuidIn(List<Long> values) {
+        public Criteria andTeacheruuidLike(String value) {
+            addCriterion("teacheruuid like", value, "teacheruuid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeacheruuidNotLike(String value) {
+            addCriterion("teacheruuid not like", value, "teacheruuid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeacheruuidIn(List<String> values) {
             addCriterion("teacheruuid in", values, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andTeacheruuidNotIn(List<Long> values) {
+        public Criteria andTeacheruuidNotIn(List<String> values) {
             addCriterion("teacheruuid not in", values, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andTeacheruuidBetween(Long value1, Long value2) {
+        public Criteria andTeacheruuidBetween(String value1, String value2) {
             addCriterion("teacheruuid between", value1, value2, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andTeacheruuidNotBetween(Long value1, Long value2) {
+        public Criteria andTeacheruuidNotBetween(String value1, String value2) {
             addCriterion("teacheruuid not between", value1, value2, "teacheruuid");
             return (Criteria) this;
         }

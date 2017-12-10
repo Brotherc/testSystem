@@ -11,7 +11,7 @@ public class Ksgl {
 
     private Integer status;
 
-    private Long teacherid;
+    private String teacherid;
 
     private Long createtime;
 
@@ -63,12 +63,12 @@ public class Ksgl {
         this.status = status;
     }
 
-    public Long getTeacherid() {
+    public String getTeacherid() {
         return teacherid;
     }
 
-    public void setTeacherid(Long teacherid) {
-        this.teacherid = teacherid;
+    public void setTeacherid(String teacherid) {
+        this.teacherid = teacherid == null ? null : teacherid.trim();
     }
 
     public Long getCreatetime() {

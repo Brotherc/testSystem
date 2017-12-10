@@ -45,4 +45,7 @@
 
 <!--题目知识点管理  -->
 <bean id="tmZsdEbo" class="ytk.base.business.impl.TmZsdEbi"></bean>
+
+<!--学生管理  -->
+<bean id="studentEbo" class="ytk.base.business.impl.StudentEbi"></bean>
 </beans>
