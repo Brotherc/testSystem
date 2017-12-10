@@ -52,10 +52,6 @@ var fixWidth=function(percent){
 		title : '性别 ',
 		width : fixWidth(0.03)
 	}, {
-		field : 'groupname',//对应json中的key
-		title : '用户类型',
-		width : fixWidth(0.05)
-	}, {
 		field : 'birthdayView',//对应json中的key
 		title : '出生日期',
 		width : fixWidth(0.07)
@@ -64,7 +60,7 @@ var fixWidth=function(percent){
 		title : '联系电话',
 		width : fixWidth(0.07)
 	},{
-		field : 'xname',//对应json中的key
+		field : 'xiName',//对应json中的key
 		title : '所在单位',
 		width : fixWidth(0.1)
 	},{
@@ -136,12 +132,12 @@ var fixWidth=function(percent){
         
 	    $('#groupid').combobox({
 	        url: '${baseurl}sysuser/type.action',
-	        valueField: 'dictcode',
+	        valueField: 'remark',
 	        textField: 'info',
 	        editable: false,
 	        loadFilter:function(data){
 	        	var obj={};
-	        	obj.dictcode="";
+	        	obj.remark="";
 	        	obj.info="请选择";
 	        	data.splice(0,0,obj);
 	        	return data;
@@ -231,7 +227,7 @@ var fixWidth=function(percent){
 
 				<TD class="left">用户类型：</TD>
 				<td class="one">
-					<input id="groupid"  name="sysuserCustom.groupid" >
+					<input id="groupid"  name="sysuserCustom.roleId" >
 				</TD>
 				<TD class="left">状态：</TD>
 				<td>
@@ -276,7 +272,7 @@ var fixWidth=function(percent){
 				<TD class="left">地址：</TD>
 				<td><INPUT class="easyui-textbox" type="text" name="sysuserCustom.addr" /></TD>
 				<TD class="left">单位名称：</TD>
-				<td><INPUT class="easyui-textbox" type="text" name="sysuserCustom.xname" /></TD>
+				<td><INPUT class="easyui-textbox" type="text" name="sysuserCustom.xiName" /></TD>
 				<td>
 					<a id="btn" href="#" onclick="queryuser()"
 					class="easyui-linkbutton" iconCls='icon-search'>查询</a>

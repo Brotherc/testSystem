@@ -16,10 +16,8 @@ import ytk.base.business.SystemConfigEbo;
 import ytk.base.business.SysuserEbo;
 import ytk.base.business.XiEbo;
 import ytk.base.pojo.po.Dictinfo;
-import ytk.base.pojo.po.Sysuser;
-import ytk.base.pojo.vo.ClassCustom;
-import ytk.base.pojo.vo.ClassQueryVo;
 import ytk.base.pojo.vo.PageQuery;
+import ytk.base.pojo.vo.Role;
 import ytk.base.pojo.vo.SysuserCustom;
 import ytk.base.pojo.vo.SysuserQueryVo;
 import ytk.base.process.context.Config;
@@ -76,10 +74,13 @@ public class SysuserAction {
 	
 	//根据页面传送的数据添加用户，返回响应信息
 	@RequestMapping("/sysuser/add")
-	public @ResponseBody SubmitResultInfo addSysuser(SysuserQueryVo sysuserQueryVo,ClassQueryVo classQueryVo) throws Exception{
+	public @ResponseBody SubmitResultInfo addSysuser(SysuserQueryVo sysuserQueryVo,String[] roleList) throws Exception{
+		
+		//查询教师角色的uuid
+		String teacherRoleUuid=systemConfigEbo.findDictinfoByDictcode("s01", "1").getRemark();
 		
 		//添加用户
-		sysuserEbo.addSysuser(sysuserQueryVo.getSysuserCustom(),classQueryVo.getClassCustom());
+		sysuserEbo.addSysuser(sysuserQueryVo.getSysuserCustom(),roleList,teacherRoleUuid);
 		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(Config.MESSAGE, 906, null));
 	}
 	
@@ -90,29 +91,41 @@ public class SysuserAction {
 		//查询修改用户信息
 		SysuserCustom sysuserCustom = sysuserEbo.findSysuserByUuid(uuid);
 		model.addAttribute("sysuserCustom", sysuserCustom);
-		
-		//查询用户班级信息
-		String classuuid = sysuserCustom.getClassuuid();
-		if(classuuid!=null&&!classuuid.trim().equals("")){
-			ClassCustom classCustom = classEbo.findClassByUuid(classuuid);
-			model.addAttribute("classCustom", classCustom);
-		}
 
+		List<Role> roleList = sysuserCustom.getRoleList();
+		
+		//加载用户角色信息
+		String s="[";
+		for(int i=0;i<roleList.size();i++){
+			s+="'"+roleList.get(i).getRoleId()+"'";
+			if(i!=roleList.size()-1)
+				s+=",";
+		}
+		s+="]";
+		System.out.println(s);
+		model.addAttribute("roleList", s);
+		
 		return "/base/sysuser/edit";
 	}
 	//根据页面传递的数据，修改用户信息
 	@RequestMapping("/sysuser/edit")
-	public @ResponseBody SubmitResultInfo editSysuser(Long uuid,SysuserQueryVo sysuserQueryVo,ClassQueryVo classQueryVo) throws Exception{
+	public @ResponseBody SubmitResultInfo editSysuser(Long uuid,SysuserQueryVo sysuserQueryVo,String[] roleList) throws Exception{
+		
+		//查询教师角色的uuid
+		String teacherRoleUuid=systemConfigEbo.findDictinfoByDictcode("s01", "1").getRemark();
+		
 		SysuserCustom sysuserCustom = sysuserQueryVo.getSysuserCustom();
-		ClassCustom classCustom = classQueryVo.getClassCustom();
-		sysuserEbo.updateSysuser(uuid, sysuserCustom,classCustom);
+		sysuserEbo.updateSysuser(uuid, sysuserCustom,roleList,teacherRoleUuid);
 		
 		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(Config.MESSAGE, 906, null));
 	}
 	
 	@RequestMapping("/sysuser/delete")
 	public @ResponseBody SubmitResultInfo deleteSysuser(Long uuid) throws Exception{
-		sysuserEbo.deleteSysuserByUuid(uuid);
+		//查询教师角色的uuid
+		String teacherRoleUuid=systemConfigEbo.findDictinfoByDictcode("s01", "1").getRemark();
+		
+		sysuserEbo.deleteSysuserByUuid(uuid,teacherRoleUuid);
 		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(Config.MESSAGE, 906, null));
 	}
 	
@@ -132,10 +145,12 @@ public class SysuserAction {
 	public @ResponseBody List<Dictinfo> findSysuserType() throws Exception{
 		return systemConfigEbo.findSysuserTypeDictinfo();
 	}
-	//获取json格式课程信息
+	//获取json格式用户信息
 	@RequestMapping("/sysuser/jsonList")
-	public @ResponseBody List<Sysuser> getSysuserJsonList(String groupid) throws Exception{
-		List<Sysuser> sysuserList = sysuserEbo.findSysuserByGroupid(groupid);
-		return sysuserList;
+	public @ResponseBody List<SysuserCustom> getSysuserJsonListByDictcode(String dictcode) throws Exception{
+		//查询用户角色的uuid
+		String roleUuid=systemConfigEbo.findDictinfoByDictcode("s01", dictcode).getRemark();
+		
+		return sysuserEbo.findSysuserByRoleId(roleUuid);
 	}
 }

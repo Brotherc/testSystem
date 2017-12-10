@@ -124,13 +124,13 @@ public class HxlsOptRowsInterfaceKsglStudentImpl implements HxlsOptRowsInterface
 			//补全用户名（初始化学号）
 			sysuser.setUsername(userid);
 			//补全分组（学生）
-			sysuser.setGroupid("3");
+/*			sysuser.setGroupid("3");*/
 			//补全状态（正常）
 			sysuser.setUserstate("1");
 			//补全系uuid
 			sysuser.setXuuid(xi.getUuid());
 			//补全班级信息
-			sysuser.setClassuuid(classCustom.getUuid());
+/*			sysuser.setClassuuid(classCustom.getUuid());*/
 			sysuserMapper.insert(sysuser);
 			
 		} catch(ExceptionResultInfo e){

@@ -30,8 +30,7 @@ public class SysuserCustom extends Sysuser{
 		userstateMap.put(USERSTATE_STOP, USERSTATE_STOPVIEW);
 	}
 	
-	private String xname;
-	private String groupname;
+	private String xiName;
 	private Long birthdayMax;
 	private Long birthdayMin;
 	
@@ -40,30 +39,19 @@ public class SysuserCustom extends Sysuser{
 	private String userstateView;
 	private String birthdayMinView;
 	private String birthdayMaxView;
-	private String zyname;
-	
-	private String classuuid;
-	private String classname;
-	private Long zyuuid;
-	private Long njuuid;
-	private String njname;
-	
-	private String ksgluuid;
 	
 	private Menu menu;
 	private List<Operation> operationList;
+	private String roleId;
+	private String roleName;
 
-	public String getXname() {
-		return xname;
+	private List<Role> roleList;
+
+	public String getXiName() {
+		return xiName;
 	}
-	public void setXname(String xname) {
-		this.xname = xname;
-	}
-	public String getGroupname() {
-		return groupname;
-	}
-	public void setGroupname(String groupname) {
-		this.groupname = groupname;
+	public void setXiName(String xiName) {
+		this.xiName = xiName;
 	}
 	public Long getBirthdayMax() {
 		return birthdayMax;
@@ -148,48 +136,23 @@ public class SysuserCustom extends Sysuser{
 			setBirthday(DateUtil.parseDate(birthdayView).getTime());
 		}
 	}
-	public String getZyname() {
-		return zyname;
+	public List<Role> getRoleList() {
+		return roleList;
 	}
-	public void setZyname(String zyname) {
-		this.zyname = zyname;
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
 	}
-	public String getClassuuid() {
-		return classuuid;
+	public String getRoleId() {
+		return roleId;
 	}
-	public void setClassuuid(String classuuid) {
-		this.classuuid = classuuid;
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
 	}
-	public String getClassname() {
-		return classname;
+	public String getRoleName() {
+		return roleName;
 	}
-	public void setClassname(String classname) {
-		this.classname = classname;
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
-	public Long getZyuuid() {
-		return zyuuid;
-	}
-	public void setZyuuid(Long zyuuid) {
-		this.zyuuid = zyuuid;
-	}
-	public Long getNjuuid() {
-		return njuuid;
-	}
-	public void setNjuuid(Long njuuid) {
-		this.njuuid = njuuid;
-	}
-	public String getNjname() {
-		return njname;
-	}
-	public void setNjname(String njname) {
-		this.njname = njname;
-	}
-	public String getKsgluuid() {
-		return ksgluuid;
-	}
-	public void setKsgluuid(String ksgluuid) {
-		this.ksgluuid = ksgluuid;
-	}
-	
 	
 }

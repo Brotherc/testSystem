@@ -9,8 +9,6 @@ public class Sysuser {
 
     private String username;
 
-    private String groupid;
-
     private String userstate;
 
     private String name;
@@ -30,8 +28,6 @@ public class Sysuser {
     private String lastloginip;
 
     private Long xuuid;
-
-    private String classuuid;
 
     public Long getUuid() {
         return uuid;
@@ -63,14 +59,6 @@ public class Sysuser {
 
     public void setUsername(String username) {
         this.username = username == null ? null : username.trim();
-    }
-
-    public String getGroupid() {
-        return groupid;
-    }
-
-    public void setGroupid(String groupid) {
-        this.groupid = groupid == null ? null : groupid.trim();
     }
 
     public String getUserstate() {
@@ -151,13 +139,5 @@ public class Sysuser {
 
     public void setXuuid(Long xuuid) {
         this.xuuid = xuuid;
-    }
-
-    public String getClassuuid() {
-        return classuuid;
-    }
-
-    public void setClassuuid(String classuuid) {
-        this.classuuid = classuuid == null ? null : classuuid.trim();
     }
 }

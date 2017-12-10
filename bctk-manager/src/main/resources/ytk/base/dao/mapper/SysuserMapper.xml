@@ -6,7 +6,6 @@
     <result column="userid" property="userid" jdbcType="VARCHAR" />
     <result column="pwd" property="pwd" jdbcType="VARCHAR" />
     <result column="username" property="username" jdbcType="VARCHAR" />
-    <result column="groupid" property="groupid" jdbcType="CHAR" />
     <result column="userstate" property="userstate" jdbcType="CHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="addr" property="addr" jdbcType="VARCHAR" />
@@ -17,7 +16,6 @@
     <result column="lastLoginTime" property="lastlogintime" jdbcType="BIGINT" />
     <result column="lastLoginIp" property="lastloginip" jdbcType="VARCHAR" />
     <result column="xuuid" property="xuuid" jdbcType="BIGINT" />
-    <result column="classuuid" property="classuuid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -78,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    uuid, userid, pwd, username, groupid, userstate, name, addr, email, gender, birthday, 
-    tele, lastLoginTime, lastLoginIp, xuuid, classuuid
+    uuid, userid, pwd, username, userstate, name, addr, email, gender, birthday, tele, 
+    lastLoginTime, lastLoginIp, xuuid
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="ytk.base.pojo.po.SysuserExample" >
     select
@@ -116,17 +114,15 @@
   		select LAST_INSERT_ID()
   	</selectKey>
     insert into sysuser (uuid, userid, pwd, 
-      username, groupid, userstate, 
-      name, addr, email, 
-      gender, birthday, tele, 
-      lastLoginTime, lastLoginIp, xuuid, 
-      classuuid)
+      username, userstate, name, 
+      addr, email, gender, 
+      birthday, tele, lastLoginTime, 
+      lastLoginIp, xuuid)
     values (#{uuid,jdbcType=BIGINT}, #{userid,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
-      #{username,jdbcType=VARCHAR}, #{groupid,jdbcType=CHAR}, #{userstate,jdbcType=CHAR}, 
-      #{name,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{gender,jdbcType=INTEGER}, #{birthday,jdbcType=BIGINT}, #{tele,jdbcType=VARCHAR}, 
-      #{lastlogintime,jdbcType=BIGINT}, #{lastloginip,jdbcType=VARCHAR}, #{xuuid,jdbcType=BIGINT}, 
-      #{classuuid,jdbcType=VARCHAR})
+      #{username,jdbcType=VARCHAR}, #{userstate,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, 
+      #{addr,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
+      #{birthday,jdbcType=BIGINT}, #{tele,jdbcType=VARCHAR}, #{lastlogintime,jdbcType=BIGINT}, 
+      #{lastloginip,jdbcType=VARCHAR}, #{xuuid,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="ytk.base.pojo.po.Sysuser" >
   	<selectKey keyProperty="uuid" order="AFTER" resultType="long">
@@ -145,9 +141,6 @@
       </if>
       <if test="username != null" >
         username,
-      </if>
-      <if test="groupid != null" >
-        groupid,
       </if>
       <if test="userstate != null" >
         userstate,
@@ -179,9 +172,6 @@
       <if test="xuuid != null" >
         xuuid,
       </if>
-      <if test="classuuid != null" >
-        classuuid,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="uuid != null" >
@@ -195,9 +185,6 @@
       </if>
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="groupid != null" >
-        #{groupid,jdbcType=CHAR},
       </if>
       <if test="userstate != null" >
         #{userstate,jdbcType=CHAR},
@@ -229,9 +216,6 @@
       <if test="xuuid != null" >
         #{xuuid,jdbcType=BIGINT},
       </if>
-      <if test="classuuid != null" >
-        #{classuuid,jdbcType=VARCHAR},
-      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="ytk.base.pojo.po.SysuserExample" resultType="java.lang.Integer" >
@@ -254,9 +238,6 @@
       </if>
       <if test="record.username != null" >
         username = #{record.username,jdbcType=VARCHAR},
-      </if>
-      <if test="record.groupid != null" >
-        groupid = #{record.groupid,jdbcType=CHAR},
       </if>
       <if test="record.userstate != null" >
         userstate = #{record.userstate,jdbcType=CHAR},
@@ -288,9 +269,6 @@
       <if test="record.xuuid != null" >
         xuuid = #{record.xuuid,jdbcType=BIGINT},
       </if>
-      <if test="record.classuuid != null" >
-        classuuid = #{record.classuuid,jdbcType=VARCHAR},
-      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -302,7 +280,6 @@
       userid = #{record.userid,jdbcType=VARCHAR},
       pwd = #{record.pwd,jdbcType=VARCHAR},
       username = #{record.username,jdbcType=VARCHAR},
-      groupid = #{record.groupid,jdbcType=CHAR},
       userstate = #{record.userstate,jdbcType=CHAR},
       name = #{record.name,jdbcType=VARCHAR},
       addr = #{record.addr,jdbcType=VARCHAR},
@@ -312,8 +289,7 @@
       tele = #{record.tele,jdbcType=VARCHAR},
       lastLoginTime = #{record.lastlogintime,jdbcType=BIGINT},
       lastLoginIp = #{record.lastloginip,jdbcType=VARCHAR},
-      xuuid = #{record.xuuid,jdbcType=BIGINT},
-      classuuid = #{record.classuuid,jdbcType=VARCHAR}
+      xuuid = #{record.xuuid,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -329,9 +305,6 @@
       </if>
       <if test="username != null" >
         username = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="groupid != null" >
-        groupid = #{groupid,jdbcType=CHAR},
       </if>
       <if test="userstate != null" >
         userstate = #{userstate,jdbcType=CHAR},
@@ -363,9 +336,6 @@
       <if test="xuuid != null" >
         xuuid = #{xuuid,jdbcType=BIGINT},
       </if>
-      <if test="classuuid != null" >
-        classuuid = #{classuuid,jdbcType=VARCHAR},
-      </if>
     </set>
     where uuid = #{uuid,jdbcType=BIGINT}
   </update>
@@ -374,7 +344,6 @@
     set userid = #{userid,jdbcType=VARCHAR},
       pwd = #{pwd,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
-      groupid = #{groupid,jdbcType=CHAR},
       userstate = #{userstate,jdbcType=CHAR},
       name = #{name,jdbcType=VARCHAR},
       addr = #{addr,jdbcType=VARCHAR},
@@ -384,8 +353,7 @@
       tele = #{tele,jdbcType=VARCHAR},
       lastLoginTime = #{lastlogintime,jdbcType=BIGINT},
       lastLoginIp = #{lastloginip,jdbcType=VARCHAR},
-      xuuid = #{xuuid,jdbcType=BIGINT},
-      classuuid = #{classuuid,jdbcType=VARCHAR}
+      xuuid = #{xuuid,jdbcType=BIGINT}
     where uuid = #{uuid,jdbcType=BIGINT}
   </update>
 </mapper>

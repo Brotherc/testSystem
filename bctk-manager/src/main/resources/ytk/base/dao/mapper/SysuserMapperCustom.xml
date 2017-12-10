@@ -12,82 +12,89 @@
     </collection>
 </resultMap>
 
+	<resultMap type="ytk.base.pojo.vo.SysuserCustom" id="sysuserCustom">
+		
+	    <id column="uuid" property="uuid" jdbcType="BIGINT" />
+	    <result column="userid" property="userid" jdbcType="VARCHAR" />
+	    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
+	    <result column="username" property="username" jdbcType="VARCHAR" />
+	    <result column="userstate" property="userstate" jdbcType="CHAR" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="addr" property="addr" jdbcType="VARCHAR" />
+	    <result column="email" property="email" jdbcType="VARCHAR" />
+	    <result column="gender" property="gender" jdbcType="INTEGER" />
+	    <result column="birthday" property="birthday" jdbcType="BIGINT" />
+	    <result column="tele" property="tele" jdbcType="VARCHAR" />
+	    <result column="lastLoginTime" property="lastlogintime" jdbcType="BIGINT" />
+	    <result column="lastLoginIp" property="lastloginip" jdbcType="VARCHAR" />
+	    <result column="xuuid" property="xuuid" jdbcType="BIGINT" />
+	    
+	    <result column="xi_name" property="xiName" />
+		
+		<collection property="roleList" ofType="ytk.base.pojo.vo.Role">
+			<id column="role_id" property="roleId"/>
+			<result column="role_name" property="roleName"/>
+		</collection>		
+		
+	</resultMap>
 
 	<sql id="query_sysuser_where">
 		<if test="sysuserCustom!=null">
 			<if test="sysuserCustom.uuid!=null and sysuserCustom.uuid!=''">
-				and sysuser.uuid = #{sysuserCustom.uuid}
+				and SYSUSER.uuid = #{sysuserCustom.uuid}
 			</if>
 			<if test="sysuserCustom.userid!=null and sysuserCustom.userid!=''">
-				and sysuser.userid like '%${sysuserCustom.userid}%'
+				and SYSUSER.userid like '%${sysuserCustom.userid}%'
 			</if>
 			<if test="sysuserCustom.username!=null and sysuserCustom.username!=''">
-				and sysuser.username = #{sysuserCustom.username}
+				and SYSUSER.username = #{sysuserCustom.username}
 			</if>
 			<if test="sysuserCustom.addr!=null and sysuserCustom.addr!=''">
-				and sysuser.addr like '%${sysuserCustom.addr}%'
+				and SYSUSER.addr like '%${sysuserCustom.addr}%'
 			</if>
 			<if test="sysuserCustom.name!=null and sysuserCustom.name!=''">
-				and sysuser.name like '%${sysuserCustom.name}%'
+				and SYSUSER.name like '%${sysuserCustom.name}%'
 			</if>
 			<if test="sysuserCustom.email!=null and sysuserCustom.email!=''">
-				and sysuser.email like '%${sysuserCustom.email}%'
+				and SYSUSER.email like '%${sysuserCustom.email}%'
 			</if>
 			<if test="sysuserCustom.gender!=null and sysuserCustom.gender!=''">
-				and sysuser.gender = #{sysuserCustom.gender}
+				and SYSUSER.gender = #{sysuserCustom.gender}
 			</if>
 			<if test="sysuserCustom.tele!=null and sysuserCustom.tele!=''">
-				and sysuser.tele like '%${sysuserCustom.tele}%'
-			</if>
-			<if test="sysuserCustom.groupid!=null and sysuserCustom.groupid!=''">
-				and sysuser.groupid = #{sysuserCustom.groupid}
-			</if>
-			<if test="sysuserCustom.groupname!=null and sysuserCustom.groupname!=''">
-				and sysuser.groupname = #{sysuserCustom.groupname}
+				and SYSUSER.tele like '%${sysuserCustom.tele}%'
 			</if>
 			<if test="sysuserCustom.userstate!=null and sysuserCustom.userstate!=''">
-				and sysuser.userstate = #{sysuserCustom.userstate}
+				and SYSUSER.userstate = #{sysuserCustom.userstate}
 			</if>
 			<if test="sysuserCustom.birthdayMin!=null and sysuserCustom.birthdayMin!=''">
-				and sysuser.birthday <![CDATA[>= ]]> #{sysuserCustom.birthdayMin}
+				and SYSUSER.birthday <![CDATA[>= ]]> #{sysuserCustom.birthdayMin}
 			</if>
 			<if test="sysuserCustom.birthdayMax!=null and sysuserCustom.birthdayMax!=''">
-				and sysuser.birthday<![CDATA[<= ]]> #{sysuserCustom.birthdayMax}
+				and SYSUSER.birthday<![CDATA[<= ]]> #{sysuserCustom.birthdayMax}
 			</if>
-			<if test="sysuserCustom.xname!=null and sysuserCustom.xname!=''">
-				and sysuser.xname = #{sysuserCustom.xname}
+			<if test="sysuserCustom.xiName!=null and sysuserCustom.xiName!=''">
+				and SYSUSER.xi_name = #{sysuserCustom.xiName}
 			</if>
 			<if test="sysuserCustom.xuuid!=null and sysuserCustom.xuuid!=''">
-				and sysuser.xuuid = #{sysuserCustom.xuuid}
+				and SYSUSER.xuuid = #{sysuserCustom.xuuid}
 			</if>
-			<if test="sysuserCustom.classuuid!=null and sysuserCustom.classuuid!=''">
-				and sysuser.classuuid = #{sysuserCustom.classuuid}
+			<if test="sysuserCustom.roleName!=null and sysuserCustom.roleName!=''">
+				and SYSUSER.role_name = #{sysuserCustom.roleName}
 			</if>
-			<if test="sysuserCustom.classname!=null and sysuserCustom.classname!=''">
-				and sysuser.classname = #{sysuserCustom.classname}
-			</if>
-			<if test="sysuserCustom.zyuuid!=null and sysuserCustom.zyuuid!=''">
-				and sysuser.zyuuid = #{sysuserCustom.zyuuid}
-			</if>
-			<if test="sysuserCustom.zyname!=null and sysuserCustom.zyname!=''">
-				and sysuser.zyname = #{sysuserCustom.zyname}
-			</if>
-			<if test="sysuserCustom.njuuid!=null and sysuserCustom.njuuid!=''">
-				and sysuser.njuuid = #{sysuserCustom.njuuid}
-			</if>
-			<if test="sysuserCustom.njname!=null and sysuserCustom.njname!=''">
-				and sysuser.njname = #{sysuserCustom.njname}
+			<if test="sysuserCustom.roleId!=null and sysuserCustom.roleId!=''">
+				and SYSUSER.role_id = #{sysuserCustom.roleId}
 			</if>
 		</if>
 	</sql>
 
-	<select id="findSysuserList" parameterType="ytk.base.pojo.vo.SysuserQueryVo" resultType="ytk.base.pojo.vo.SysuserCustom">
+	<select id="findSysuserList" parameterType="ytk.base.pojo.vo.SysuserQueryVo" resultMap="sysuserCustom">
 		SELECT *FROM (
-			SELECT SYSUSER.uuid,userid,username,userstate,SYSUSER.name,groupid,addr,email,gender,birthday,tele,xuuid,XI.name xname,
-			(SELECT info FROM dictinfo WHERE dictcode=SYSUSER.groupid AND typecode='s01')groupname
-			FROM SYSUSER  LEFT OUTER JOIN XI 
-			ON SYSUSER.xuuid=XI.uuid
-		) sysuser
+			SELECT sysuser.uuid,userid,username,userstate,sysuser.name,addr,email,gender,birthday,tele,xuuid,xi.name xi_name,bss_sys_sysuserrole.roleid role_id,
+			(SELECT rolename FROM bss_sys_role WHERE bss_sys_role.roleid=bss_sys_sysuserrole.roleid) role_name
+			FROM sysuser LEFT OUTER JOIN xi
+			ON sysuser.xuuid=xi.uuid INNER JOIN bss_sys_sysuserrole ON sysuser.uuid=bss_sys_sysuserrole.sysuserid
+		) SYSUSER
 		
 		<where>
 			<include refid="query_sysuser_where"></include>
@@ -100,12 +107,22 @@
 
 	<select id="findSysuserListCount" parameterType="ytk.base.pojo.vo.SysuserQueryVo" resultType="int">
 		SELECT count(*)FROM (
-			SELECT SYSUSER.uuid,userid,username,userstate,SYSUSER.name,groupid,addr,email,gender,birthday,tele,xuuid,XI.name xname,
-			(SELECT info FROM dictinfo WHERE dictcode=SYSUSER.groupid AND typecode='s01')groupname
-			FROM SYSUSER  LEFT OUTER JOIN XI 
-			ON SYSUSER.xuuid=XI.uuid
-		) sysuser
-		
+			SELECT sysuser.uuid,userid,username,userstate,sysuser.name,addr,email,gender,birthday,tele,xuuid,xi.name xi_name
+		<if test="sysuserCustom!=null">
+			<if test="sysuserCustom.roleId!=null and sysuserCustom.roleId!=''">
+				,bss_sys_sysuserrole.roleid role_id,
+				(SELECT rolename FROM bss_sys_role WHERE bss_sys_role.roleid=bss_sys_sysuserrole.roleid) role_name
+			</if>
+		</if>			
+			FROM sysuser LEFT OUTER JOIN xi
+			ON sysuser.xuuid=xi.uuid 
+		<if test="sysuserCustom!=null">
+			<if test="sysuserCustom.roleId!=null and sysuserCustom.roleId!=''">
+				INNER JOIN bss_sys_sysuserrole ON sysuser.uuid=bss_sys_sysuserrole.sysuserid
+			</if>
+		</if>				
+
+		) SYSUSER
 		<where>
 			<include refid="query_sysuser_where"></include>
 		</where>
@@ -113,7 +130,7 @@
 	
 
   <!-- 根据角色获取菜单(一、二级) -->
-  <select id="findMenuByroleid" parameterType="java.lang.String"
+  <select id="findMenuBySysuserUuid" parameterType="java.lang.Long"
     resultMap="findMenuByroleidResultMap"
   >
 	SELECT m1.moduleid menuid,
@@ -133,12 +150,12 @@
    
    			WHERE bss_sys_role.roleid=bss_sys_rolesys.roleid 
    				AND bss_sys_role.roleid=bss_sys_rolemodule.roleid
-   				AND bss_sys_role.roleid=#{roleid} 
+   				AND bss_sys_role.roleid IN (SELECT roleid FROM bss_sys_sysuserrole WHERE bss_sys_sysuserrole.sysuserid=#{sysuseruuid})
    		)
    	ORDER BY m1.showorder,m2.showorder
   </select>
 	
-  <select id="findOperatByRoleid" parameterType="java.lang.String"
+  <select id="findOperatBySysuserUuid" parameterType="java.lang.Long"
     resultType="ytk.base.pojo.vo.Operation"
   >
   
@@ -157,7 +174,7 @@
         
          				WHERE bss_sys_role.roleid = bss_sys_rolesys.roleid
            					AND bss_sys_roleoperate.rmid = bss_sys_rolemodule.rmid
-           					AND bss_sys_role.roleid = #{roleid}
+           					AND bss_sys_role.roleid IN (SELECT roleid FROM bss_sys_sysuserrole WHERE bss_sys_sysuserrole.sysuserid=#{sysuseruuid})
            					AND bss_sys_role.roleid=bss_sys_rolemodule.roleid
         	)
 

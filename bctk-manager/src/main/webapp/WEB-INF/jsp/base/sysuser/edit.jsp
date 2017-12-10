@@ -20,8 +20,6 @@
 			var val=$.trim($(this).combobox('getValue'));
 			$(this).combobox('setValue',val);
 		});	
- 		var val=$.trim($("#zyname").combobox("getText"));
- 		$("#zyname").combobox("setValue",val);
 	  jquerySubByFId('userform',sysusersave_callback,null,"json");
 	  
   }
@@ -48,14 +46,54 @@
 	        $('.easyui-datebox').datebox({  
 	            buttons: buttons  
 	        }); 
-	  
+
+		    $('#roleList').combobox({
+	            url: '${baseurl}sysuser/type.action',//对应的ashx页面的数据源 
+	            valueField: 'remark',//绑定字段ID  
+	            textField: 'info',//绑定字段Name
+	            panelHeight: 'auto',//自适应
+	            required:true,
+	            editable:false,
+	            multiple: true,
+	            formatter: function (row) {
+	                var opts = $(this).combobox('options');
+	                return '<input type="checkbox" class="combobox-checkbox" id="' + row[opts.valueField] + '">' + row[opts.textField]
+	            },
+
+	            onShowPanel: function () {
+	                var opts = $(this).combobox('options');
+	                var target = this;
+	                var values = $(target).combobox('getValues');
+	                $.map(values, function (value) {
+	                    var el = opts.finder.getEl(target, value);
+	                    el.find('input.combobox-checkbox')._propAttr('checked', true);
+	                })
+	            },
+	            onLoadSuccess: function () {
+	                var opts = $(this).combobox('options');
+	                var target = this;
+	                var values = $(target).combobox('getValues');
+	                $.map(values, function (value) {
+	                    var el = opts.finder.getEl(target, value);
+	                    el.find('input.combobox-checkbox')._propAttr('checked', true);
+	                })
+	            },
+	            onSelect: function (row) {
+	                var opts = $(this).combobox('options');
+	                var el = opts.finder.getEl(this, row[opts.valueField]);
+	                el.find('input.combobox-checkbox')._propAttr('checked', true);
+	            },
+	            onUnselect: function (row) {
+	                var opts = $(this).combobox('options');
+	                var el = opts.finder.getEl(this, row[opts.valueField]);
+	                el.find('input.combobox-checkbox')._propAttr('checked', false);
+	            }
+	        });
+	        
 	  
 	  $('#gender').combobox('setValues', '${sysuserCustom.gender}');
-	  $('#groupid').combobox('setValues', '${sysuserCustom.groupid}');
 	  $('#xuuid').combobox('setValues', '${sysuserCustom.xuuid}');
 	  
-	  $('#zyname').combobox('setValues', '${classCustom.zyname}');
-	  $('#nj').combobox('setValues', '${classCustom.njuuid}');
   });
 </script>
 </head>
@@ -132,8 +170,9 @@
 							<TD height=30 width="15%" align=right>用户类型：</TD>
 							
 							<TD class=category width="35%">
-								<input id="groupid" class="easyui-combobox" data-options="editable:false,url:'${baseurl}sysuser/type.action',valueField:'dictcode',textField:'info'" name="sysuserCustom.groupid" >
-								<div id="sysuser_groupidTip"></div>
+								<div>
+     								<input id="roleList" class="easyui-combobox" name="roleList" />
+								</div>
 							</TD>
 						</TR>
 						
@@ -188,23 +227,6 @@
 								<input type="radio" name="sysuserCustom.userstate" value="2" <c:if test="${sysuserCustom.userstate=='2'}">checked</c:if>/>暂停
 							</TD>
 						</TR>
-						<tr>
-							<TD height=30 width="15%" align=right >专业：</TD><!-- 用处：根据名称获取单位id -->
-							<td>
-								<input id="zyname" class="easyui-combobox" data-options="editable:true,mode:'remote',url:'${baseurl}zy/jsonList.action',valueField:'name',textField:'name'" name="classCustom.zyname" >
-							</TD>
-							
-							<TD height=30 width="15%" align=right >年级：</TD>
-							<TD class=category width="35%">
-								<input id="nj" class="easyui-combobox" data-options="editable:false,url:'${baseurl}nj/jsonList.action',valueField:'uuid',textField:'njnane'" name="classCustom.njuuid" >
-							</TD>
-						</tr>
-						<tr>
-							<TD height=30 width="15%" align=right >班级：</TD>
-							<TD class=category width="35%">
-								<input class="easyui-textbox" type="text" id="sysuser_class" name="classCustom.classname" value="${classCustom.classname}" />
-							</TD>						
-						</tr>
 						
 						<tr>
 							<td colspan=4 align=center class=category>
@@ -220,5 +242,11 @@
    </TBODY>
 </TABLE>
 </form>
+
+<script type="text/javascript">
+
+var s="$('#roleList').combobox('setValues', "+"${roleList}"+")";
+setTimeout(s, 500);
+</script>
 </body>
 </html>

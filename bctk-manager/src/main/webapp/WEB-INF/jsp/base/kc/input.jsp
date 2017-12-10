@@ -85,7 +85,7 @@ function toLogin(){
   
   $(function(){
 	    $('#teacher').combobox({
-            url: '${baseurl}sysuser/jsonList.action?groupid=1',//对应的ashx页面的数据源 
+            url: '${baseurl}sysuser/jsonList.action?dictcode=1',//对应的ashx页面的数据源 
             valueField: 'uuid',//绑定字段ID
             textField: 'userid',//绑定字段Name
             panelHeight: 'auto',//自适应

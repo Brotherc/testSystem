@@ -226,13 +226,13 @@ public class KsglStudentEbi implements KsglStudentEbo{
 		//补全用户名（初始化学号）
 		sysuserCustom.setUsername(userid);
 		//补全分组（学生）
-		sysuserCustom.setGroupid("3");
+/*		sysuserCustom.setGroupid("3");*/
 		//补全状态（正常）
 		sysuserCustom.setUserstate("1");
 		//补全系uuid
 		sysuserCustom.setXuuid(xuuid);
 		//补全班级信息
-		sysuserCustom.setClassuuid(classCustom.getUuid());
+/*		sysuserCustom.setClassuuid(classCustom.getUuid());*/
 		sysuserMapper.insert(sysuserCustom);
 		
 		//添加考试学生信息
@@ -365,8 +365,7 @@ public class KsglStudentEbi implements KsglStudentEbo{
 		
 		//修改系uuid
 		sysuser.setXuuid(xuuid);
-		//修改班级信息
-		sysuser.setClassuuid(classCustom.getUuid());
+		
 		sysuserMapper.updateByPrimaryKey(sysuser);
 		
 
@@ -389,12 +388,12 @@ public class KsglStudentEbi implements KsglStudentEbo{
 			throws Exception {
 		//学生所属专业存在考试试卷课程
 		Sysuser sysuser = sysuserMapper.selectByPrimaryKey(sysuseruuid);
-		Class classCustom = classMapper.selectByPrimaryKey(sysuser.getClassuuid());
+/*		Class classCustom = classMapper.selectByPrimaryKey(sysuser.getClassuuid());*/
 		Ksgl ksgl = ksglMapper.selectByPrimaryKey(ksgluuid);
 		KcZyExample kcZyExample=new KcZyExample();
 		KcZyExample.Criteria kcZyCriteria = kcZyExample.createCriteria();
 		kcZyCriteria.andKcuuidEqualTo(ksgl.getKcuuid());
-		kcZyCriteria.andZyuuidEqualTo(classCustom.getZyuuid());
+/*		kcZyCriteria.andZyuuidEqualTo(classCustom.getZyuuid());*/
 		List<KcZy> kcZyList = kcZyMapper.selectByExample(kcZyExample);
 		if(kcZyList==null||kcZyList.size()<1)
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1307, null));

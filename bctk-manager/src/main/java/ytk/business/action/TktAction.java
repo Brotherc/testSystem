@@ -162,7 +162,7 @@ public class TktAction {
 	
 	//跳转填空题审核列表页，加载页面所需信息
 	@RequestMapping("/tktShList")
-	public String toCheckDxtList(Model model) throws Exception{
+	public String toCheckDxtList(Model model,HttpSession session) throws Exception{
 		//加载题目难度类型信息
 		List<Dictinfo> ndTypeList = systemConfigEbo.findNdTypeDictinfo();
 		model.addAttribute("ndTypeList",ndTypeList);
@@ -173,6 +173,11 @@ public class TktAction {
 		//加载题目状态
 		List<Dictinfo> statusList = systemConfigEbo.findDictinfoByTypeCode("008");
 		model.addAttribute("statusList", statusList);
+		
+		//加载用户uuid
+		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
+		model.addAttribute("sysuseruuid", sysuser.getUuid());
+		
 		return "/business/tkt/checklist";
 		
 	}

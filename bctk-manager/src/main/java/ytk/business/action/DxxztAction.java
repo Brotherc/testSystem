@@ -149,7 +149,7 @@ public class DxxztAction {
 	
 	//跳转多项选择题审核列表页，加载页面所需信息
 	@RequestMapping("/dxxztShList")
-	public String toCheckDxxztList(Model model) throws Exception{
+	public String toCheckDxxztList(Model model,HttpSession session) throws Exception{
 		//加载题目难度类型信息
 		List<Dictinfo> ndTypeList = systemConfigEbo.findNdTypeDictinfo();
 		model.addAttribute("ndTypeList",ndTypeList);
@@ -160,6 +160,11 @@ public class DxxztAction {
 		//加载题目状态
 		List<Dictinfo> statusList = systemConfigEbo.findDictinfoByTypeCode("008");
 		model.addAttribute("statusList", statusList);
+		
+		//加载用户uuid
+		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
+		model.addAttribute("sysuseruuid", sysuser.getUuid());
+		
 		return "/business/dxxzt/checklist";
 		
 	}

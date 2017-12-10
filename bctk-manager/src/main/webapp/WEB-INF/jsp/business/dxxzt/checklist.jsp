@@ -108,7 +108,7 @@ var fixWidth=function(percent){
 			title : '多项选择题查询',//数据列表标题
 			nowrap : true,//单元格中的数据不换行，如果为true表示不换行，不换行情况下数据加载性能高，如果为false就是换行，换行数据加载性能不高
 			striped : true,//条纹显示效果
-			url : '${baseurl}dxxzt/query.action',//加载数据的连接，引连接请求过来是json数据
+			url : '${baseurl}dxxzt/query.action?dxxztCustom.sysuseruuid=${sysuseruuid}',//加载数据的连接，引连接请求过来是json数据
 			idField : 'uuid',//此字段很重要，数据结果集的唯一约束(重要)，如果写错影响 获取当前选中行的方法执行
 			loadMsg : '',
 			columns : columns_v,
@@ -125,13 +125,6 @@ var fixWidth=function(percent){
 			}
 		});
 		
-	    $('#zyname').combobox({
-	    	onSelect: function(data){
-	    		var zyname=data.name;
-	    		//根据专业名称查询对应课程信息
-	    	    $('#kcname').combobox('reload','${baseurl}kc/jsonList.action?kcCustom.zyname='+zyname);
-	    	}
-	    });
 	    
 	    
 	    $('#kcname').combobox({
@@ -177,8 +170,6 @@ var fixWidth=function(percent){
 			var val=$.trim($(this).combobox('getValue'));
 			$(this).combobox('setValue',val);
 		});
- 		var val=$.trim($("#zyname").combobox("getText"));
- 		$("#zyname").combobox("setValue",val);
  		var val=$.trim($("#kcname").combobox("getText"));
  		$("#kcname").combobox("setValue",val);
  		var val=$.trim($("#zsdname").combobox("getText"));
@@ -279,10 +270,6 @@ var fixWidth=function(percent){
 				<td class="one">
 					<input id="ndtype"  name="dxxztCustom.ndtype" >
 				</TD>
-				<TD class="left">专业名称：</TD>
-				<td>
-					<input id="zyname" class="easyui-combobox" data-options="editable:true,mode:'remote',url:'${baseurl}zy/jsonList.action',valueField:'name',textField:'name'" name="dxxztCustom.zyname" >
-				</TD>
 				<TD class="left">内容：</TD>
 				<td><INPUT class="easyui-textbox" type="text" name="dxxztCustom.content"/></TD>
 				<TD class="left">知识点名称：</td>
@@ -300,7 +287,7 @@ var fixWidth=function(percent){
 
 				<TD class="left">课程：</td>
 				<td>
-					<input id="kcname" class="easyui-combobox" data-options="editable:true,mode:'remote',url:'${baseurl}kc/jsonList.action',valueField:'name',textField:'name'" name="dxxztCustom.kcname" >
+					<input id="kcname" class="easyui-combobox" data-options="editable:true,mode:'remote',url:'${baseurl}kc/jsonList.action?kcCustom.sysuseruuid=${sysuseruuid}',valueField:'name',textField:'name'" name="dxxztCustom.kcname" >
 				</TD>
 				
 				<TD class="left">答案：</TD>
