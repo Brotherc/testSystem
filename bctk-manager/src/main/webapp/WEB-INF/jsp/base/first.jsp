@@ -95,12 +95,26 @@
 		style='background: url("images/layout-browser-hd-bg.gif") repeat-x center 50% rgb(127, 153, 190); height: 30px; color: rgb(255, 255, 255); line-height: 20px; overflow: hidden; font-family: Verdana, 微软雅黑, 黑体;'
 		border="false" split="true" region="north">
 		<SPAN style="padding-right: 20px; float: right;" class="head">
-			欢迎当前用户：${loginUser.username}&nbsp;&nbsp;
-			<A href=javascript:showhelp()>使用帮助</A>
+
+			<c:if test="${loginType==1 }">
+						欢迎当前用户：${loginUser.username}
+			</c:if>
+			<c:if test="${loginType==3 }">
+			学号：${loginStudent.studentId }&nbsp;&nbsp;姓名：${loginStudent.studentName}
+			</c:if>
 			&nbsp;&nbsp;
+			<c:if test="${loginType==1 }">
+						<A href=javascript:showhelp()>使用帮助</A>
+									&nbsp;&nbsp;
+			</c:if>
+			<c:if test="${loginType==1 }">
 			<A title='修改密码' ref='modifypwd' href=javascript:changepwd() icon='icon-null' id="modifypwd" >修改密码</A>
 			&nbsp;&nbsp;
-			<A id="loginOut" href=javascript:logout()>退出系统</A>
+			</c:if>			
+			<c:if test="${loginType==1 }">
+						<A id="loginOut" href=javascript:logout()>退出系统</A>
+			</c:if>
+
 
 		</SPAN> <SPAN style="padding-left: 10px; font-size: 16px;"><IMG
 			align="absmiddle" src="images/blocks.gif" width="20" height="20">
