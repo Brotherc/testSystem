@@ -253,7 +253,7 @@ public class KsglAction {
 	
 	//考试试卷提交
 	@RequestMapping("/ksgl/ks")
-	public @ResponseBody SubmitResultInfo KsglKs(HttpSession session,StudentSjdaQueryVo studentSjdaQueryVo,String sjuuid,String ksgluuid) throws Exception{
+	public @ResponseBody SubmitResultInfo KsglKsSubmit(HttpSession session,StudentSjdaQueryVo studentSjdaQueryVo,String sjuuid,String ksgluuid) throws Exception{
 		//修改学生该门考试的状态
 		Student student=(Student) session.getAttribute(Config.LOGINSTUDENT_KEY);
 		ksglStudentEbo.updateKsglStudentStatus(ksgluuid,student.getUuid(),2);
