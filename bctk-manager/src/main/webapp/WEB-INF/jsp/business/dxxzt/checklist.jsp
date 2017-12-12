@@ -276,23 +276,6 @@ var fixWidth=function(percent){
 				<td>
 					<input  name="dxxztCustom.zsdname" id="zsdname">
 				</TD>
-				<td>
-					<a id="btn" href="#" onclick="querydxxzt()"
-					class="easyui-linkbutton" iconCls='icon-search'>查询</a>
-				</td>
-			</TR>
-			<TR>
-				<TD class="left">创建用户：</td>
-				<td ><INPUT class="easyui-textbox" type="text" name="dxxztCustom.teachername" class="one"/></TD>
-
-				<TD class="left">课程：</td>
-				<td>
-					<input id="kcname" class="easyui-combobox" data-options="editable:true,mode:'remote',url:'${baseurl}kc/jsonList.action?kcCustom.sysuseruuid=${sysuseruuid}',valueField:'name',textField:'name'" name="dxxztCustom.kcname" >
-				</TD>
-				
-				<TD class="left">答案：</TD>
-				<td><INPUT type="text" class="easyui-textbox" name="dxxztCustom.answer"/></TD>
-				
 				<TD class="left">状态：</TD>
 				<td>
 				
@@ -310,7 +293,22 @@ var fixWidth=function(percent){
 						}],valueField:'key',textField:'value'" 
 					name="dxxztCustom.status" >
 				</TD>
+			</TR>
+			<TR>
+				<TD class="left">创建用户：</td>
+				<td ><INPUT class="easyui-textbox" type="text" name="dxxztCustom.teachername" class="one"/></TD>
+
+				<TD class="left">课程：</td>
+				<td>
+					<input id="kcname" class="easyui-combobox" data-options="editable:true,mode:'remote',url:'${baseurl}kc/jsonList.action?kcCustom.sysuseruuid=${sysuseruuid}',valueField:'name',textField:'name'" name="dxxztCustom.kcname" >
+				</TD>
 				
+				<TD class="left">答案：</TD>
+				<td><INPUT type="text" class="easyui-textbox" name="dxxztCustom.answer"/></TD>
+				<td>
+					<a id="btn" href="#" onclick="querydxxzt()"
+					class="easyui-linkbutton" iconCls='icon-search'>查询</a>
+				</td>				
 			</TR>
 		</TBODY>
 	</TABLE>

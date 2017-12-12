@@ -83,11 +83,15 @@ var fixWidth=function(percent){
 	//加载datagrid
 
 	$(function() {
+		var query={
+				"tktCustom.kcname":'${kc.name}'
+			};
 		$('#tktlist').datagrid({
 			title : '单选题查询',//数据列表标题
 			nowrap : true,//单元格中的数据不换行，如果为true表示不换行，不换行情况下数据加载性能高，如果为false就是换行，换行数据加载性能不高
 			striped : true,//条纹显示效果
 			url : '${baseurl}tkt/query.action?tktCustom.sysuseruuid=${sysuseruuid}',//加载数据的连接，引连接请求过来是json数据
+			queryParams:query,
 			idField : 'uuid',//此字段很重要，数据结果集的唯一约束(重要)，如果写错影响 获取当前选中行的方法执行
 			loadMsg : '',
 			columns : columns_v,
@@ -113,7 +117,7 @@ var fixWidth=function(percent){
 	    });
 	    
 	    $('#zsdname').combobox({
-	        url: '${baseurl}zsd/jsonList.action?zsdCustom.sysuseruuid=${sysuseruuid}',
+	        url: '${baseurl}zsd/jsonList.action?zsdCustom.sysuseruuid=${sysuseruuid}&zsdCustom.kcname=${kc.name}',
 	        valueField: 'name',
 	        textField: 'name',
 	        editable: true,
@@ -133,6 +137,8 @@ var fixWidth=function(percent){
 	        	return data;
 	        }
 	    });
+	    
+		$('#kcname').combobox('setValue','${kc.name}');
 	});
 	
 	//查询方法

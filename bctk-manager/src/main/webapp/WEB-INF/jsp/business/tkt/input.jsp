@@ -264,23 +264,28 @@ function toLogin(){
 							</TD>
 						</tr>
 						<tr>
-							<TD height=30 width="15%" align=right >程序填空题：</TD>
-							<TD class=category width="35%" colspan="3">
+							<TD height=30 width="15%" align=right >答案处理方案：</TD>
+							<TD class=category width="35%">
 								<div>
 								<input id="isprogram" class="easyui-combobox" 
 								data-options="editable:false,data: [{
 										key: '1',
-										value: '否',
+										value: '去除前后空格',
 										selected:'true'
 									},{
 										key: '2',
-										value: '是'
+										value: '去除所有空格'
 									},],valueField:'key',textField:'value'" 
 								name="tktCustom.isprogram" >
 								</div>
 								<div id="tkt_isprogramTip"></div>
 							</TD>
+							<TD height=30 width="15%" align=right >填空题空格格式：</TD>
+							<TD class=category width="100%" colspan="3">
+								___
+							</TD>
 						</tr>
+
 						
 						<tr >
 							<TD height=30 width="15%" align=right >空格数：</TD>

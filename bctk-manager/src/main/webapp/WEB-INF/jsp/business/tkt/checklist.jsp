@@ -247,35 +247,13 @@ var fixWidth=function(percent){
 				<td class="one">
 					<input id="ndtype"  name="tktCustom.ndtype" >
 				</TD>
-				<TD class="left">专业名称：</TD>
-				<td>
-					<input id="zyname" class="easyui-combobox" data-options="editable:true,mode:'remote',url:'${baseurl}zy/jsonList.action',valueField:'name',textField:'name'" name="tktCustom.zyname" >
-				</TD>
 				<TD class="left">内容：</TD>
 				<td><INPUT class="easyui-textbox" type="text" name="tktCustom.content"/></TD>
 				<TD class="left">知识点名称：</td>
 				<td>
 					<input  name="tktCustom.zsdname" id="zsdname">
 				</TD>
-				<td>
-					<a id="btn" href="#" onclick="querytkt()"
-					class="easyui-linkbutton" iconCls='icon-search'>查询</a>
-				</td>
-			</TR>
-			<TR>
-				<TD class="left">创建用户：</td>
-				<td ><INPUT type="text" class="easyui-textbox" name="tktCustom.teachername" class="one"/></TD>
-
-				<TD class="left">课程：</td>
-				<td>
-					<input id="kcname" class="easyui-combobox" data-options="editable:true,mode:'remote',url:'${baseurl}kc/jsonList.action?kcCustom.sysuseruuid=${sysuseruuid }',valueField:'name',textField:'name'" name="tktCustom.kcname" >
-				</TD>
-				
-				<TD class="left">答案：</TD>
-				<td><INPUT type="text" class="easyui-textbox" name="tktCustom.answer" class="four"/></TD>
-				
 				<TD class="left">状态：</TD>
-				
 				<td>
 				
 					<input class="easyui-combobox" 
@@ -292,7 +270,23 @@ var fixWidth=function(percent){
 						}],valueField:'key',textField:'value'" 
 					name="tktCustom.status" >
 				</TD>
+			</TR>
+			<TR>
+				<TD class="left">创建用户：</td>
+				<td ><INPUT type="text" class="easyui-textbox" name="tktCustom.teachername" class="one"/></TD>
+
+				<TD class="left">课程：</td>
+				<td>
+					<input id="kcname" class="easyui-combobox" data-options="editable:true,mode:'remote',url:'${baseurl}kc/jsonList.action?kcCustom.sysuseruuid=${sysuseruuid }',valueField:'name',textField:'name'" name="tktCustom.kcname" >
+				</TD>
 				
+				<TD class="left">答案：</TD>
+				<td><INPUT type="text" class="easyui-textbox" name="tktCustom.answer" class="four"/></TD>
+
+				<td>
+					<a id="btn" href="#" onclick="querytkt()"
+					class="easyui-linkbutton" iconCls='icon-search'>查询</a>
+				</td>				
 			</TR>
 		</TBODY>
 	</TABLE>

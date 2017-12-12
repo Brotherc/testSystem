@@ -99,27 +99,7 @@ var fixWidth=function(percent){
 	//加载datagrid
 
 	$(function() {
-		$('#dxtlist').datagrid({
-			title : '单选题查询',//数据列表标题
-			nowrap : true,//单元格中的数据不换行，如果为true表示不换行，不换行情况下数据加载性能高，如果为false就是换行，换行数据加载性能不高
-			striped : true,//条纹显示效果
-			url : '${baseurl}dxt/query.action?dxtCustom.sysuseruuid=${sysuseruuid}',//加载数据的连接，引连接请求过来是json数据
-			idField : 'uuid',//此字段很重要，数据结果集的唯一约束(重要)，如果写错影响 获取当前选中行的方法执行
-			loadMsg : '',
-			columns : columns_v,
-			pagination : true,//是否显示分页
-			rownumbers : true,//是否显示行号
-			pageList:[15,30,50],
-			toolbar : toolbar_v,
-			onClickRow : function(index, field, value) {
-				$('#dxtlist').datagrid('unselectRow', index);
-			},
-			//将加载成功后执行：清除选中的行
-			onLoadSuccess:function(){
-				$('#dxtlist').datagrid('clearSelections');
-			}
-		});
-		
+		var kcname;
 	    $('#zyname').combobox({
 	    	onSelect: function(data){
 	    		var zyname=data.name;
@@ -130,15 +110,23 @@ var fixWidth=function(percent){
 	    
 	    
 	    $('#kcname').combobox({
+	    	url:'${baseurl}kc/jsonList.action?kcCustom.sysuseruuid=${sysuseruuid}',
+	    	textField:'name',
+	    	valueField:'name',
+	    	editable:true,
+	    	mode:'remote',
 	    	onSelect: function(data){
 	    		var kcname=data.name;
 	    		//根据课程名称查询对应章节信息
 	    	    $('#zsdname').combobox('reload','${baseurl}zsd/jsonList.action?zsdCustom.kcname='+kcname);
-	    	}
+	    	},
+/* 	    	onLoadSuccess:function(){
+	    		$('#kcname').combobox('select','${kc.name}');
+	    	} */
 	    });
 	    
 	    $('#zsdname').combobox({
-	        url: '${baseurl}zsd/jsonList.action?zsdCustom.sysuseruuid=${sysuseruuid}',
+	        url: '${baseurl}zsd/jsonList.action?zsdCustom.sysuseruuid=${sysuseruuid}&zsdCustom.kcname=${kc.name}',
 	        valueField: 'name',
 	        textField: 'name',
 	        editable: true,
@@ -158,6 +146,32 @@ var fixWidth=function(percent){
 	        	return data;
 	        }
 	    });
+		var query={
+			"dxtCustom.kcname":'${kc.name}'
+		};
+		$('#dxtlist').datagrid({
+			title : '单选题查询',//数据列表标题
+			nowrap : true,//单元格中的数据不换行，如果为true表示不换行，不换行情况下数据加载性能高，如果为false就是换行，换行数据加载性能不高
+			striped : true,//条纹显示效果
+			url : '${baseurl}dxt/query.action?dxtCustom.sysuseruuid=${sysuseruuid}',//加载数据的连接，引连接请求过来是json数据
+			queryParams:query,
+			idField : 'uuid',//此字段很重要，数据结果集的唯一约束(重要)，如果写错影响 获取当前选中行的方法执行
+			loadMsg : '',
+			columns : columns_v,
+			pagination : true,//是否显示分页
+			rownumbers : true,//是否显示行号
+			pageList:[15,30,50],
+			toolbar : toolbar_v,
+			onClickRow : function(index, field, value) {
+				$('#dxtlist').datagrid('unselectRow', index);
+			},
+			//将加载成功后执行：清除选中的行
+			onLoadSuccess:function(){
+				$('#dxtlist').datagrid('clearSelections');
+			}
+		});
+		
+		$('#kcname').combobox('setValue','${kc.name}');
 	});
 	
 	//查询方法
@@ -277,7 +291,7 @@ var fixWidth=function(percent){
 
 				<TD class="left">课程：</td>
 				<td>
-					<input id="kcname" class="easyui-combobox" data-options="editable:true,mode:'remote',url:'${baseurl}kc/jsonList.action?kcCustom.sysuseruuid=${sysuseruuid}',valueField:'name',textField:'name'" name="dxtCustom.kcname" >
+					<input id="kcname"  name="dxtCustom.kcname" >
 				</TD>
 				
 				<TD class="left">答案：</TD>

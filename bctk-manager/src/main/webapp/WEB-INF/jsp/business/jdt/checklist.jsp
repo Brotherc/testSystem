@@ -84,7 +84,7 @@ var fixWidth=function(percent){
 			title : '简答题查询',//数据列表标题
 			nowrap : true,//单元格中的数据不换行，如果为true表示不换行，不换行情况下数据加载性能高，如果为false就是换行，换行数据加载性能不高
 			striped : true,//条纹显示效果
-			url : '${baseurl}jdt/query.actionjdtCustom.sysuseruuid=${sysuseruuid}',//加载数据的连接，引连接请求过来是json数据
+			url : '${baseurl}jdt/query.action?jdtCustom.sysuseruuid=${sysuseruuid}',//加载数据的连接，引连接请求过来是json数据
 			idField : 'uuid',//此字段很重要，数据结果集的唯一约束(重要)，如果写错影响 获取当前选中行的方法执行
 			loadMsg : '',
 			columns : columns_v,
@@ -249,24 +249,6 @@ var fixWidth=function(percent){
 				</TD>
 				<TD class="left">内容：</TD>
 				<td><INPUT class="easyui-textbox" type="text" name="jdtCustom.content"/></TD>
-
-				<td>
-					<a id="btn" href="#" onclick="queryjdt()"
-					class="easyui-linkbutton" iconCls='icon-search'>查询</a>
-				</td>
-			</TR>
-			<TR>
-				<TD class="left">创建用户：</td>
-				<td ><INPUT type="text" class="easyui-textbox" name="jdtCustom.teachername" class="one"/></TD>
-
-				<TD class="left">课程：</td>
-				<td>
-					<input id="kcname" class="easyui-combobox" data-options="editable:true,mode:'remote',url:'${baseurl}kc/jsonList.action?kcCustom.sysuseruuid=${sysuseruuid }',valueField:'name',textField:'name'" name="jdtCustom.kcname" >
-				</TD>
-				
-				<TD class="left">答案：</TD>
-				<td><INPUT type="text" class="easyui-textbox" name="jdtCustom.answer" class="four"/></TD>
-				
 				<TD class="left">状态：</TD>
 				<td>
 				
@@ -284,7 +266,22 @@ var fixWidth=function(percent){
 						}],valueField:'key',textField:'value'" 
 					name="jdtCustom.status" >
 				</TD>
+			</TR>
+			<TR>
+				<TD class="left">创建用户：</td>
+				<td ><INPUT type="text" class="easyui-textbox" name="jdtCustom.teachername" class="one"/></TD>
+
+				<TD class="left">课程：</td>
+				<td>
+					<input id="kcname" class="easyui-combobox" data-options="editable:true,mode:'remote',url:'${baseurl}kc/jsonList.action?kcCustom.sysuseruuid=${sysuseruuid }',valueField:'name',textField:'name'" name="jdtCustom.kcname" >
+				</TD>
 				
+				<TD class="left">答案：</TD>
+				<td><INPUT type="text" class="easyui-textbox" name="jdtCustom.answer" class="four"/></TD>
+				<td>
+					<a id="btn" href="#" onclick="queryjdt()"
+					class="easyui-linkbutton" iconCls='icon-search'>查询</a>
+				</td>				
 			</TR>
 		</TBODY>
 	</TABLE>

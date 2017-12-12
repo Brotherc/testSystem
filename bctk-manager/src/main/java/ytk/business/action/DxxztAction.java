@@ -10,13 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ytk.base.business.SystemConfigEbo;
+import ytk.base.business.TeacherKcEbo;
 import ytk.base.business.ZsdEbo;
-import ytk.base.business.ZyEbo;
-import ytk.base.pojo.po.Dictinfo;
+import ytk.base.pojo.po.Kc;
 import ytk.base.pojo.po.Sysuser;
 import ytk.base.pojo.po.Zsd;
-import ytk.base.pojo.po.Zy;
 import ytk.base.pojo.vo.PageQuery;
 import ytk.base.process.context.Config;
 import ytk.base.process.result.DataGridResultInfo;
@@ -32,27 +30,23 @@ public class DxxztAction {
 	@Autowired
 	private DxxztEbo dxxztEbo;
 	@Autowired
-	private SystemConfigEbo systemConfigEbo;
-	@Autowired
-	private ZyEbo zyEbo; 
-	@Autowired
 	private ZsdEbo zsdEbo;
+	@Autowired
+	private TeacherKcEbo teacherKcEbo;
 	
 	
 	//跳转多项选择题列表页，加载页面所需信息
 	@RequestMapping("/dxxztList")
 	public String toDxxztList(Model model,HttpSession session) throws Exception{
 		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
+		String teacherUuid=sysuser.getUuid();
+		
 		//加载用户uuid
-		model.addAttribute("sysuseruuid", sysuser.getUuid());
+		model.addAttribute("sysuseruuid", teacherUuid);
 		
-		//加载题目难度类型信息
-		List<Dictinfo> ndTypeList = systemConfigEbo.findNdTypeDictinfo();
-		model.addAttribute("ndTypeList",ndTypeList);
-		
-		//加载专业信息
-		List<Zy> zyList = zyEbo.findZyList();
-		model.addAttribute("zyList",zyList);
+		//加载任课教师一门任课课程
+		Kc kc = teacherKcEbo.findTeacherKcOneByTeacherUuid(teacherUuid);
+		model.addAttribute("kc", kc);
 		return "/business/dxxzt/list";
 	}
 	
@@ -82,12 +76,6 @@ public class DxxztAction {
 	@RequestMapping("/dxxztInput")
 	public String toDxxztInput(Model model,HttpSession session) throws Exception{
 		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
-		//加载题目难度类型信息
-		List<Dictinfo> ndTypeList = systemConfigEbo.findNdTypeDictinfo();
-		model.addAttribute("ndTypeList",ndTypeList);
-		//加载指定系的专业信息
-		List<Zy> zyList = zyEbo.findZyByXiUuid(sysuser.getXuuid());
-		model.addAttribute("zyList",zyList);
 		
 		model.addAttribute("sysuseruuid", sysuser.getUuid());
 		return "/business/dxxzt/input";
@@ -105,12 +93,6 @@ public class DxxztAction {
 	@RequestMapping("/dxxztEdit")
 	public String toEditDxxzt(Model model,String uuid,HttpSession session) throws Exception{
 		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
-		//加载题目难度类型信息
-		List<Dictinfo> ndTypeList = systemConfigEbo.findNdTypeDictinfo();
-		model.addAttribute("ndTypeList",ndTypeList);
-		//加载专业信息
-		List<Zy> zyList = zyEbo.findZyList();
-		model.addAttribute("zyList",zyList);
 		//加载多项选择题信息
 		DxxztCustom dxxztCustom = dxxztEbo.findDxxztByUuid(uuid);
 		model.addAttribute("dxxztCustom",dxxztCustom);
@@ -150,16 +132,6 @@ public class DxxztAction {
 	//跳转多项选择题审核列表页，加载页面所需信息
 	@RequestMapping("/dxxztShList")
 	public String toCheckDxxztList(Model model,HttpSession session) throws Exception{
-		//加载题目难度类型信息
-		List<Dictinfo> ndTypeList = systemConfigEbo.findNdTypeDictinfo();
-		model.addAttribute("ndTypeList",ndTypeList);
-		//加载专业信息
-		List<Zy> zyList = zyEbo.findZyList();
-		model.addAttribute("zyList",zyList);
-		
-		//加载题目状态
-		List<Dictinfo> statusList = systemConfigEbo.findDictinfoByTypeCode("008");
-		model.addAttribute("statusList", statusList);
 		
 		//加载用户uuid
 		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
