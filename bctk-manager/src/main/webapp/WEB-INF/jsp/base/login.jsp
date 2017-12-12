@@ -87,7 +87,7 @@ $(document).ready(function(){
 		message_alert(data);
 		var type = data.resultInfo.type;
 		if (1 == type) {//如果登录成功，这里1秒后执行跳转到首页
-			setTimeout("tofirst()", 1000);
+			tofirst();
 		} else {
 			//登录错误，重新刷新验证码
 			randomcode_refresh();

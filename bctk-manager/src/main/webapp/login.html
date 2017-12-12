@@ -60,10 +60,15 @@
 		
 		function login_commit_callback(data) {
 			var type = data.resultInfo.type;
+			var messageCode=data.resultInfo.messageCode;
 			if (1 == type) {//如果登录成功，这里1秒后执行跳转到首页
-				setTimeout("tofirst()", 1000);
+				tofirst();
 			} else {
-				showErr('loginname',data.resultInfo.message);
+				if(messageCode==113){
+					showErr('imgcheck',data.resultInfo.message);
+				}else if(messageCode==103){
+					showErr('loginname',data.resultInfo.message);
+				}
 				//$('#imgcheck').focus();
 			}
 		}
@@ -79,7 +84,31 @@
 					showErr(inputid,"学号中不能含有空格");
 					return;
 				}else{
-					showRight(inputid);
+					//showRight(inputid);
+					//请求输入的学号对应学生的真实姓名
+					$.ajax({
+						url : "http://localhost:8081/ytkproject/student/queryStudentName.action",
+						type : 'POST',
+						data: "studentId="+loginname,
+						dataType : 'json',
+						success : function(data) {
+							var message = data.resultInfo.message;
+							var type = data.resultInfo.type;
+							if(type==1){
+								showRight(inputid);
+								$('#'+inputid+'_err').html(message);
+							}
+							else{
+								//$('#'+inputid+'_right').hide();
+								showErr(inputid,message);
+								return;
+							}
+							
+						},
+						error : function(msg) {
+							alert('姓名加载异常!');
+						}
+					});
 				}
 			}else if(inputid=='imgcheck'){
 				var imgcheck=jQuery('#imgcheck').val();
@@ -129,7 +158,6 @@
 				return;
 			}
 			if(submitFlag){
-				alert("---");
 				jquerySubByFId('loginForm', login_commit_callback,null,'json'); 
 				return false;
 			}

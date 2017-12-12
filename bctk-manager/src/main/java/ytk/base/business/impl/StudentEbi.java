@@ -1,8 +1,10 @@
 package ytk.base.business.impl;
 
 import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import ytk.base.business.StudentEbo;
 import ytk.base.dao.mapper.StudentMapper;
 import ytk.base.dao.mapper.SysuserMapperCustom;
@@ -27,7 +29,7 @@ public class StudentEbi implements StudentEbo{
 		//检验该用户是否存在
 		Student student=findStudentByStudentId(studentId);
 		if(student==null)
-			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 101, null));
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 108, null));
 
 		StudentCustom studentCustom=new StudentCustom();
 		BeanUtils.copyProperties(student, studentCustom);
@@ -62,6 +64,17 @@ public class StudentEbi implements StudentEbo{
 		List<Student> studentList = studentMapper.selectByExample(studentExample);
 		if(studentList!=null&&studentList.size()>0)
 			return studentList.get(0);
+		return null;
+	}
+
+	@Override
+	public String findStudentNameByStudentId(String studentId) throws Exception {
+		StudentExample studentExample=new StudentExample();
+		Criteria studentCriteria = studentExample.createCriteria();
+		studentCriteria.andStudentIdEqualTo(studentId);
+		List<Student> studentList = studentMapper.selectByExample(studentExample);
+		if(studentList!=null&&studentList.size()>0)
+			return studentList.get(0).getStudentName();
 		return null;
 	}
 
