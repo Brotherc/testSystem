@@ -11,14 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ytk.base.business.SystemConfigEbo;
-import ytk.base.business.TmZsdEbo;
+import ytk.base.business.TeacherKcEbo;
 import ytk.base.business.ZsdEbo;
-import ytk.base.business.ZyEbo;
-import ytk.base.pojo.po.Dictinfo;
+import ytk.base.pojo.po.Kc;
 import ytk.base.pojo.po.Sysuser;
 import ytk.base.pojo.po.Zsd;
-import ytk.base.pojo.po.Zy;
 import ytk.base.pojo.vo.PageQuery;
 import ytk.base.process.context.Config;
 import ytk.base.process.result.DataGridResultInfo;
@@ -35,27 +32,22 @@ public class TktAction {
 	@Autowired
 	private TktEbo tktEbo;
 	@Autowired
-	private SystemConfigEbo systemConfigEbo;
-	@Autowired
-	private ZyEbo zyEbo; 
-	@Autowired
 	private ZsdEbo zsdEbo;
 	@Autowired
-	private TmZsdEbo tmZsdEbo;
+	private TeacherKcEbo teacherKcEbo;
 	
 	//跳转单选题列表页，加载页面所需信息
 	@RequestMapping("/tktList")
 	public String toTktList(Model model,HttpSession session) throws Exception{
 		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
-		//加载用户uuid
-		model.addAttribute("sysuseruuid", sysuser.getUuid());
+		String teacherUuid=sysuser.getUuid();
 		
-		//加载题目难度类型信息
-		List<Dictinfo> ndTypeList = systemConfigEbo.findNdTypeDictinfo();
-		model.addAttribute("ndTypeList",ndTypeList);
-		//加载专业信息
-		List<Zy> zyList = zyEbo.findZyList();
-		model.addAttribute("zyList",zyList);
+		//加载用户uuid
+		model.addAttribute("sysuseruuid", teacherUuid);
+
+		//加载任课教师一门任课课程
+		Kc kc = teacherKcEbo.findTeacherKcOneByTeacherUuid(teacherUuid);
+		model.addAttribute("kc", kc);
 		return "/business/tkt/list";
 	}
 	
@@ -85,12 +77,6 @@ public class TktAction {
 	@RequestMapping("/tktInput")
 	public String toTktInput(Model model,HttpSession session) throws Exception{
 		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
-		//加载题目难度类型信息
-		List<Dictinfo> ndTypeList = systemConfigEbo.findNdTypeDictinfo();
-		model.addAttribute("ndTypeList",ndTypeList);
-		//加载指定系的专业信息
-		List<Zy> zyList = zyEbo.findZyByXiUuid(sysuser.getXuuid());
-		model.addAttribute("zyList",zyList);
 		
 		model.addAttribute("sysuseruuid", sysuser.getUuid());
 		return "/business/tkt/input";
@@ -109,12 +95,6 @@ public class TktAction {
 	public String toEditTkt(Model model,String uuid,HttpSession session) throws Exception{
 		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
 		
-		//加载题目难度类型信息
-		List<Dictinfo> ndTypeList = systemConfigEbo.findNdTypeDictinfo();
-		model.addAttribute("ndTypeList",ndTypeList);
-		//加载专业信息
-		List<Zy> zyList = zyEbo.findZyList();
-		model.addAttribute("zyList",zyList);
 		//加载填空题题信息
 		TktCustom tktCustom = tktEbo.findTktByUuid(uuid);
 		model.addAttribute("tktCustom",tktCustom);
@@ -163,16 +143,6 @@ public class TktAction {
 	//跳转填空题审核列表页，加载页面所需信息
 	@RequestMapping("/tktShList")
 	public String toCheckDxtList(Model model,HttpSession session) throws Exception{
-		//加载题目难度类型信息
-		List<Dictinfo> ndTypeList = systemConfigEbo.findNdTypeDictinfo();
-		model.addAttribute("ndTypeList",ndTypeList);
-		//加载专业信息
-		List<Zy> zyList = zyEbo.findZyList();
-		model.addAttribute("zyList",zyList);
-		
-		//加载题目状态
-		List<Dictinfo> statusList = systemConfigEbo.findDictinfoByTypeCode("008");
-		model.addAttribute("statusList", statusList);
 		
 		//加载用户uuid
 		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);

@@ -10,13 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ytk.base.business.SystemConfigEbo;
+import ytk.base.business.TeacherKcEbo;
 import ytk.base.business.ZsdEbo;
-import ytk.base.business.ZyEbo;
-import ytk.base.pojo.po.Dictinfo;
+import ytk.base.pojo.po.Kc;
 import ytk.base.pojo.po.Sysuser;
 import ytk.base.pojo.po.Zsd;
-import ytk.base.pojo.po.Zy;
 import ytk.base.pojo.vo.PageQuery;
 import ytk.base.process.context.Config;
 import ytk.base.process.result.DataGridResultInfo;
@@ -32,25 +30,23 @@ public class JdtAction {
 	@Autowired
 	private JdtEbo jdtEbo;
 	@Autowired
-	private SystemConfigEbo systemConfigEbo;
-	@Autowired
-	private ZyEbo zyEbo; 
-	@Autowired
 	private ZsdEbo zsdEbo;
+	@Autowired
+	private TeacherKcEbo teacherKcEbo;
 	
 	
 	//跳转简答题列表页，加载页面所需信息
 	@RequestMapping("/jdtList")
 	public String toJdtList(Model model,HttpSession session) throws Exception{
 		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
+		String teacherUuid=sysuser.getUuid();
+		
 		//加载用户uuid
-		model.addAttribute("sysuseruuid", sysuser.getUuid());
-		//加载题目难度类型信息
-		List<Dictinfo> ndTypeList = systemConfigEbo.findNdTypeDictinfo();
-		model.addAttribute("ndTypeList",ndTypeList);
-		//加载专业信息
-		List<Zy> zyList = zyEbo.findZyList();
-		model.addAttribute("zyList",zyList);
+		model.addAttribute("sysuseruuid", teacherUuid);
+		
+		//加载任课教师一门任课课程
+		Kc kc = teacherKcEbo.findTeacherKcOneByTeacherUuid(teacherUuid);
+		model.addAttribute("kc", kc);
 		return "/business/jdt/list";
 	}
 	
@@ -80,12 +76,7 @@ public class JdtAction {
 	@RequestMapping("/jdtInput")
 	public String toJdtInput(Model model,HttpSession session) throws Exception{
 		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
-		//加载题目难度类型信息
-		List<Dictinfo> ndTypeList = systemConfigEbo.findNdTypeDictinfo();
-		model.addAttribute("ndTypeList",ndTypeList);
-		//加载指定系的专业信息
-		List<Zy> zyList = zyEbo.findZyByXiUuid(sysuser.getXuuid());
-		model.addAttribute("zyList",zyList);
+
 		
 		model.addAttribute("sysuseruuid", sysuser.getUuid());
 		return "/business/jdt/input";
@@ -103,13 +94,7 @@ public class JdtAction {
 	@RequestMapping("/jdtEdit")
 	public String toEditJdt(Model model,String uuid,HttpSession session) throws Exception{
 		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
-		
-		//加载题目难度类型信息
-		List<Dictinfo> ndTypeList = systemConfigEbo.findNdTypeDictinfo();
-		model.addAttribute("ndTypeList",ndTypeList);
-		//加载专业信息
-		List<Zy> zyList = zyEbo.findZyList();
-		model.addAttribute("zyList",zyList);
+
 		//加载简答题信息
 		JdtCustom jdtCustom = jdtEbo.findJdtByUuid(uuid);
 		model.addAttribute("jdtCustom",jdtCustom);
@@ -151,16 +136,6 @@ public class JdtAction {
 	//跳转简答题审核列表页，加载页面所需信息
 	@RequestMapping("/jdtShList")
 	public String toCheckJdtList(Model model,HttpSession session) throws Exception{
-		//加载题目难度类型信息
-		List<Dictinfo> ndTypeList = systemConfigEbo.findNdTypeDictinfo();
-		model.addAttribute("ndTypeList",ndTypeList);
-		//加载专业信息
-		List<Zy> zyList = zyEbo.findZyList();
-		model.addAttribute("zyList",zyList);
-		
-		//加载题目状态
-		List<Dictinfo> statusList = systemConfigEbo.findDictinfoByTypeCode("008");
-		model.addAttribute("statusList", statusList);
 		
 		//加载用户uuid
 		Sysuser sysuser=(Sysuser) session.getAttribute(Config.LOGINUSER_KEY);
