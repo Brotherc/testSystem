@@ -41,7 +41,6 @@ public class TmAction {
 	private JdtEbo jdtEbo;
 	@Autowired
 	private TmEbo tmEbo;
-	
 	@Autowired
 	private SystemConfigEbo systemConfigEbo;
 	
@@ -123,5 +122,11 @@ public class TmAction {
 				msgs[1]
 		}));
 	
+	}
+	
+	//获取单选题难度信息(json)
+	@RequestMapping("/dxt/ndTypeJsonList")
+	public @ResponseBody List<Dictinfo> getDxtNdTypeJsonList() throws Exception{
+		return systemConfigEbo.findNdTypeDictinfo();
 	}
 }
