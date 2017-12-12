@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ytk.base.business.ClassEbo;
 import ytk.base.business.SystemConfigEbo;
 import ytk.base.business.SysuserEbo;
-import ytk.base.business.XiEbo;
 import ytk.base.pojo.po.Dictinfo;
 import ytk.base.pojo.vo.PageQuery;
 import ytk.base.pojo.vo.Role;
@@ -32,8 +31,6 @@ public class SysuserAction {
 	private SysuserEbo sysuserEbo;
 	@Autowired 
 	private SystemConfigEbo systemConfigEbo;
-	@Autowired
-	private XiEbo xiEbo;
 	@Autowired
 	private ClassEbo classEbo;
 	
@@ -142,8 +139,8 @@ public class SysuserAction {
 	}
 	
 	@RequestMapping("/sysuser/type")
-	public @ResponseBody List<Dictinfo> findSysuserType() throws Exception{
-		return systemConfigEbo.findSysuserTypeDictinfo();
+	public @ResponseBody List<Dictinfo> findSysuserTypeNoStudent() throws Exception{
+		return systemConfigEbo.findSysuserTypeDictinfoNoStudent();
 	}
 	//获取json格式用户信息
 	@RequestMapping("/sysuser/jsonList")

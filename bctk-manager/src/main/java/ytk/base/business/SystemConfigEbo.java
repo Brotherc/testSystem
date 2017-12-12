@@ -17,4 +17,7 @@ public interface SystemConfigEbo {
 	
 	//根据typeocde和dictcode获取单个字典明细
 	public Dictinfo  findDictinfoByDictcode(String typecode,String dictcode) throws Exception;
+	
+	//根据数据字典类型(用户类别不包括学生)查询对应详情
+	public List<Dictinfo>findSysuserTypeDictinfoNoStudent() throws Exception;
 }

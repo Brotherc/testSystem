@@ -47,4 +47,13 @@ public class SystemConfigEbi implements SystemConfigEbo{
 		return null;
 		
 	}
+
+	@Override
+	public List<Dictinfo> findSysuserTypeDictinfoNoStudent() throws Exception {
+		DictinfoExample dictinfoExample=new DictinfoExample();
+		Criteria criteria = dictinfoExample.createCriteria();
+		criteria.andTypecodeEqualTo("s01");
+		criteria.andDictcodeNotEqualTo("3");
+		return dictinfoMapper.selectByExample(dictinfoExample);
+	}
 }
