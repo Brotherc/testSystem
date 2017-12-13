@@ -39,6 +39,7 @@ import ytk.business.business.StudentSjdaEbo;
 import ytk.business.pojo.po.Dxt;
 import ytk.business.pojo.po.Dxxzt;
 import ytk.business.pojo.po.Jdt;
+import ytk.business.pojo.po.Ksgl;
 import ytk.business.pojo.po.Sjmb;
 import ytk.business.pojo.po.Tkt;
 import ytk.business.pojo.vo.KsglCustom;
@@ -352,6 +353,12 @@ public class KsglAction {
 		
 		//加载考试管理uuid
 		model.addAttribute("ksgluuid", ksgluuid);
+		
+		//保存考试结束的时间到session中
+		Ksgl ksgl = ksglEbo.findKsglByUuid(ksgluuid);
+		if(ksgl!=null){
+			session.setAttribute("ksEndTime", ksgl.getEndtime());
+		}
 		
 		//加载试卷模板信息
 		Sjmb sjmb = sjmbEbo.findSjmbByUuid(sjCustom.getSjmbid());

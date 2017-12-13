@@ -269,6 +269,12 @@ public class SjTmAction {
 		model.addAttribute("sjCustom", sjCustom);
 		
 		model.addAttribute("dxtSize",dxtList.size());
+		
+		//计算剩余考试时间
+		Long endTime=(Long)session.getAttribute("ksEndTime");
+		Long currentTime=System.currentTimeMillis();
+		model.addAttribute("time", endTime-currentTime);
+		
 		return "/business/sj/sjdxt";
 	}	
 	@RequestMapping("/sjDxxzt")
@@ -301,6 +307,12 @@ public class SjTmAction {
 		//加载试卷信息
 		SjCustom sjCustom = sjEbo.findSjCustomByUuid(sjTmQueryVo.getSjTmCustom().getSjid());
 		model.addAttribute("sjCustom", sjCustom);
+		
+		//计算剩余考试时间
+		Long endTime=(Long)session.getAttribute("ksEndTime");
+		Long currentTime=System.currentTimeMillis();
+		model.addAttribute("time", endTime-currentTime);
+		
 		return "/business/sj/sjtkt";
 	}
 	@RequestMapping("/sjJdt")

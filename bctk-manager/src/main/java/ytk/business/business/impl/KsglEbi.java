@@ -26,6 +26,7 @@ import ytk.business.dao.mapper.StudentSjMapper;
 import ytk.business.dao.mapper.StudentSjdaMapper;
 import ytk.business.dao.mapper.TktMapper;
 import ytk.business.pojo.po.Ksgl;
+import ytk.business.pojo.po.KsglExample;
 import ytk.business.pojo.po.KsglStudentExample;
 import ytk.business.pojo.po.KsglStudentExample.Criteria;
 import ytk.business.pojo.po.SjTm;
@@ -484,5 +485,13 @@ public class KsglEbi implements KsglEbo{
 		if(!ksgl.getJkpwd().equals(jkPwd))
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1122, null));
 		
+	}
+
+	@Override
+	public Ksgl findKsglByUuid(String ksglUuid) throws Exception {
+		KsglExample ksglExample=new KsglExample();
+		KsglExample.Criteria ksglCriteria = ksglExample.createCriteria();
+		ksglCriteria.andUuidEqualTo(ksglUuid);
+		return ksglMapper.selectByPrimaryKey(ksglUuid);
 	}
 }

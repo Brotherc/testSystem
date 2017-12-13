@@ -2,6 +2,7 @@ package ytk.business.business;
 
 import java.util.List;
 
+import ytk.business.pojo.po.Ksgl;
 import ytk.business.pojo.vo.KsglCustom;
 import ytk.business.pojo.vo.KsglQueryVo;
 
@@ -44,5 +45,8 @@ public interface KsglEbo {
 	public void checkKsPwd(String ksgluuid,String ksPwd) throws Exception;
 	
 	//检测监考密码是否正确
-	public void checkJkPwd(String ksgluuid, String jkPwd) throws Exception;;
+	public void checkJkPwd(String ksgluuid, String jkPwd) throws Exception;
+	
+	//根据uuid查询考试管理信息
+	public Ksgl findKsglByUuid(String ksglUuid) throws Exception;
 }

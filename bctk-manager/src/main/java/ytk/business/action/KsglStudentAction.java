@@ -195,7 +195,7 @@ public class KsglStudentAction {
 	
 	//题目导入
 	@RequestMapping("/ksglStudent/import")
-	public @ResponseBody SubmitResultInfo importTm(
+	public @ResponseBody SubmitResultInfo importKsglStudent(
 			//写上传的文件
 			MultipartFile ksglStudentImportFile
 			)throws Exception{
