@@ -9,6 +9,10 @@ public class Student {
 
     private String classUuid;
 
+    private Long lastlogintime;
+
+    private String lastloginip;
+
     public String getUuid() {
         return uuid;
     }
@@ -39,5 +43,21 @@ public class Student {
 
     public void setClassUuid(String classUuid) {
         this.classUuid = classUuid == null ? null : classUuid.trim();
+    }
+
+    public Long getLastlogintime() {
+        return lastlogintime;
+    }
+
+    public void setLastlogintime(Long lastlogintime) {
+        this.lastlogintime = lastlogintime;
+    }
+
+    public String getLastloginip() {
+        return lastloginip;
+    }
+
+    public void setLastloginip(String lastloginip) {
+        this.lastloginip = lastloginip == null ? null : lastloginip.trim();
     }
 }

@@ -6,6 +6,8 @@
     <result column="student_id" property="studentId" jdbcType="VARCHAR" />
     <result column="student_name" property="studentName" jdbcType="VARCHAR" />
     <result column="class_uuid" property="classUuid" jdbcType="VARCHAR" />
+    <result column="lastLoginTime" property="lastlogintime" jdbcType="BIGINT" />
+    <result column="lastLoginIp" property="lastloginip" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -66,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    uuid, student_id, student_name, class_uuid
+    uuid, student_id, student_name, class_uuid, lastLoginTime, lastLoginIp
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="ytk.base.pojo.po.StudentExample" >
     select
@@ -100,9 +102,11 @@
   </delete>
   <insert id="insert" parameterType="ytk.base.pojo.po.Student" >
     insert into student (uuid, student_id, student_name, 
-      class_uuid)
+      class_uuid, lastLoginTime, lastLoginIp
+      )
     values (#{uuid,jdbcType=VARCHAR}, #{studentId,jdbcType=VARCHAR}, #{studentName,jdbcType=VARCHAR}, 
-      #{classUuid,jdbcType=VARCHAR})
+      #{classUuid,jdbcType=VARCHAR}, #{lastlogintime,jdbcType=BIGINT}, #{lastloginip,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="ytk.base.pojo.po.Student" >
     insert into student
@@ -119,6 +123,12 @@
       <if test="classUuid != null" >
         class_uuid,
       </if>
+      <if test="lastlogintime != null" >
+        lastLoginTime,
+      </if>
+      <if test="lastloginip != null" >
+        lastLoginIp,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="uuid != null" >
@@ -132,6 +142,12 @@
       </if>
       <if test="classUuid != null" >
         #{classUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastlogintime != null" >
+        #{lastlogintime,jdbcType=BIGINT},
+      </if>
+      <if test="lastloginip != null" >
+        #{lastloginip,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -156,6 +172,12 @@
       <if test="record.classUuid != null" >
         class_uuid = #{record.classUuid,jdbcType=VARCHAR},
       </if>
+      <if test="record.lastlogintime != null" >
+        lastLoginTime = #{record.lastlogintime,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastloginip != null" >
+        lastLoginIp = #{record.lastloginip,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -166,7 +188,9 @@
     set uuid = #{record.uuid,jdbcType=VARCHAR},
       student_id = #{record.studentId,jdbcType=VARCHAR},
       student_name = #{record.studentName,jdbcType=VARCHAR},
-      class_uuid = #{record.classUuid,jdbcType=VARCHAR}
+      class_uuid = #{record.classUuid,jdbcType=VARCHAR},
+      lastLoginTime = #{record.lastlogintime,jdbcType=BIGINT},
+      lastLoginIp = #{record.lastloginip,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -183,6 +207,12 @@
       <if test="classUuid != null" >
         class_uuid = #{classUuid,jdbcType=VARCHAR},
       </if>
+      <if test="lastlogintime != null" >
+        lastLoginTime = #{lastlogintime,jdbcType=BIGINT},
+      </if>
+      <if test="lastloginip != null" >
+        lastLoginIp = #{lastloginip,jdbcType=VARCHAR},
+      </if>
     </set>
     where uuid = #{uuid,jdbcType=VARCHAR}
   </update>
@@ -190,7 +220,9 @@
     update student
     set student_id = #{studentId,jdbcType=VARCHAR},
       student_name = #{studentName,jdbcType=VARCHAR},
-      class_uuid = #{classUuid,jdbcType=VARCHAR}
+      class_uuid = #{classUuid,jdbcType=VARCHAR},
+      lastLoginTime = #{lastlogintime,jdbcType=BIGINT},
+      lastLoginIp = #{lastloginip,jdbcType=VARCHAR}
     where uuid = #{uuid,jdbcType=VARCHAR}
   </update>
 </mapper>
