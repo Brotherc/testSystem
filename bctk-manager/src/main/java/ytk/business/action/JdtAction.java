@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ytk.base.business.TeacherKcEbo;
-import ytk.base.business.ZsdEbo;
 import ytk.base.pojo.po.Kc;
 import ytk.base.pojo.po.Sysuser;
 import ytk.base.pojo.po.Zsd;
@@ -29,8 +28,6 @@ public class JdtAction {
 	
 	@Autowired
 	private JdtEbo jdtEbo;
-	@Autowired
-	private ZsdEbo zsdEbo;
 	@Autowired
 	private TeacherKcEbo teacherKcEbo;
 	

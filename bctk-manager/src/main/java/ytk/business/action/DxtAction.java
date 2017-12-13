@@ -1,17 +1,13 @@
 package ytk.business.action;
 
 import java.util.List;
-
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import ytk.base.business.TeacherKcEbo;
-import ytk.base.business.ZsdEbo;
 import ytk.base.pojo.po.Kc;
 import ytk.base.pojo.po.Sysuser;
 import ytk.base.pojo.po.Zsd;
@@ -29,8 +25,6 @@ public class DxtAction {
 	
 	@Autowired
 	private DxtEbo dxtEbo;
-	@Autowired
-	private ZsdEbo zsdEbo;
 	@Autowired
 	private TeacherKcEbo teacherKcEbo;
 	
