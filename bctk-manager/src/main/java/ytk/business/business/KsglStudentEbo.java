@@ -31,4 +31,8 @@ public interface KsglStudentEbo {
 	public SubmitResultInfo importKsglStudent(String filePath) throws Exception;
 
 	public void updateKsglStudentStatus(String ksgluuid, String studentUuid,Integer status) throws Exception;
+	
+	public List<KsglStudentCustom> findJkKsglStudentList(KsglStudentQueryVo ksglStudentQueryVo) throws Exception;
+	
+	public int findJkKsglStudentListCount(KsglStudentQueryVo ksglStudentQueryVo) throws Exception;
 }

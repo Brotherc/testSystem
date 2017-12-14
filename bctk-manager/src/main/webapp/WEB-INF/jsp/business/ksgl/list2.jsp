@@ -86,6 +86,13 @@
 		formatter : function(value, row, index) {
 			return '<a href=javascript:studentSj("'+row.uuid+'","'+row.sjname+'")>查看</a>';
 		}
+	},{
+		field : 'option6',//对应json中的key
+		title : '监考',
+		width : 65,
+		formatter : function(value, row, index) {
+			return '<a href=javascript:ksglStudent("'+row.uuid+'","'+row.sjname+'")>查看</a>';
+		}
 	}] ];
 
 	//定义 datagird工具
@@ -215,6 +222,11 @@
 		var sendUrl = "${baseurl}studentSjList.action?ksgluuid="+id;
 		parent.opentabwindow(sjname, sendUrl);
 	}
+	
+	function ksglStudent(id,sjname){
+		var sendUrl = "${baseurl}jkKsglStudentList.action?ksgluuid="+id;
+		parent.opentabwindow('监考'+sjname, sendUrl);
+	}	
 	//删除系的回调
 	function ksgldel_callback(data){
 		message_alert(data);
