@@ -40,6 +40,7 @@
 			 (SELECT info FROM dictinfo WHERE dictcode=nj.status AND typecode='014') njstatusname
 				FROM class,zy,nj,xi
 					WHERE class.zyuuid=zy.uuid AND class.njuuid=nj.uuid AND zy.xuuid=xi.uuid
+					order by zyuuid,classname
 		) CLASS	
 		<where>
 			<include refid="query_class_where"></include>
@@ -55,6 +56,7 @@
 			 (SELECT info FROM dictinfo WHERE dictcode=nj.status AND typecode='014') njstatusname
 				FROM class,zy,nj,xi
 					WHERE class.zyuuid=zy.uuid AND class.njuuid=nj.uuid AND zy.xuuid=xi.uuid
+					order by zyuuid,classname
 		) CLASS				
 		<where>
 			<include refid="query_class_where"></include>

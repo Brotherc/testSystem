@@ -14,7 +14,7 @@ public class TktCustom extends Tkt{
 	private String teachername;
 	private String statusname;
 	private String zsdname;
-	private Long sysuseruuid;
+	private String sysuseruuid;
 	
 	private List<Zy> zyList;
 	private List<Zsd> zsdList;
@@ -164,11 +164,11 @@ public class TktCustom extends Tkt{
 		this.answer5 = answer5;
 	}
 
-	public Long getSysuseruuid() {
+	public String getSysuseruuid() {
 		return sysuseruuid;
 	}
 
-	public void setSysuseruuid(Long sysuseruuid) {
+	public void setSysuseruuid(String sysuseruuid) {
 		this.sysuseruuid = sysuseruuid;
 	}
 }

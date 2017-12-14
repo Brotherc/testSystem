@@ -57,7 +57,7 @@ function toLogin(){
 		_alert(result);//输出信息
  		 
 
- 	  if(data.resultInfo.type=='1'){
+ 	  if(data.resultInfo.type==1){
  		  setTimeout("parent.closemodalwindow()", 1500);
  		 setTimeout("parent.window.location.reload()", 2000);
  	  }

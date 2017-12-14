@@ -16,7 +16,7 @@ public class DxtCustom extends Dxt{
 	private List<Zy> zyList;
 	private List<Zsd> zsdList;
 	private String zsdname;
-	private Long sysuseruuid;
+	private String sysuseruuid;
 	
 	private String createtimeView;
 	private Long createtimeMin;
@@ -93,13 +93,11 @@ public class DxtCustom extends Dxt{
 	public void setZsdname(String zsdname) {
 		this.zsdname = zsdname;
 	}
-	public Long getSysuseruuid() {
+	public String getSysuseruuid() {
 		return sysuseruuid;
 	}
-	public void setSysuseruuid(Long sysuseruuid) {
+	public void setSysuseruuid(String sysuseruuid) {
 		this.sysuseruuid = sysuseruuid;
-	}	
-	
-	
+	}
 	
 }

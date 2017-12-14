@@ -320,7 +320,16 @@ function toLogin(){
 							<td>
      						<input id="zsd" class="easyui-combobox" name="zsdList" />
 							</td>
-						</tr>						
+						</tr>	
+						<tr>
+							<TD height=30 width="15%" align=right >答案：</TD>
+							<TD class=category width="35%">
+								<div>
+									<input type="text" id="tkt_answer" class="easyui-textbox" data-options="required:true" name="tktCustom.answer" />
+								</div>
+								<div id="tkt_answerTip"></div>
+							</TD>
+						</tr>					
 						<tr id="content">
 							  <td colspan=4 align=center class=category>
 								<a id="submitbtn"  class="easyui-linkbutton"   iconCls="icon-ok" href="#" onclick="tktsave()">提交</a>

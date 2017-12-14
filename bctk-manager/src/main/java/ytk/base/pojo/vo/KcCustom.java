@@ -14,7 +14,7 @@ public class KcCustom extends Kc{
 	private Long zyuuid;
 	private Long[] zyuuids;
 	private String q;
-	private Long sysuseruuid;
+	private String sysuseruuid;
 	
 	public Long getCreatetimeMin() {
 		return createtimeMin;
@@ -88,11 +88,12 @@ public class KcCustom extends Kc{
 			setCreatetime(DateUtil.parseDate(createtimeView).getTime());
 		}
 	}
-	public Long getSysuseruuid() {
+	public String getSysuseruuid() {
 		return sysuseruuid;
 	}
-	public void setSysuseruuid(Long sysuseruuid) {
+	public void setSysuseruuid(String sysuseruuid) {
 		this.sysuseruuid = sysuseruuid;
 	}
+
 	
 }

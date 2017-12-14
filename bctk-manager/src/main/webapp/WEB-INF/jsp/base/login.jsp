@@ -84,12 +84,13 @@ $(document).ready(function(){
 	}
 	//登录提示回调方法
 	function login_commit_callback(data) {
-		message_alert(data);
+
 		var type = data.resultInfo.type;
 		if (1 == type) {//如果登录成功，这里1秒后执行跳转到首页
 			tofirst();
 		} else {
 			//登录错误，重新刷新验证码
+			message_alert(data);
 			randomcode_refresh();
 		}
 

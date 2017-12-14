@@ -98,7 +98,6 @@ public class ClassEbi implements ClassEbo{
 		ClassExample.Criteria classCriteria = classExample.createCriteria();
 		classCriteria.andClassnameEqualTo(i+"");
 		classCriteria.andNjuuidEqualTo(classCustom.getNjuuid());
-		classCriteria.andZyuuidEqualTo(zy.getUuid());
 		List<Class> classList = classMapper.selectByExample(classExample);
 		if(classList!=null&&classList.size()>0)
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1503, null));

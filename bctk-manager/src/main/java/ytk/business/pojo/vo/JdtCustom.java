@@ -13,7 +13,7 @@ public class JdtCustom extends Jdt{
 	private String ndname;
 	private String teachername;
 	private String zsdname;
-	private Long sysuseruuid;
+	private String sysuseruuid;
 	private List<Zy> zyList;
 	private List<Zsd> zsdList;
 	
@@ -116,11 +116,11 @@ public class JdtCustom extends Jdt{
 		this.zsdname = zsdname;
 	}
 
-	public Long getSysuseruuid() {
+	public String getSysuseruuid() {
 		return sysuseruuid;
 	}
 
-	public void setSysuseruuid(Long sysuseruuid) {
+	public void setSysuseruuid(String sysuseruuid) {
 		this.sysuseruuid = sysuseruuid;
 	}
 	

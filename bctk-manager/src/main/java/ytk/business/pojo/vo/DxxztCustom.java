@@ -14,7 +14,7 @@ public class DxxztCustom extends Dxxzt{
 	private String teachername;
 	private String statusname;
 	private String zsdname;
-	private Long sysuseruuid;
+	private String sysuseruuid;
 	private List<Zy> zyList;
 	
 	private List<Zsd> zsdList;
@@ -117,11 +117,11 @@ public class DxxztCustom extends Dxxzt{
 		this.zsdname = zsdname;
 	}
 
-	public Long getSysuseruuid() {
+	public String getSysuseruuid() {
 		return sysuseruuid;
 	}
 
-	public void setSysuseruuid(Long sysuseruuid) {
+	public void setSysuseruuid(String sysuseruuid) {
 		this.sysuseruuid = sysuseruuid;
 	}
 	

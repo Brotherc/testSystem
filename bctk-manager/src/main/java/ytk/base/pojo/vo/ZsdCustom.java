@@ -7,7 +7,7 @@ public class ZsdCustom extends Zsd{
 	
 	private String q;
 	
-	private Long sysuseruuid;
+	private String sysuseruuid;
 
 	public String getKcname() {
 		return kcname;
@@ -25,12 +25,13 @@ public class ZsdCustom extends Zsd{
 		this.q = q;
 	}
 
-	public Long getSysuseruuid() {
+	public String getSysuseruuid() {
 		return sysuseruuid;
 	}
 
-	public void setSysuseruuid(Long sysuseruuid) {
+	public void setSysuseruuid(String sysuseruuid) {
 		this.sysuseruuid = sysuseruuid;
 	}
+
 	
 }
