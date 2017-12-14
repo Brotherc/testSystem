@@ -13,40 +13,38 @@
 <title>考试</title>
 
 <script type="text/javascript">
+function checkTime(i){
+	if(i<10){
+		i="0"+i;
+	}
+	return i;
+}
 $(function(){
-	var $radios = $("input:radio");
-	// 同时向所有的li元素存储数据
+	var time="${time}";
+	var leftTime =parseInt(time);
 	
-	  $('input:radio').click(function(){
-		    //
-		    var $radio = $(this);
-		    // if this was previously checked
-		    if ($radio.attr('waschecked') == "1"){
-		      $radio.prop('checked', false);
-		      $radio.attr("waschecked", "0");
-		    } else {
-		      $radio.prop('checked', true);
-		      $radio.attr('waschecked', "1");
-		    }
-		});
-		//alert($('#nav'));
-/* 		var menulist ='';
-		menulist +='<ul>';
-        	//这里自定义了一些属性存放菜单的内容：title存放菜单名称rel存放菜单地址，这些在属性在点击菜单 时要取出值使用
-			menulist += '<li><div>ascasc</div></li> ';
-
-		menulist += '</ul>';
-		alert($("#nav >ul"));
- 		$('#nav').accordion('add', {
-            title: 'sdfsdv',
-            content: menulist,//二级菜单的内容
-        }); */
-/* 		var pp = $('#nav').accordion('getSelected'); // 获取选择的面板 
-		alert(pp);
-		if (pp){    
-		    pp.panel('refresh',menulist);  // 调用'refresh'方法刷新 
-		}  */
-		//parent.refreshmenu();
+	
+	var h = parseInt(leftTime / 1000 / 60 / 60 % 24 , 10); //计算剩余的小时
+	var m = parseInt(leftTime / 1000 / 60 % 60, 10);//计算剩余的分钟
+	var s = parseInt(leftTime / 1000 % 60, 10);//计算剩余的秒数
+	h = checkTime(h); 
+	m = checkTime(m); 
+	s = checkTime(s);
+	$('#time').html(h+"小时" + m+"分"+s+"秒");
+	if(leftTime!=0)
+		leftTime=leftTime-1000;
+	
+	setInterval(function(){
+		var hours = parseInt(leftTime / 1000 / 60 / 60 % 24 , 10); //计算剩余的小时
+		var minutes = parseInt(leftTime / 1000 / 60 % 60, 10);//计算剩余的分钟
+		var seconds = parseInt(leftTime / 1000 % 60, 10);//计算剩余的秒数
+		hours = checkTime(hours); 
+		minutes = checkTime(minutes); 
+		seconds = checkTime(seconds);
+		$('#time').html(hours+"小时" + minutes+"分"+seconds+"秒");
+		if(leftTime!=0)
+			leftTime=leftTime-1000;
+	},1000); 
 		
 });
 function ks(){
