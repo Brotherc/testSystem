@@ -24,7 +24,9 @@ import ytk.base.process.result.ExceptionResultInfo;
 import ytk.base.process.result.ResultInfo;
 import ytk.base.process.result.ResultUtil;
 import ytk.base.process.result.SubmitResultInfo;
+import ytk.business.business.KsglEbo;
 import ytk.business.business.KsglStudentEbo;
+import ytk.business.pojo.po.Ksgl;
 import ytk.business.pojo.po.KsglStudent;
 import ytk.business.pojo.vo.KsglStudentCustom;
 import ytk.business.pojo.vo.KsglStudentQueryVo;
@@ -37,12 +39,28 @@ public class KsglStudentAction {
 	private KsglStudentEbo ksglStudentEbo;
 	@Autowired
 	private SystemConfigEbo systemConfigEbo;
+	@Autowired
+	private KsglEbo ksglEbo;
 	
 	//跳转考试学生列表页，加载页面所需信息
 	@RequestMapping("/ksglStudentList")
 	public String toKsglStudentList(Model model,String ksgluuid) throws Exception{
 		model.addAttribute("ksgluuid", ksgluuid);
 		return "/business/ksglstudent/list";
+	}
+	
+	//跳转监考考试学生列表页，加载页面所需信息
+	@RequestMapping("/jkKsglStudentList")
+	public String toJkKsglStudentList(Model model,String ksgluuid,HttpSession session) throws Exception{
+		model.addAttribute("ksgluuid", ksgluuid);
+		
+		//加载考试剩余时间
+		Ksgl ksgl = ksglEbo.findKsglByUuid(ksgluuid);
+		if(ksgl!=null){
+			Long leftTime=ksgl.getEndtime()-System.currentTimeMillis();
+			session.setAttribute("leftTime", leftTime);
+		}
+		return "/business/ksglstudent/jklist";
 	}
 	
 	//将查询考试学生信息返回列表页
@@ -68,6 +86,28 @@ public class KsglStudentAction {
 		return dataGridResultInfo;
 	}
 	
+	//将查询考试学生信息返回列表页
+	@RequestMapping("/jkKsglStudent/query")
+	public @ResponseBody DataGridResultInfo queryJkKsglStudent(KsglStudentQueryVo ksglStudentQueryVo,int page,int rows) throws Exception{
+		
+		//非空校验
+		ksglStudentQueryVo=ksglStudentQueryVo==null?new KsglStudentQueryVo():ksglStudentQueryVo;
+		
+		//查询列表的总数
+		int total = ksglStudentEbo.findJkKsglStudentListCount(ksglStudentQueryVo);
+		PageQuery pageQuery=new PageQuery();
+		pageQuery.setPageParams(total, rows, page);
+		
+		ksglStudentQueryVo.setPageQuery(pageQuery);
+
+		List<KsglStudentCustom> KsglStudentCustomList = ksglStudentEbo.findJkKsglStudentList(ksglStudentQueryVo);
+		//最终DataGridResultInfo通过@ResponseBody将java对象转成json
+		DataGridResultInfo dataGridResultInfo=new DataGridResultInfo();
+		dataGridResultInfo.setTotal(total);
+		dataGridResultInfo.setRows(KsglStudentCustomList);
+
+		return dataGridResultInfo;
+	}
 	
 	//删除考试学生信息
 	@RequestMapping("/ksglStudent/delete")

@@ -21,8 +21,13 @@ import ytk.base.process.result.ExceptionResultInfo;
 import ytk.base.process.result.ResultInfo;
 import ytk.base.process.result.ResultUtil;
 import ytk.base.process.result.SubmitResultInfo;
+import ytk.business.business.SjTmEbo;
+import ytk.business.business.SjdaEbo;
 import ytk.business.business.StudentSjEbo;
 import ytk.business.business.StudentSjdaEbo;
+import ytk.business.pojo.po.SjTm;
+import ytk.business.pojo.po.Sjda;
+import ytk.business.pojo.po.StudentSjda;
 import ytk.business.pojo.vo.StudentSjCustom;
 import ytk.business.pojo.vo.StudentSjQueryVo;
 
@@ -32,6 +37,10 @@ public class StudentSjAction {
 	private StudentSjEbo studentSjEbo;
 	@Autowired
 	private StudentSjdaEbo studentSjdaEbo;
+	@Autowired
+	private SjdaEbo sjdaEbo;
+	@Autowired
+	private SjTmEbo sjTmEbo;
 
 	
 	//跳转到学生考试试卷页面
@@ -114,5 +123,25 @@ public class StudentSjAction {
 				count_error
 		}), msgs_error);
 	}
-
+	//跳转到学生考试试卷评分
+	@RequestMapping("/studentSjda/pScore")
+	public String toStudentSjdaPScore(String studentSjdaUuid,Model model) throws Exception{
+		//加载学生考试试卷答案信息
+		StudentSjda studentSjda = studentSjdaEbo.findStudentSjdaByUuid(studentSjdaUuid);
+		model.addAttribute("studentSjda", studentSjda);
+		//加载学生考试试卷系题目信息
+		SjTm sjTm = sjTmEbo.findSjTmByUuid(studentSjda.getSjxitmid());
+		model.addAttribute("sjXitm", sjTm);
+		//加载试卷答案信息
+		Sjda sjda = sjdaEbo.findSjdaBySjXitmid(studentSjda.getSjxitmid());
+		model.addAttribute("sjda", sjda);
+		return "/business/studentSj/pScore";
+	};
+	
+	//评分
+	@RequestMapping("/studentSjda/pScoreSubmit")
+	public @ResponseBody SubmitResultInfo pScoreStudentSjda(String studentSjdaUuid,Integer score,Integer mscore) throws Exception{
+		studentSjdaEbo.pScore(studentSjdaUuid, score, mscore);
+		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(Config.MESSAGE, 906, null));
+	}
 }

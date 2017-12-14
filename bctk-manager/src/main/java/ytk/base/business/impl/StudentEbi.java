@@ -25,7 +25,7 @@ public class StudentEbi implements StudentEbo{
 	private SysuserMapperCustom sysuserMapperCustom;
 	
 	@Override
-	public StudentCustom loginCheck(String studentId) throws Exception {
+	public StudentCustom loginCheck(String studentId,String lastloginip) throws Exception {
 		//检验该用户是否存在
 		Student student=findStudentByStudentId(studentId);
 		if(student==null)
@@ -52,6 +52,15 @@ public class StudentEbi implements StudentEbo{
 		}
 		studentCustom.setOperationList(operations);//将用户操作权限存入用户身份对象中
 		
+		//修改用户的最后登录时间
+		long time = System.currentTimeMillis();
+		studentCustom.setLastlogintime(time);
+		
+		//修改用户最后登录的ip
+		studentCustom.setLastloginip(lastloginip);
+		
+		//更新学生信息
+		studentMapper.updateByPrimaryKey(studentCustom);
 		
 		return studentCustom;
 	}

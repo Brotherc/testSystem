@@ -493,4 +493,16 @@ public class KsglStudentEbi implements KsglStudentEbo{
 		ksglStudent.setStatus(status);
 		ksglStudentMapper.updateByPrimaryKey(ksglStudent);
 	}
+
+	@Override
+	public List<KsglStudentCustom> findJkKsglStudentList(
+			KsglStudentQueryVo ksglStudentQueryVo) throws Exception {
+		return ksglStudentMapperCustom.findKsglStudentListToJk(ksglStudentQueryVo);
+	}
+
+	@Override
+	public int findJkKsglStudentListCount(KsglStudentQueryVo ksglStudentQueryVo)
+			throws Exception {
+		return ksglStudentMapperCustom.findKsglStudentListCountToJk(ksglStudentQueryVo);
+	}
 }
