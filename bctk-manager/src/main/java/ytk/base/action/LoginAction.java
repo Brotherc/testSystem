@@ -1,5 +1,6 @@
 package ytk.base.action;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,11 +45,11 @@ public class LoginAction {
 	
 	//学生登录，进行身份校验，跳转首页
 	@RequestMapping("/studentLoginsubmit")
-	public @ResponseBody SubmitResultInfo studentLoginSubmit(String studentId,String validatecode,HttpSession session) throws Exception{
+	public @ResponseBody SubmitResultInfo studentLoginSubmit(String studentId,String validatecode,HttpSession session,HttpServletRequest request) throws Exception{
 		String loginValidateCode=(String) session.getAttribute("validateCode");
 		if(!loginValidateCode.equals(validatecode))
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 113, null));
-		StudentCustom student=studentEbo.loginCheck(studentId);
+		StudentCustom student=studentEbo.loginCheck(studentId,request.getRemoteAddr());
 		//将查询出来的用户信息保存到session
 		session.setAttribute(Config.LOGINSTUDENT_KEY, student);
 		session.setAttribute(Config.LOGINTYPE_KEY, "3");
