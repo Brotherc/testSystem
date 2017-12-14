@@ -33,7 +33,7 @@
 			return '<input type="hidden" name="studentSjList['+index+'].uuid" value="'+value+'" />';
 		}
 	}, {
-		field : 'userid',//对应json中的key
+		field : 'studentId',//对应json中的key
 		title : '学号',
 		width : 400
 	}, {
@@ -176,7 +176,7 @@
 			<TR>
 				<TD class="left">学号：</td>
 				<td>
-				<INPUT class="easyui-textbox" type="text" name="studentSjCustom.userid" />
+				<INPUT class="easyui-textbox" type="text" name="studentSjCustom.studentId" />
 				</TD>
 				<TD class="left">分数：</TD>
 				<td>

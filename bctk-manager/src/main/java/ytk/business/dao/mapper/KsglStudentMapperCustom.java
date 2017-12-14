@@ -10,4 +10,7 @@ public interface KsglStudentMapperCustom {
 	
 	public int findKsglStudentListCount(KsglStudentQueryVo ksglStudentQueryVo) throws Exception;
 	
+	public List<KsglStudentCustom> findKsglStudentListToJk(KsglStudentQueryVo ksglStudentQueryVo) throws Exception;
+	
+	public int findKsglStudentListCountToJk(KsglStudentQueryVo ksglStudentQueryVo) throws Exception;
 }

@@ -7,8 +7,8 @@
 			<if test="studentSjCustom.uuid!=null and studentSjCustom.uuid!=''">
 				and STUDENT_SJ.uuid = #{studentSjCustom.uuid}
 			</if>
-			<if test="studentSjCustom.studentid!=null and studentSjCustom.studentid!=''">
-				and STUDENT_SJ.studentid = #{studentSjCustom.studentid}
+			<if test="studentSjCustom.studentUuid!=null and studentSjCustom.studentUuid!=''">
+				and STUDENT_SJ.student_uuid = #{studentSjCustom.studentUuid}
 			</if>
 			<if test="studentSjCustom.sjid!=null and studentSjCustom.sjid!=''">
 				and STUDENT_SJ.sjid = #{studentSjCustom.sjid}
@@ -20,8 +20,8 @@
 				and STUDENT_SJ.ksgluuid = #{studentSjCustom.ksgluuid}
 			</if>
 			
-			<if test="studentSjCustom.userid!=null and studentSjCustom.userid!=''">
-				and STUDENT_SJ.userid = #{studentSjCustom.userid}
+			<if test="studentSjCustom.studentId!=null and studentSjCustom.studentId!=''">
+				and STUDENT_SJ.studentId = #{studentSjCustom.studentId}
 			</if>
 			<if test="studentSjCustom.classuuid!=null and studentSjCustom.classuuid!=''">
 				and STUDENT_SJ.classuuid = #{studentSjCustom.classuuid}
@@ -67,10 +67,10 @@
 	
 	<select id="findStudentSjList" parameterType="ytk.business.pojo.vo.StudentSjQueryVo" resultType="ytk.business.pojo.vo.StudentSjCustom">
 		SELECT * FROM(
-			SELECT student_sj.*,sysuser.userid,
+			SELECT student_sj.*,student.student_id studentId,
 			(SELECT info FROM dictinfo WHERE dictcode=student_sj.status AND typecode='012') statusname
-				FROM student_sj,sysuser
-					WHERE student_sj.studentid=sysuser.uuid AND student_sj.studentid IN (SELECT sysuseruuid FROM ksgl_student WHERE ksgluuid=#{studentSjCustom.ksgluuid})
+				FROM student_sj,student
+					WHERE student_sj.student_uuid=student.uuid AND student_sj.ksgluuid=#{studentSjCustom.ksgluuid}
 		) STUDENT_SJ
 		<where>
 			<include refid="query_studentSj_where"></include>
@@ -82,10 +82,10 @@
 	
 	<select id="findStudentSjListCount" parameterType="ytk.business.pojo.vo.StudentSjQueryVo" resultType="int">
 		SELECT count(*) FROM(
-			SELECT student_sj.*,sysuser.userid,
+			SELECT student_sj.*,student.student_id studentId,
 			(SELECT info FROM dictinfo WHERE dictcode=student_sj.status AND typecode='012') statusname
-				FROM student_sj,sysuser
-					WHERE student_sj.studentid=sysuser.uuid AND student_sj.studentid IN (SELECT sysuseruuid FROM ksgl_student WHERE ksgluuid=#{studentSjCustom.ksgluuid})
+				FROM student_sj,student
+					WHERE student_sj.student_uuid=student.uuid AND student_sj.ksgluuid=#{studentSjCustom.ksgluuid}
 		) STUDENT_SJ
 		<where>
 			<include refid="query_studentSj_where"></include>

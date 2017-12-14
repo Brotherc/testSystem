@@ -1,6 +1,8 @@
 package ytk.business.pojo.vo;
 
 import ytk.business.pojo.po.KsglStudent;
+import ytk.util.DateUtil;
+import ytk.util.MyUtil;
 
 public class KsglStudentCustom extends KsglStudent{
 	private String studentId;
@@ -14,6 +16,10 @@ public class KsglStudentCustom extends KsglStudent{
 	private Long njuuid;
 	private String njname;
 	private String statusname;
+	private Long lastLoginTime;
+	private String lastLoginIp;
+	
+	private String lastLoginTimeView;
 	
 	public String getStudentId() {
 		return studentId;
@@ -80,6 +86,22 @@ public class KsglStudentCustom extends KsglStudent{
 	}
 	public void setStudentName(String studentName) {
 		this.studentName = studentName;
+	}
+	public Long getLastLoginTime() {
+		return lastLoginTime;
+	}
+	public void setLastLoginTime(Long lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+		this.lastLoginTimeView=DateUtil.formatDateTime(lastLoginTime);
+	}
+	public String getLastLoginIp() {
+		return lastLoginIp;
+	}
+	public void setLastLoginIp(String lastLoginIp) {
+		this.lastLoginIp = lastLoginIp;
+	}
+	public String getLastLoginTimeView() {
+		return lastLoginTimeView;
 	}
 	
 }

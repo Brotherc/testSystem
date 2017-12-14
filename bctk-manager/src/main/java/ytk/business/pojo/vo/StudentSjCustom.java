@@ -3,16 +3,17 @@ package ytk.business.pojo.vo;
 import ytk.business.pojo.po.StudentSj;
 
 public class StudentSjCustom extends StudentSj{
-	private String userid;
+	private String studentId;
 	private String classuuid;
 	private Integer scoreMax;
 	private Integer scoreMin;
 	private String statusname;
-	public String getUserid() {
-		return userid;
+	
+	public String getStudentId() {
+		return studentId;
 	}
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
 	}
 	public String getClassuuid() {
 		return classuuid;

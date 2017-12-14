@@ -81,4 +81,36 @@
 			<include refid="query_ksglStudent_where"></include>
 		</where> 
 	</select>
+	
+	<select id="findKsglStudentListToJk" parameterType="ytk.business.pojo.vo.KsglStudentQueryVo" resultType="ytk.business.pojo.vo.KsglStudentCustom">
+		SELECT *FROM(
+
+			SELECT ksgl_student.uuid,ksgl_student.ksgluuid,ksgl_student.student_uuid studentUuid,ksgl_student.status,student.student_id studentId,student.student_name studentName,xi.uuid xiuuid,xi.name xiname,class.uuid classuuid,class.classname,zy.uuid zyuuid,zy.name zyname,nj.uuid njuuid,nj.njnane njname,student.lastLoginTime,student.lastLoginIp,
+			(SELECT info FROM dictinfo WHERE dictcode=ksgl_student.status AND typecode='010') statusname			
+				FROM ksgl_student,student,class,zy,nj,xi
+					WHERE ksgl_student.student_uuid=student.uuid AND student.class_uuid=class.uuid AND zy.xuuid=xi.uuid AND class.zyuuid=zy.uuid AND class.njuuid=nj.uuid
+
+		)KSGL_STUDENT
+		<where>
+			<include refid="query_ksglStudent_where"></include>
+		</where> 
+		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if>
+	</select>	
+	
+	<select id="findKsglStudentListCountToJk" parameterType="ytk.business.pojo.vo.KsglStudentQueryVo" resultType="int">
+		SELECT count(*)FROM(
+
+			SELECT ksgl_student.uuid,ksgl_student.ksgluuid,ksgl_student.student_uuid studentUuid,ksgl_student.status,student.student_id studentId,student.student_name studentName,xi.uuid xiuuid,xi.name xiname,class.uuid classuuid,class.classname,zy.uuid zyuuid,zy.name zyname,nj.uuid njuuid,nj.njnane njname,student.lastLoginTime,student.lastLoginIp,
+			(SELECT info FROM dictinfo WHERE dictcode=ksgl_student.status AND typecode='010') statusname			
+				FROM ksgl_student,student,class,zy,nj,xi
+					WHERE ksgl_student.student_uuid=student.uuid AND student.class_uuid=class.uuid AND zy.xuuid=xi.uuid AND class.zyuuid=zy.uuid AND class.njuuid=nj.uuid
+
+		)KSGL_STUDENT
+		<where>
+			<include refid="query_ksglStudent_where"></include>
+		</where> 
+	</select>
+
 </mapper>
