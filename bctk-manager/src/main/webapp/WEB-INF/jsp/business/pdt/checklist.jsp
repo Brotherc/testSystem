@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- 引用jquery easy ui的js库及css -->
 <LINK rel="stylesheet" type="text/css" href="${baseurl}js/jquery-easyui-1.4.1/styles/default.css">
 <%-- <LINK rel="stylesheet" type="text/css" href="${baseurl}js/easyui/styles/default.css"> --%>
 <%@ include file="/WEB-INF/jsp/base/common_css2.jsp"%>
@@ -18,56 +17,34 @@
 <script type="text/javascript" src="${baseurl}js/custom.jquery.form.js"></script>
 <script type="text/javascript" src="${baseurl}js/custom.box.main.js"></script>
 <script type="text/javascript" src="${baseurl}js/jquery.ajax.custom.extend.js"></script>
-<title>多项选择题目录维护</title>
+<title>简答题目录审核</title>
 
 <script type="text/javascript">
 var width=parent.document.body.clientWidth;
 var height=parent.document.body.clientHeight;
+
 var fixWidth=function(percent){
 	return (parent.document.body.clientWidth)*percent;
 };
-
 	//datagrid列定义
-	var columns_v = [ [  {
+	var columns_v = [ [ {
 		field : 'kcname',//对应json中的key
 		title : '课程名称 ',
 		width : fixWidth(0.08)
 	}, {
 		field : 'content',//对应json中的key
 		title : '题目内容',
-		width : fixWidth(0.145)
-	}, {
-		field : 'optiona',//对应json中的key
-		title : '选项A ',
-		width : fixWidth(0.045)
-	}, {
-		field : 'optionb',//对应json中的key
-		title : '选项B ',
-		width : fixWidth(0.045)
-	}, {
-		field : 'optionc',//对应json中的key
-		title : '选项C',
-		width : fixWidth(0.045)
-	}, {
-		field : 'optiond',//对应json中的key
-		title : '选项D',
-		width : fixWidth(0.045)
-	}, {
-		field : 'optione',//对应json中的key
-		title : '选项E',
-		width : fixWidth(0.045)
-	}, {
-		field : 'optionf',//对应json中的key
-		title : '选项F',
-		width : fixWidth(0.045)
-	}, {
-		field : 'statusname',//对应json中的key
-		title : '状态',
-		width : fixWidth(0.05)
+		width : fixWidth(0.372)
 	}, {
 		field : 'answer',//对应json中的key
 		title : '答案',
-		width : fixWidth(0.05)
+		width : fixWidth(0.05),
+		formatter : function(value, row, index) {
+			if(value==0)
+				return "×";
+			else
+				return "√";
+		}
 	},{
 		field : 'ndname',//对应json中的key
 		title : '难度类别',
@@ -77,45 +54,43 @@ var fixWidth=function(percent){
 		title : '创建用户',
 		width : fixWidth(0.05),
 	},{
+		field : 'statusname',//对应json中的key
+		title : '状态',
+		width : fixWidth(0.05),
+	},{
 		field : 'detail',//对应json中的key
 		title : '详情',
-		width : fixWidth(0.03),
+		width : fixWidth(0.05),
 		formatter : function(value, row, index) {
-			return "<a href=javascript:editdxxzt('"+row.uuid+"')>查看</a>";
+			return '<a href=javascript:tminfo("'+row.uuid+'","'+row.type+'")>查看</a>';
 		}
 	},{
 		field : 'option1',//对应json中的key
-		title : '操作',
-		width : fixWidth(0.03),
+		title : '审核',
+		width : fixWidth(0.05),
 		formatter : function(value, row, index) {
-			return "<a href=javascript:deletedxxzt('"+row.uuid+"')>删除</a>";
+			if(row.status==1){
+				//审核通过
+				return '<a href=javascript:outcheckpdt("'+row.uuid+'","'+row.type+'")>撤销通过</a>';
+			}
+			else  if(row.status==2){
+				//审核未通过
+				return '<a href=javascript:checkpdt("'+row.uuid+'","'+row.type+'")>审核通过</a>';
+			}
 		}
 	} ] ];
 
 	//定义 datagird工具
-	var toolbar_v = [ {//工具栏
-		id : 'btnadd',
-		text : '添加',
-		iconCls : 'icon-add',
-		handler : function() {
-			//打开一个窗口，用户添加页面
-			//参数：窗口的title、宽、高、url地址
-			createmodalwindow("添加题目信息", width*0.6, height*0.7, '${baseurl}dxxztInput.action');
-		}
-	} ];
+	var toolbar_v = [ ];
 
 	//加载datagrid
 
 	$(function() {
-		var query={
-				"dxxztCustom.kcname":'${kc.name}'
-			};
-		$('#dxxztlist').datagrid({
-			title : '多项选择题查询',//数据列表标题
+		$('#pdtlist').datagrid({
+			title : '简答题查询',//数据列表标题
 			nowrap : true,//单元格中的数据不换行，如果为true表示不换行，不换行情况下数据加载性能高，如果为false就是换行，换行数据加载性能不高
 			striped : true,//条纹显示效果
-			url : '${baseurl}dxxzt/query.action?dxxztCustom.sysuseruuid=${sysuseruuid}',//加载数据的连接，引连接请求过来是json数据
-			queryParams:query,
+			url : '${baseurl}pdt/query.action?pdtCustom.sysuseruuid=${sysuseruuid}',//加载数据的连接，引连接请求过来是json数据
 			idField : 'uuid',//此字段很重要，数据结果集的唯一约束(重要)，如果写错影响 获取当前选中行的方法执行
 			loadMsg : '',
 			columns : columns_v,
@@ -124,13 +99,14 @@ var fixWidth=function(percent){
 			pageList:[15,30,50],
 			toolbar : toolbar_v,
 			onClickRow : function(index, field, value) {
-				$('#dxxztlist').datagrid('unselectRow', index);
+				$('#pdtlist').datagrid('unselectRow', index);
 			},
 			//将加载成功后执行：清除选中的行
 			onLoadSuccess:function(){
-				$('#dxxztlist').datagrid('clearSelections');
+				$('#pdtlist').datagrid('clearSelections');
 			}
 		});
+	
 	    
 	    
 	    $('#kcname').combobox({
@@ -142,7 +118,7 @@ var fixWidth=function(percent){
 	    });
 	    
 	    $('#zsdname').combobox({
-	        url: '${baseurl}zsd/jsonList.action?zsdCustom.sysuseruuid=${sysuseruuid}&zsdCustom.kcname=${kc.name}',
+	        url: '${baseurl}zsd/jsonList.action',
 	        valueField: 'name',
 	        textField: 'name',
 	        editable: true,
@@ -162,11 +138,10 @@ var fixWidth=function(percent){
 	        	return data;
 	        }
 	    });
-		$('#kcname').combobox('setValue','${kc.name}');
 	});
 	
 	//查询方法
-	function querydxxzt(){
+	function querypdt(){
 		//datagrid的方法load方法要求传入json数据，最终将 json转成key/value数据传入action
 		//将form表单数据提取出来，组成一个json
 		$("input[type=text]").each(function(i){
@@ -177,55 +152,60 @@ var fixWidth=function(percent){
 			var val=$.trim($(this).combobox('getValue'));
 			$(this).combobox('setValue',val);
 		});
- 		var val=$.trim($("#zsdname").combobox("getText"));
- 		$("#zsdname").combobox("setValue",val);
  		var val=$.trim($("#kcname").combobox("getText"));
  		$("#kcname").combobox("setValue",val);
-		var formdata = $("#dxxztqueryForm").serializeJson();
-		$('#dxxztlist').datagrid('load',formdata);
-	}
-	function querydxxztByKc(kcname){
-		//datagrid的方法load方法要求传入json数据，最终将 json转成key/value数据传入action
-		//将form表单数据提取出来，组成一个json
-		$("input[type=text]").each(function(i){
-			var val=$.trim($(this).val());
-			$(this).val(val);
-		});
-		$("input[class=easyui-combobox]").each(function(i){
-			var val=$.trim($(this).combobox('getValue'));
-			$(this).combobox('setValue',val);
-		});
  		var val=$.trim($("#zsdname").combobox("getText"));
  		$("#zsdname").combobox("setValue",val);
- 		$("#kcname").combobox("setValue",kcname);
-		var formdata = $("#dxxztqueryForm").serializeJson();
-		$('#dxxztlist').datagrid('load',formdata);
+		var formdata = $("#pdtqueryForm").serializeJson();
+		$('#pdtlist').datagrid('load',formdata);
 	}
-	//修改用户
-	function editdxxzt(id){
+	
+	function tminfo(uuid,type){
 		
 		//打开修改窗口
-		createmodalwindow("题目详细信息", width*0.6, height*0.8, '${baseurl}dxxztEdit.action?uuid='+id);
+			var sendUrl = "${baseurl}tm/detail.action?uuid="+uuid+"&&type="+type;
+		createmodalwindow("题目详细信息",  width*0.6, height*0.7, sendUrl);
 	}
-	//删除用户方法
-	function deletedxxzt(id){
+	
+	//审核通过题目方法
+	function checkpdt(id,type){
 
 		//第一个参数是提示信息，第二个参数，取消执行的函数指针，第三个参是，确定执行的函数指针
-		_confirm('您确认删除吗？',null,function (){
+		_confirm('您确认要审核通过该题目吗？',null,function (){
 
 			//将要删除的id赋值给deleteid，deleteid在sysuserdeleteform中
-			$("#delete_id").val(id);
+			$("#check_id").val(id);
+			$("#check_type").val(type);
 			//使用ajax的from提交执行删除
 			//sysuserdeleteform：form的id，userdel_callback：删除回调函数，
 			//第三个参数是url的参数
 			//第四个参数是datatype，表示服务器返回的类型
-			jquerySubByFId('dxxztdeleteform',dxxztdel_callback,null,"json");
+			jquerySubByFId('pdtdeleteform',pdtdel_callback,null,"json");
+			
+			
+		});
+	}
+	
+	//审核撤销通过题目方法 
+	function outcheckpdt(id,type){
+
+		//第一个参数是提示信息，第二个参数，取消执行的函数指针，第三个参是，确定执行的函数指针
+		_confirm('您确认要撤销通过该题目吗？',null,function (){
+
+			//将要删除的id赋值给deleteid，deleteid在sysuserdeleteform中
+			$("#outcheck_id").val(id);
+			$("#outcheck_type").val(type);
+			//使用ajax的from提交执行删除
+			//sysuserdeleteform：form的id，userdel_callback：删除回调函数，
+			//第三个参数是url的参数
+			//第四个参数是datatype，表示服务器返回的类型
+			jquerySubByFId('outcheckform',pdtdel_callback,null,"json");
 			
 			
 		});
 	}
 	//删除用户的回调
-	function dxxztdel_callback(data){
+	function pdtdel_callback(data){
 		message_alert(data);
 		//刷新 页面
 		//在提交成功后重新加载 datagrid
@@ -234,9 +214,10 @@ var fixWidth=function(percent){
 		if(type==1){
 			//成功结果
 			//重新加载 datagrid
-			querydxxzt();
+			querypdt();
 		}
 	}
+
 </script>
 <style type="text/css">
 .one{
@@ -259,33 +240,21 @@ var fixWidth=function(percent){
 <body>
 
 <!-- html的静态布局 -->
-<form id="dxxztqueryForm">
+<form id="pdtqueryForm">
 	<!-- 查询条件 -->
 	<TABLE class="table_search" align=center>
 		<TBODY>
 			<TR>
 				<TD class="left">难度类型：</TD>
 				<td class="one">
-					<input id="ndtype"  name="dxxztCustom.ndtype" >
+					<input id="ndtype"  name="pdtCustom.ndtype" >
 				</TD>
-				<TD class="left">内容：</TD>
-				<td><INPUT type="text" name="dxxztCustom.content" class="easyui-textbox"/></TD>
 				<TD class="left">知识点名称：</td>
 				<td>
-					<input  name="dxxztCustom.zsdname" id="zsdname">
+					<input  name="pdtCustom.zsdname" id="zsdname">
 				</TD>
-				<TD class="left">答案：</TD>
-				<td><INPUT type="text" name="dxxztCustom.answer" class="easyui-textbox"/></TD>
-			</TR>
-			<TR>
-				<TD class="left">创建用户：</td>
-				<td ><INPUT type="text" name="dxxztCustom.teachername" class="easyui-textbox"/></TD>
-
-				<TD class="left">课程：</td>
-				<td>
-					<input id="kcname" class="easyui-combobox" data-options="editable:true,mode:'remote',url:'${baseurl}kc/jsonList.action?kcCustom.sysuseruuid=${sysuseruuid}',valueField:'name',textField:'name'" name="dxxztCustom.kcname" >
-				</TD>
-
+				<TD class="left">内容：</TD>
+				<td><INPUT class="easyui-textbox" type="text" name="pdtCustom.content"/></TD>
 				<TD class="left">状态：</TD>
 				<td>
 				
@@ -301,12 +270,40 @@ var fixWidth=function(percent){
 							key: '2',
 							value: '审核未通过'
 						}],valueField:'key',textField:'value'" 
-					name="dxxztCustom.status" >
+					name="pdtCustom.status" >
+				</TD>
+			</TR>
+			<TR>
+				<TD class="left">创建用户：</td>
+				<td ><INPUT type="text" class="easyui-textbox" name="pdtCustom.teachername" class="one"/></TD>
+
+				<TD class="left">课程：</td>
+				<td>
+					<input id="kcname" class="easyui-combobox" data-options="editable:true,mode:'remote',url:'${baseurl}kc/jsonList.action?kcCustom.sysuseruuid=${sysuseruuid }',valueField:'name',textField:'name'" name="pdtCustom.kcname" >
+				</TD>
+				
+				<TD class="left">答案：</TD>
+				<td>
+				
+					<input class="easyui-combobox" 
+					data-options="editable:false,data: [{
+							key: '',
+							value: '请选择',
+							selected:'true'
+						},{
+							key: '0',
+							value: '×'
+						},{
+							key: '1',
+							value: '√'
+						}],valueField:'key',textField:'value'" 
+					name="pdtCustom.answer" >
 				</TD>
 				<td>
-					<a id="btn" href="#" onclick="querydxxzt()"
+					<a id="btn" href="#" onclick="querypdt()"
 					class="easyui-linkbutton" iconCls='icon-search'>查询</a>
-				</td>
+				</td>	
+			
 			</TR>
 		</TBODY>
 	</TABLE>
@@ -316,14 +313,19 @@ var fixWidth=function(percent){
 		<TBODY align="center">
 			<TR>
 				<TD>
-					<table id="dxxztlist"></table>
+					<table id="pdtlist"></table>
 				</TD>
 			</TR>
 		</TBODY>
 	</TABLE>
 </form>
-<form id="dxxztdeleteform" action="${baseurl}dxxzt/delete.action" method="post">
-  <input type="hidden" id="delete_id" name="uuid" />
+<form id="pdtdeleteform" action="${baseurl}pdt/check.action" method="post">
+  <input type="hidden" id="check_id" name="pdtCustom.uuid" />
+  <input type="hidden" id="check_type" name="pdtCustom.type" />
+</form>
+<form id="outcheckform" action="${baseurl}pdt/outcheck.action" method="post">
+  <input type="hidden" id="outcheck_id" name="pdtCustom.uuid" />
+  <input type="hidden" id="outcheck_type" name="pdtCustom.type" />
 </form>
 </body>
 </html>

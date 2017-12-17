@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="ytk.business.dao.mapper.SjmbMapper" >
-  <resultMap id="BaseResultMap" type="ytk.business.pojo.po.Sjmb" >
+<mapper namespace="ytk.business.dao.mapper.PdtMapper" >
+  <resultMap id="BaseResultMap" type="ytk.business.pojo.po.Pdt" >
     <id column="uuid" property="uuid" jdbcType="VARCHAR" />
-    <result column="dxtcount" property="dxtcount" jdbcType="INTEGER" />
-    <result column="tktcount" property="tktcount" jdbcType="INTEGER" />
-    <result column="pdtcount" property="pdtcount" jdbcType="INTEGER" />
-    <result column="dxtscore" property="dxtscore" jdbcType="INTEGER" />
-    <result column="tktscore" property="tktscore" jdbcType="INTEGER" />
-    <result column="pdtscore" property="pdtscore" jdbcType="INTEGER" />
-    <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="kcuuid" property="kcuuid" jdbcType="BIGINT" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="answer" property="answer" jdbcType="CHAR" />
+    <result column="ndtype" property="ndtype" jdbcType="INTEGER" />
+    <result column="teacheruuid" property="teacheruuid" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="BIGINT" />
     <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -71,15 +71,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    uuid, dxtcount, tktcount, pdtcount, dxtscore, tktscore, pdtscore, score, status
+    uuid, type, kcuuid, content, answer, ndtype, teacheruuid, createtime, status
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="ytk.business.pojo.po.SjmbExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="ytk.business.pojo.po.PdtExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from sjmb
+    from pdt
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,55 +90,55 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from sjmb
+    from pdt
     where uuid = #{uuid,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from sjmb
+    delete from pdt
     where uuid = #{uuid,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="ytk.business.pojo.po.SjmbExample" >
-    delete from sjmb
+  <delete id="deleteByExample" parameterType="ytk.business.pojo.po.PdtExample" >
+    delete from pdt
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="ytk.business.pojo.po.Sjmb" >
-    insert into sjmb (uuid, dxtcount, tktcount, 
-      pdtcount, dxtscore, tktscore, 
-      pdtscore, score, status
+  <insert id="insert" parameterType="ytk.business.pojo.po.Pdt" >
+    insert into pdt (uuid, type, kcuuid, 
+      content, answer, ndtype, 
+      teacheruuid, createtime, status
       )
-    values (#{uuid,jdbcType=VARCHAR}, #{dxtcount,jdbcType=INTEGER}, #{tktcount,jdbcType=INTEGER}, 
-      #{pdtcount,jdbcType=INTEGER}, #{dxtscore,jdbcType=INTEGER}, #{tktscore,jdbcType=INTEGER}, 
-      #{pdtscore,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}
+    values (#{uuid,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{kcuuid,jdbcType=BIGINT}, 
+      #{content,jdbcType=VARCHAR}, #{answer,jdbcType=CHAR}, #{ndtype,jdbcType=INTEGER}, 
+      #{teacheruuid,jdbcType=VARCHAR}, #{createtime,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="ytk.business.pojo.po.Sjmb" >
-    insert into sjmb
+  <insert id="insertSelective" parameterType="ytk.business.pojo.po.Pdt" >
+    insert into pdt
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="uuid != null" >
         uuid,
       </if>
-      <if test="dxtcount != null" >
-        dxtcount,
+      <if test="type != null" >
+        type,
       </if>
-      <if test="tktcount != null" >
-        tktcount,
+      <if test="kcuuid != null" >
+        kcuuid,
       </if>
-      <if test="pdtcount != null" >
-        pdtcount,
+      <if test="content != null" >
+        content,
       </if>
-      <if test="dxtscore != null" >
-        dxtscore,
+      <if test="answer != null" >
+        answer,
       </if>
-      <if test="tktscore != null" >
-        tktscore,
+      <if test="ndtype != null" >
+        ndtype,
       </if>
-      <if test="pdtscore != null" >
-        pdtscore,
+      <if test="teacheruuid != null" >
+        teacheruuid,
       </if>
-      <if test="score != null" >
-        score,
+      <if test="createtime != null" >
+        createtime,
       </if>
       <if test="status != null" >
         status,
@@ -148,64 +148,64 @@
       <if test="uuid != null" >
         #{uuid,jdbcType=VARCHAR},
       </if>
-      <if test="dxtcount != null" >
-        #{dxtcount,jdbcType=INTEGER},
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
       </if>
-      <if test="tktcount != null" >
-        #{tktcount,jdbcType=INTEGER},
+      <if test="kcuuid != null" >
+        #{kcuuid,jdbcType=BIGINT},
       </if>
-      <if test="pdtcount != null" >
-        #{pdtcount,jdbcType=INTEGER},
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
       </if>
-      <if test="dxtscore != null" >
-        #{dxtscore,jdbcType=INTEGER},
+      <if test="answer != null" >
+        #{answer,jdbcType=CHAR},
       </if>
-      <if test="tktscore != null" >
-        #{tktscore,jdbcType=INTEGER},
+      <if test="ndtype != null" >
+        #{ndtype,jdbcType=INTEGER},
       </if>
-      <if test="pdtscore != null" >
-        #{pdtscore,jdbcType=INTEGER},
+      <if test="teacheruuid != null" >
+        #{teacheruuid,jdbcType=VARCHAR},
       </if>
-      <if test="score != null" >
-        #{score,jdbcType=INTEGER},
+      <if test="createtime != null" >
+        #{createtime,jdbcType=BIGINT},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="ytk.business.pojo.po.SjmbExample" resultType="java.lang.Integer" >
-    select count(*) from sjmb
+  <select id="countByExample" parameterType="ytk.business.pojo.po.PdtExample" resultType="java.lang.Integer" >
+    select count(*) from pdt
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update sjmb
+    update pdt
     <set >
       <if test="record.uuid != null" >
         uuid = #{record.uuid,jdbcType=VARCHAR},
       </if>
-      <if test="record.dxtcount != null" >
-        dxtcount = #{record.dxtcount,jdbcType=INTEGER},
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
       </if>
-      <if test="record.tktcount != null" >
-        tktcount = #{record.tktcount,jdbcType=INTEGER},
+      <if test="record.kcuuid != null" >
+        kcuuid = #{record.kcuuid,jdbcType=BIGINT},
       </if>
-      <if test="record.pdtcount != null" >
-        pdtcount = #{record.pdtcount,jdbcType=INTEGER},
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
       </if>
-      <if test="record.dxtscore != null" >
-        dxtscore = #{record.dxtscore,jdbcType=INTEGER},
+      <if test="record.answer != null" >
+        answer = #{record.answer,jdbcType=CHAR},
       </if>
-      <if test="record.tktscore != null" >
-        tktscore = #{record.tktscore,jdbcType=INTEGER},
+      <if test="record.ndtype != null" >
+        ndtype = #{record.ndtype,jdbcType=INTEGER},
       </if>
-      <if test="record.pdtscore != null" >
-        pdtscore = #{record.pdtscore,jdbcType=INTEGER},
+      <if test="record.teacheruuid != null" >
+        teacheruuid = #{record.teacheruuid,jdbcType=VARCHAR},
       </if>
-      <if test="record.score != null" >
-        score = #{record.score,jdbcType=INTEGER},
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=BIGINT},
       </if>
       <if test="record.status != null" >
         status = #{record.status,jdbcType=INTEGER},
@@ -216,43 +216,43 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update sjmb
+    update pdt
     set uuid = #{record.uuid,jdbcType=VARCHAR},
-      dxtcount = #{record.dxtcount,jdbcType=INTEGER},
-      tktcount = #{record.tktcount,jdbcType=INTEGER},
-      pdtcount = #{record.pdtcount,jdbcType=INTEGER},
-      dxtscore = #{record.dxtscore,jdbcType=INTEGER},
-      tktscore = #{record.tktscore,jdbcType=INTEGER},
-      pdtscore = #{record.pdtscore,jdbcType=INTEGER},
-      score = #{record.score,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
+      kcuuid = #{record.kcuuid,jdbcType=BIGINT},
+      content = #{record.content,jdbcType=VARCHAR},
+      answer = #{record.answer,jdbcType=CHAR},
+      ndtype = #{record.ndtype,jdbcType=INTEGER},
+      teacheruuid = #{record.teacheruuid,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=BIGINT},
       status = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="ytk.business.pojo.po.Sjmb" >
-    update sjmb
+  <update id="updateByPrimaryKeySelective" parameterType="ytk.business.pojo.po.Pdt" >
+    update pdt
     <set >
-      <if test="dxtcount != null" >
-        dxtcount = #{dxtcount,jdbcType=INTEGER},
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
       </if>
-      <if test="tktcount != null" >
-        tktcount = #{tktcount,jdbcType=INTEGER},
+      <if test="kcuuid != null" >
+        kcuuid = #{kcuuid,jdbcType=BIGINT},
       </if>
-      <if test="pdtcount != null" >
-        pdtcount = #{pdtcount,jdbcType=INTEGER},
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
       </if>
-      <if test="dxtscore != null" >
-        dxtscore = #{dxtscore,jdbcType=INTEGER},
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=CHAR},
       </if>
-      <if test="tktscore != null" >
-        tktscore = #{tktscore,jdbcType=INTEGER},
+      <if test="ndtype != null" >
+        ndtype = #{ndtype,jdbcType=INTEGER},
       </if>
-      <if test="pdtscore != null" >
-        pdtscore = #{pdtscore,jdbcType=INTEGER},
+      <if test="teacheruuid != null" >
+        teacheruuid = #{teacheruuid,jdbcType=VARCHAR},
       </if>
-      <if test="score != null" >
-        score = #{score,jdbcType=INTEGER},
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=BIGINT},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
@@ -260,15 +260,15 @@
     </set>
     where uuid = #{uuid,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="ytk.business.pojo.po.Sjmb" >
-    update sjmb
-    set dxtcount = #{dxtcount,jdbcType=INTEGER},
-      tktcount = #{tktcount,jdbcType=INTEGER},
-      pdtcount = #{pdtcount,jdbcType=INTEGER},
-      dxtscore = #{dxtscore,jdbcType=INTEGER},
-      tktscore = #{tktscore,jdbcType=INTEGER},
-      pdtscore = #{pdtscore,jdbcType=INTEGER},
-      score = #{score,jdbcType=INTEGER},
+  <update id="updateByPrimaryKey" parameterType="ytk.business.pojo.po.Pdt" >
+    update pdt
+    set type = #{type,jdbcType=INTEGER},
+      kcuuid = #{kcuuid,jdbcType=BIGINT},
+      content = #{content,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=CHAR},
+      ndtype = #{ndtype,jdbcType=INTEGER},
+      teacheruuid = #{teacheruuid,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=BIGINT},
       status = #{status,jdbcType=INTEGER}
     where uuid = #{uuid,jdbcType=VARCHAR}
   </update>

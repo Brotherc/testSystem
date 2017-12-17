@@ -193,6 +193,23 @@ var fixWidth=function(percent){
 		var formdata = $("#dxtqueryForm").serializeJson();
 		$('#dxtlist').datagrid('load',formdata);
 	}
+	function querydxtByKc(kcname){
+		//datagrid的方法load方法要求传入json数据，最终将 json转成key/value数据传入action
+		//将form表单数据提取出来，组成一个json
+		$("input[type=text]").each(function(i){
+			var val=$.trim($(this).val());
+			$(this).val(val);
+		});
+		$("input[class=easyui-combobox]").each(function(i){
+			var val=$.trim($(this).combobox('getValue'));
+			$(this).combobox('setValue',val);
+		});
+ 		var val=$.trim($("#zsdname").combobox("getText"));
+ 		$("#zsdname").combobox("setValue",val);
+ 		$("#kcname").combobox("setValue",kcname);
+		var formdata = $("#dxtqueryForm").serializeJson();
+		$('#dxtlist').datagrid('load',formdata);
+	}
 	//修改用户
 	function editdxt(id){
 		

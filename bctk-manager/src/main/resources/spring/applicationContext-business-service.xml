@@ -28,6 +28,9 @@
 	<!--简答题目管理  -->
 	<bean id="jdtEbo" class="ytk.business.business.impl.JdtEbi"></bean>
 	
+	<!--判断题目管理  -->
+	<bean id="pdtEbo" class="ytk.business.business.impl.PdtEbi"></bean>
+	
 	<!--题目管理  -->
 	<bean id="tmEbo" class="ytk.business.business.impl.TmEbi"></bean>
 	

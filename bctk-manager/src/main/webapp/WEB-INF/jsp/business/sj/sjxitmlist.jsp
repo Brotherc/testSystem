@@ -161,12 +161,10 @@ var columns = [ [{
 		//gysypmls对应action接收对象中list的名称，[]括号中是从0开始序号,id是list中对象属性
 		if(row.type==1)
 			return '<input type="text" class="addScore" name="sjTmList['+index+'].score" value="${sjmb.dxtscoreA}" />';
-		if(row.type==2)
-			return '<input type="text" class="addScore" name="sjTmList['+index+'].score" value="${sjmb.dxxztscoreA}" />';
 		if(row.type==3)
 			return '<input type="text" class="addScore" name="sjTmList['+index+'].score" value="${sjmb.tktscoreA}" />';
-		if(row.type==4)
-			return '<input type="text" class="addScore" name="sjTmList['+index+'].score" value="${sjmb.jdtscoreA}" />';
+		if(row.type==5)
+			return '<input type="text" class="addScore" name="sjTmList['+index+'].score" value="${sjmb.pdtscoreA}" />';
 	}
 }]];
 

@@ -20,11 +20,13 @@ import ytk.base.process.result.SubmitResultInfo;
 import ytk.business.business.DxtEbo;
 import ytk.business.business.DxxztEbo;
 import ytk.business.business.JdtEbo;
+import ytk.business.business.PdtEbo;
 import ytk.business.business.TktEbo;
 import ytk.business.business.TmEbo;
 import ytk.business.pojo.vo.DxtCustom;
 import ytk.business.pojo.vo.DxxztCustom;
 import ytk.business.pojo.vo.JdtCustom;
+import ytk.business.pojo.vo.PdtCustom;
 import ytk.business.pojo.vo.TktCustom;
 import ytk.util.UUIDBuild;
 
@@ -39,6 +41,8 @@ public class TmAction {
 	private TktEbo tktEbo;
 	@Autowired
 	private JdtEbo jdtEbo;
+	@Autowired
+	private PdtEbo pdtEbo;
 	@Autowired
 	private TmEbo tmEbo;
 	@Autowired
@@ -78,6 +82,14 @@ public class TmAction {
 			model.addAttribute("zsdList", zsdList);
 			model.addAttribute("zyList", zyList);
 			return "/business/tm/jdtdetail";
+		}else if(type==5){
+			PdtCustom pdtCustom = pdtEbo.findPdtByUuid(uuid);
+			model.addAttribute("pdtCustom", pdtCustom);
+			List<Zsd> zsdList = pdtCustom.getZsdList();
+			List<Zy> zyList = pdtCustom.getZyList();
+			model.addAttribute("zsdList", zsdList);
+			model.addAttribute("zyList", zyList);
+			return "/business/tm/pdtdetail";			
 		}
 		return "";
 	}

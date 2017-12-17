@@ -29,7 +29,7 @@ import ytk.business.business.SjTmEbo;
 import ytk.business.business.StudentSjdaEbo;
 import ytk.business.pojo.po.Dxt;
 import ytk.business.pojo.po.Dxxzt;
-import ytk.business.pojo.po.Jdt;
+import ytk.business.pojo.po.Pdt;
 import ytk.business.pojo.po.SjTm;
 import ytk.business.pojo.po.Tkt;
 import ytk.business.pojo.vo.SjCustom;
@@ -91,7 +91,7 @@ public class SjTmAction {
 		return dataGridResultInfo;
 	}
 	
-	//跳转试卷系题目添加页面前调用
+	//跳转试卷题目添加页面前调用
 	@RequestMapping("/sjXitmListPre")
 	public @ResponseBody SubmitResultInfo sjTmListPre(SjQueryVo sjQueryVo,SjmbQueryVo sjmbQueryVo) throws Exception{
 		sjTmEbo.sjTmListPre(sjQueryVo.getSjCustom(),sjQueryVo.getSjmbCustom());  
@@ -112,12 +112,10 @@ public class SjTmAction {
 		//加载试卷模板
 		if(sjmbCustom.getDxtcount()!=0)
 			sjmbCustom.setDxtscoreA(sjmbCustom.getDxtscore()/sjmbCustom.getDxtcount());
-		if(sjmbCustom.getDxxztcount()!=0)
-			sjmbCustom.setDxxztscoreA(sjmbCustom.getDxxztscore()/sjmbCustom.getDxxztcount());
 		if(sjmbCustom.getTktcount()!=0)
 			sjmbCustom.setTktscoreA(sjmbCustom.getTktscore()/sjmbCustom.getTktcount());
-		if(sjmbCustom.getJdtcount()!=0)		
-			sjmbCustom.setJdtscoreA(sjmbCustom.getJdtscore()/sjmbCustom.getJdtcount());
+		if(sjmbCustom.getPdtcount()!=0)		
+			sjmbCustom.setPdtscoreA(sjmbCustom.getPdtscore()/sjmbCustom.getPdtcount());
 		model.addAttribute("sjmb",sjmbCustom);
 		return "/business/sj/sjxitmlist";
 	}
@@ -315,11 +313,40 @@ public class SjTmAction {
 		
 		return "/business/sj/sjtkt";
 	}
-	@RequestMapping("/sjJdt")
-	public String toSjJdt(SjTmQueryVo sjXitmQueryVo,Model model) throws Exception{
-		//加载试卷简答题信息
-		List<Jdt> jdtList = sjTmEbo.findJdtBySjUuid(sjXitmQueryVo);
-		return "/business/sj/sjjdt";
+	@RequestMapping("/sjPdt")
+	public String toSjPdt(SjTmQueryVo sjTmQueryVo,Model model,HttpSession session,String ksgluuid) throws Exception{
+		//加载试卷判断题信息
+		List<Pdt> pdtList = sjTmEbo.findPdtBySjUuid(sjTmQueryVo);
+
+		StudentCustom studentCustom=(StudentCustom) session.getAttribute(Config.LOGINSTUDENT_KEY);
+		List<Integer> orderList = sjTmEbo.getSjTmOrderByType(studentCustom.getUuid(), ksgluuid, 5, pdtList.size());
+		Map< Integer, Pdt>pdtMap=new HashMap<Integer, Pdt>();
+		
+		//为题目随机生成顺序
+		int index=1;
+		for(Integer i:orderList){
+			pdtMap.put(index, pdtList.get(i-1));
+			index++;
+		}
+		model.addAttribute("pdtList",pdtMap);
+		model.addAttribute("ksgluuid", ksgluuid);
+		
+		//加载学生试卷判断题答案
+		Map<Integer, String> pdtDa = studentSjdaEbo.findStudentSjDaPdt(studentCustom.getUuid(), ksgluuid);
+		model.addAttribute("pdtDa", pdtDa);
+		
+		//加载试卷信息
+		SjCustom sjCustom = sjEbo.findSjCustomByUuid(sjTmQueryVo.getSjTmCustom().getSjid());
+		model.addAttribute("sjCustom", sjCustom);
+		
+		model.addAttribute("pdtSize",pdtList.size());
+		
+		//计算剩余考试时间
+		Long endTime=(Long)session.getAttribute("ksEndTime");
+		Long currentTime=System.currentTimeMillis();
+		model.addAttribute("time", endTime-currentTime);
+		
+		return "/business/sj/sjpdt";
 	}	
 	@RequestMapping("/sjDxtSubmit")
 	public @ResponseBody SubmitResultInfo sjDxtSubmit(String sjuuid,String ksgluuid,HttpSession session, StudentSjdaQueryVo studentSjdaQueryVo,Integer dxtSize) throws Exception{
@@ -333,6 +360,17 @@ public class SjTmAction {
 		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(Config.MESSAGE, 906, null));
 	}
 	
+	@RequestMapping("/sjPdtSubmit")
+	public @ResponseBody SubmitResultInfo sjPdtSubmit(String sjuuid,String ksgluuid,HttpSession session, StudentSjdaQueryVo studentSjdaQueryVo,Integer pdtSize) throws Exception{
+		StudentCustom studentCustom=(StudentCustom) session.getAttribute(Config.LOGINSTUDENT_KEY);
+		//获取学生试卷判断题答案
+		List<String> pdtList=studentSjdaQueryVo.getPdtList();
+		
+		//保存学生试卷判断题答案
+		studentSjdaEbo.addStudentSjdaPdt(studentCustom.getUuid(),ksgluuid,pdtList,pdtSize);
+			
+		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(Config.MESSAGE, 906, null));
+	}	
 	@RequestMapping("/sjTktSubmit")
 	public @ResponseBody SubmitResultInfo sjTktSubmit(String sjuuid,String ksgluuid,HttpSession session, StudentSjdaQueryVo studentSjdaQueryVo) throws Exception{
 		StudentCustom studentCustom=(StudentCustom) session.getAttribute(Config.LOGINSTUDENT_KEY);

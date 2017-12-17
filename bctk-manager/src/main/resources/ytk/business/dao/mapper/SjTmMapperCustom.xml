@@ -140,17 +140,12 @@
 					FROM(
 
 						SELECT dxt.uuid tuuid,dxt.type,dxt.kcuuid,dxt.content,dxt.ndtype,dxt.teacheruuid
-							FROM dxt								
-
-						UNION
-
-						SELECT dxxzt.uuid tuuid,dxxzt.type,dxxzt.kcuuid,dxxzt.content,dxxzt.ndtype,dxxzt.teacheruuid
-							FROM dxxzt
+							FROM dxt						
 								
 						UNION
 
-						SELECT jdt.uuid tuuid,jdt.type,jdt.kcuuid,jdt.content,jdt.ndtype,jdt.teacheruuid
-							FROM jdt
+						SELECT pdt.uuid tuuid,pdt.type,pdt.kcuuid,pdt.content,pdt.ndtype,pdt.teacheruuid
+							FROM pdt
 
 						UNION
 
@@ -188,16 +183,11 @@
 
 						SELECT dxt.uuid tuuid,dxt.type,dxt.kcuuid,dxt.content,dxt.ndtype,dxt.teacheruuid
 							FROM dxt								
-
-						UNION
-
-						SELECT dxxzt.uuid tuuid,dxxzt.type,dxxzt.kcuuid,dxxzt.content,dxxzt.ndtype,dxxzt.teacheruuid
-							FROM dxxzt
 								
 						UNION
 
-						SELECT jdt.uuid tuuid,jdt.type,jdt.kcuuid,jdt.content,jdt.ndtype,jdt.teacheruuid
-							FROM jdt
+						SELECT pdt.uuid tuuid,pdt.type,pdt.kcuuid,pdt.content,pdt.ndtype,pdt.teacheruuid
+							FROM pdt
 
 						UNION
 
@@ -259,13 +249,8 @@
 
 						UNION
 
-						SELECT dxxzt.uuid tuuid,dxxzt.type,dxxzt.kcuuid,dxxzt.content,dxxzt.ndtype,dxxzt.teacheruuid,dxxzt.status
-							FROM dxxzt
-								
-						UNION
-
-						SELECT jdt.uuid tuuid,jdt.type,jdt.kcuuid,jdt.content,jdt.ndtype,jdt.teacheruuid,jdt.status
-							FROM jdt
+						SELECT pdt.uuid tuuid,pdt.type,pdt.kcuuid,pdt.content,pdt.ndtype,pdt.teacheruuid,pdt.status
+							FROM pdt
 
 						UNION
 
@@ -305,13 +290,8 @@
 
 						UNION
 
-						SELECT dxxzt.uuid tuuid,dxxzt.type,dxxzt.kcuuid,dxxzt.content,dxxzt.ndtype,dxxzt.teacheruuid,dxxzt.status
-							FROM dxxzt
-								
-						UNION
-
-						SELECT jdt.uuid tuuid,jdt.type,jdt.kcuuid,jdt.content,jdt.ndtype,jdt.teacheruuid,jdt.status
-							FROM jdt
+						SELECT pdt.uuid tuuid,pdt.type,pdt.kcuuid,pdt.content,pdt.ndtype,pdt.teacheruuid,pdt.status
+							FROM pdt
 
 						UNION
 

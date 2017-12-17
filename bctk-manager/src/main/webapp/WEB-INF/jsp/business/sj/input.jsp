@@ -69,26 +69,22 @@ function sjcheck_callback(data){
  	if(type==1){
 
 		var dxtcount=$("#dxtcount").val();
- 		var dxxztcount=$("#dxxztcount").val();   
  		var tktcount=$("#tktcount").val();     
- 		var jdtcount=$("#jdtcount").val();     
+ 		var pdtcount=$("#pdtcount").val();     
  		
  		var dxtscore=$("#dxtscore").val();   
- 		var dxxztscore=$("#dxxztscore").val();   
  		var tktscore=$("#tktscore").val();      
- 		var jdtscore=$("#jdtscore").val();
+ 		var pdtscore=$("#pdtscore").val();
  		
  		var kcname=$("#kcname").combobox('getValue');
  		
  		var sendUrl = "${baseurl}sjXitmList.action?kcname="+kcname+"&sjid="+$("#sjid").val()
  				+"&dxtcount="+dxtcount
- 				+"&dxxztcount="+dxxztcount
  				+"&tktcount="+tktcount
- 				+"&jdtcount="+jdtcount
+ 				+"&pdtcount="+pdtcount
  				+"&dxtscore="+dxtscore
- 				+"&dxxztscore="+dxxztscore
  				+"&tktscore="+tktscore
- 				+"&jdtscore="+jdtscore;
+ 				+"&pdtscore="+pdtscore;
  		createmodalwindow("试卷题目添加", 1150, 500, sendUrl);
 	}
  	else{
@@ -99,28 +95,24 @@ function sjcheck_callback(data){
 }
 
 var sjtmadd_xtk = function (){
-		var dxtcount=$("#dxtcount").val();
- 		var dxxztcount=$("#dxxztcount").val();   
+		var dxtcount=$("#dxtcount").val();  
  		var tktcount=$("#tktcount").val();     
- 		var jdtcount=$("#jdtcount").val();     
+ 		var pdtcount=$("#pdtcount").val();     
  		
  		var dxtscore=$("#dxtscore").val();   
- 		var dxxztscore=$("#dxxztscore").val();   
  		var tktscore=$("#tktscore").val();      
- 		var jdtscore=$("#jdtscore").val();
+ 		var pdtscore=$("#pdtscore").val();
  	
  		
 	var kcname=$.trim($("#kcname").combobox("getText"));
 		$("#kcname").combobox("setValue",kcname);
 	$("#kcnamePre").val(kcname);
 	$("#dxtcountPre").val(dxtcount);
-	$("#dxxztcountPre").val(dxxztcount);
 	$("#tktcountPre").val(tktcount);
-	$("#jdtcountPre").val(jdtcount);
+	$("#pdtcountPre").val(pdtcount);
 	$("#dxtscorePre").val(dxtscore);
-	$("#dxxztscorePre").val(dxxztscore);
 	$("#tktscorePre").val(tktscore);
-	$("#jdtscorePre").val(jdtscore);
+	$("#pdtscorePre").val(pdtscore);
 	jquerySubByFId('sjXitmListPreForm', sjcheck_callback, null);
 };
 
@@ -409,15 +401,6 @@ function addXitmCallBack(){
 							</TD>							
 						</TR>
 						<TR>
-							<TD height=30 width="15%" align=right ><input type="checkbox" />多项选择题：</TD>
-							<TD class=category width="35%" style="display:none">
-								题量
-<input type="text" id="dxxztcount" data-options="required:true" class="easyui-textbox" name="sjmbCustom.dxxztcount" value="0" />
-								分值
-<input type="text" id="dxxztscore" data-options="required:true" class="easyui-textbox" name="sjmbCustom.dxxztscore" value="0"/>
-							</TD>							
-						</TR>
-						<TR>
 							<TD height=30 width="15%" align=right ><input type="checkbox" />填空题：</TD>
 							<TD class=category width="35%" style="display:none">
 								题量
@@ -427,12 +410,12 @@ function addXitmCallBack(){
 							</TD>							
 						</TR>
 						<TR>
-							<TD height=30 width="15%" align=right ><input type="checkbox" />简答题：</TD>
+							<TD height=30 width="15%" align=right ><input type="checkbox" />判断题：</TD>
 							<TD class=category width="35%" style="display:none">
 								题量
-<input type="text" id="jdtcount" data-options="required:true" class="easyui-textbox" name="sjmbCustom.jdtcount" value="0"/>
+<input type="text" id="pdtcount" data-options="required:true" class="easyui-textbox" name="sjmbCustom.pdtcount" value="0"/>
 								分值
-<input type="text" id="jdtscore" data-options="required:true" class="easyui-textbox" name="sjmbCustom.jdtscore" value="0"/>
+<input type="text" id="pdtscore" data-options="required:true" class="easyui-textbox" name="sjmbCustom.pdtscore" value="0"/>
 							</TD>							
 						</TR>
 						
@@ -503,14 +486,11 @@ function addXitmCallBack(){
 	<input type="hidden" name="sjCustom.kcname"  id="kcnamePre"/>
 		<input type="hidden" name="sjmbCustom.dxtcount" id="dxtcountPre" />
 	<input type="hidden" name="sjmbCustom.dxtscore"  id="dxtscorePre"/>
-		<input type="hidden" name="sjmbCustom.dxxztcount" id="dxxztcountPre" />
-	<input type="hidden" name="sjmbCustom.dxxztscore"  id="dxxztscorePre"/>
 		<input type="hidden" name="sjmbCustom.tktcount" id="tktcountPre" />
 	<input type="hidden" name="sjmbCustom.tktscore"  id="tktscorePre"/>
-		<input type="hidden" name="sjmbCustom.jdtcount" id="jdtcountPre" />
-	<input type="hidden" name="sjmbCustom.jdtscore"  id="jdtscorePre"/>
+		<input type="hidden" name="sjmbCustom.pdtcount" id="pdtcountPre" />
+	<input type="hidden" name="sjmbCustom.pdtscore"  id="pdtscorePre"/>
 </form>
-
 
 </BODY>
 </HTML>

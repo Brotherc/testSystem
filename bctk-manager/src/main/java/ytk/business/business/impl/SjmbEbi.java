@@ -32,9 +32,8 @@ public class SjmbEbi implements SjmbEbo{
 	@Override
 	public Menu findSjmbMenuBySjmb(Sjmb sjmb) throws Exception {
 		Integer dxtcount = sjmb.getDxtcount();
-		Integer dxxztcount = sjmb.getDxxztcount();
 		Integer tktcount = sjmb.getTktcount();
-		Integer jdtcount = sjmb.getJdtcount();
+		Integer pdtcount = sjmb.getPdtcount();
 		List<Menu> menus=new ArrayList<Menu>();
 		Menu menu = new Menu();
 		menu.setMenus(menus);
@@ -42,17 +41,13 @@ public class SjmbEbi implements SjmbEbo{
 			Menu dxtMenu = sjmbMapperCustom.findMenuByName("试卷单选题");
 			menus.add(dxtMenu);
 		}
-		if(dxxztcount!=null&&dxxztcount!=0){
-			Menu dxxztMenu = sjmbMapperCustom.findMenuByName("试卷多项选择题");
-			menus.add(dxxztMenu);
-		}
 		if(tktcount!=null&&tktcount!=0){
 			Menu tktMenu = sjmbMapperCustom.findMenuByName("试卷填空题");
 			menus.add(tktMenu);
 		}
-		if(jdtcount!=null&&jdtcount!=0){
-			Menu jdtMenu = sjmbMapperCustom.findMenuByName("试卷简答题");
-			menus.add(jdtMenu);
+		if(pdtcount!=null&&pdtcount!=0){
+			Menu pdtMenu = sjmbMapperCustom.findMenuByName("试卷判断题");
+			menus.add(pdtMenu);
 		}
 		Menu sjSubmitMenu = sjmbMapperCustom.findMenuByName("提交试卷");
 		menus.add(sjSubmitMenu);

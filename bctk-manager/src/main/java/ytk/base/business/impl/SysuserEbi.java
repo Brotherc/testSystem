@@ -33,6 +33,7 @@ import ytk.business.dao.mapper.DxxztMapper;
 import ytk.business.dao.mapper.JdtMapper;
 import ytk.business.dao.mapper.KsglMapper;
 import ytk.business.dao.mapper.KsglStudentMapper;
+import ytk.business.dao.mapper.PdtMapper;
 import ytk.business.dao.mapper.SjMapper;
 import ytk.business.dao.mapper.TktMapper;
 import ytk.business.pojo.po.Dxt;
@@ -43,6 +44,8 @@ import ytk.business.pojo.po.Jdt;
 import ytk.business.pojo.po.JdtExample;
 import ytk.business.pojo.po.Ksgl;
 import ytk.business.pojo.po.KsglExample;
+import ytk.business.pojo.po.Pdt;
+import ytk.business.pojo.po.PdtExample;
 import ytk.business.pojo.po.Sj;
 import ytk.business.pojo.po.SjExample;
 import ytk.business.pojo.po.Tkt;
@@ -75,6 +78,8 @@ public class SysuserEbi implements SysuserEbo{
 	private TktMapper tktMapper;
 	@Autowired
 	private JdtMapper jdtMapper;
+	@Autowired
+	private PdtMapper pdtMapper;
 	@Autowired
 	private SjMapper sjMapper;
 	@Autowired
@@ -326,6 +331,13 @@ public class SysuserEbi implements SysuserEbo{
 			jdtCriteria.andTeacheruuidEqualTo(uuid);
 			List<Jdt> jdtList = jdtMapper.selectByExample(jdtExample);
 			if(jdtList!=null&&jdtList.size()>0)
+				ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 220, null));
+			
+			PdtExample pdtExample=new PdtExample();
+			PdtExample.Criteria pdtCriteria = pdtExample.createCriteria();
+			pdtCriteria.andTeacheruuidEqualTo(uuid);
+			List<Pdt> pdtList = pdtMapper.selectByExample(pdtExample);
+			if(pdtList!=null&&pdtList.size()>0)
 				ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 220, null));
 			
 			SjExample sjExample=new SjExample();

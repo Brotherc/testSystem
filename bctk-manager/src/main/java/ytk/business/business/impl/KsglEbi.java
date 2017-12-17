@@ -83,6 +83,10 @@ public class KsglEbi implements KsglEbo{
 	private String TKT_ANSWER;
 	@Value("${TKT_ORDER}")
 	private String TKT_ORDER;
+	@Value("${PDT_ORDER}")
+	private String PDT_ORDER;
+	@Value("${PDT_ANSWER}")
+	private String PDT_ANSWER;
 	
 	@Override
 	public List<KsglCustom> findKsglList(KsglQueryVo ksglQueryVo)
@@ -361,6 +365,14 @@ public class KsglEbi implements KsglEbo{
 			tktAnswer = JsonUtils.jsonToMap(jedisClient.hget(key, TKT_ANSWER), Integer.class, List.class);
 		}
 		
+		String pdt_order = jedisClient.hget(key, PDT_ORDER);
+		List<Integer> pdtOrder=null;
+		Map<Integer, String> pdtAnswer=null;
+		if(StringUtils.isNoneBlank(pdt_order)){
+			pdtOrder = JsonUtils.jsonToList(pdt_order, Integer.class);
+			pdtAnswer = JsonUtils.jsonToMap(jedisClient.hget(key, PDT_ANSWER), Integer.class, String.class);
+		}
+		
 		int index=1;
 		
 		if(dxt_order!=null)
@@ -453,6 +465,43 @@ public class KsglEbi implements KsglEbo{
 			studentSjda.setScore(0);
 			studentSjda.setStatus(1);
 			studentSjda.setType(3);
+			
+			studentSjdaMapper.insert(studentSjda);		
+			index++;
+		}
+
+		index=1;
+		
+		if(pdt_order!=null)
+		for(Integer i:pdtOrder){
+			//判断题提交
+			StudentSjda studentSjda=new StudentSjda();
+			//设置uuid
+			String uuid = UUIDBuild.getUUID();
+			studentSjda.setUuid(uuid);
+			//设置学生试卷答案的考试试卷id
+			studentSjda.setStudentsjid(studentSjUuid);
+			//设置答案
+			studentSjda.setAnswer(pdtAnswer.get(index));
+			//设置题目编号
+			Integer sjtmid = i;
+			studentSjda.setSjtmid(sjtmid);
+			
+			//设置试卷系题目id
+			SjTmExample sjTmExample = new SjTmExample();
+			SjTmExample.Criteria sjTmCriteria = sjTmExample.createCriteria();
+			sjTmCriteria.andSjidEqualTo(sjid);
+			sjTmCriteria.andSjtmidEqualTo(sjtmid);
+			sjTmCriteria.andTypeEqualTo(5);
+			
+			List<SjTm> sjTmList = sjTmMapper.selectByExample(sjTmExample);
+			if(sjTmList==null||sjTmList.size()<1)
+				ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1040, null));
+			
+			studentSjda.setSjxitmid(sjTmList.get(0).getUuid());
+			studentSjda.setScore(0);
+			studentSjda.setStatus(1);
+			studentSjda.setType(5);
 			
 			studentSjdaMapper.insert(studentSjda);		
 			index++;

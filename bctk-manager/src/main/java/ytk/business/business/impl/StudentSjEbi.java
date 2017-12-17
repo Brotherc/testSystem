@@ -90,7 +90,7 @@ public class StudentSjEbi implements StudentSjEbo{
 		StudentSjdaExample studentSjdaExample=new StudentSjdaExample();
 		Criteria criteria = studentSjdaExample.createCriteria();
 		criteria.andStudentsjidEqualTo(uuid);
-		//条件修改为单选题与填空题，只为那些未评分的题目评分
+		//条件修改为单选题与填空题与判断题，只为那些未评分的题目评分
 		criteria.andTypeEqualTo(1);
 		criteria.andStatusEqualTo(1);
 		List<StudentSjda> studentSjdaDxtList = studentSjdaMapper.selectByExample(studentSjdaExample);
@@ -187,6 +187,50 @@ public class StudentSjEbi implements StudentSjEbo{
 			studentSj.setScore(studentSj.getScore()+studentSjda.getScore());
 			//更新学生试卷
 			studentSjMapper.updateByPrimaryKey(studentSj);
+		}
+		
+		//评判断题
+		//根据学生考试uuid查询对应学生试卷题目答案
+		StudentSjdaExample studentSjdaExample4=new StudentSjdaExample();
+		Criteria criteria4 = studentSjdaExample4.createCriteria();
+		criteria4.andStudentsjidEqualTo(uuid);
+		criteria4.andTypeEqualTo(5);
+		criteria4.andStatusEqualTo(1);
+		List<StudentSjda> studentSjdaPdtList = studentSjdaMapper.selectByExample(studentSjdaExample4);
+		
+		for(StudentSjda studentSjda:studentSjdaPdtList){
+			//获取学生试卷答案对应的试卷系题目uuid
+			String sjxitmid = studentSjda.getSjxitmid();
+			//通过学生试卷答案的sjxitmid与试卷答案的sjxitmid相等找到题目的答案
+			SjdaExample sjdaExample=new SjdaExample();
+			SjdaExample.Criteria sjdaCriteria = sjdaExample.createCriteria();
+			sjdaCriteria.andSjxitmidEqualTo(sjxitmid);
+			List<Sjda> sjdaList = sjdaMapper.selectByExample(sjdaExample);
+			if(sjdaList==null||sjdaList.size()<1)
+				ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1201, null));
+			Sjda sjda = sjdaList.get(0);
+			//获取试卷题目答案
+			String answer = sjda.getAnswer();
+			String studentAnswer = studentSjda.getAnswer();
+			//判断学生考试试卷答案是否与题目答案相等
+			//如果学生答案为空或不相等，则修改状态为已评分
+			if(studentAnswer==null||studentAnswer.trim().equals("")||!studentAnswer.trim().equals(answer)){
+				studentSjda.setStatus(2);
+				studentSjdaMapper.updateByPrimaryKey(studentSjda);
+			}
+			else{
+				//获取该题目的分数，并设置分数，修改状态为已评分
+				SjTm sjTm = sjTmMapper.selectByPrimaryKey(sjxitmid);
+				studentSjda.setScore(sjTm.getScore());
+				studentSjda.setStatus(2);
+				//更新学生试卷答案
+				studentSjdaMapper.updateByPrimaryKey(studentSjda);
+				//对应试卷总分加上该题目分数
+
+				studentSj.setScore(studentSj.getScore()+sjTm.getScore());
+				//更新学生试卷
+				studentSjMapper.updateByPrimaryKey(studentSj);
+			}
 		}
 		
 		

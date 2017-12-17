@@ -16,7 +16,7 @@ public class KsglCustom extends Ksgl{
 	private Long zyuuid;
 	private String classuuid;
 	private Long njuuid;
-	private Long sysuseruuid;
+	private String sysuseruuid;
 	private String timeView;
 	
 	private Long[] zyuuids;
@@ -130,13 +130,14 @@ public class KsglCustom extends Ksgl{
 	public void setZyuuids(Long[] zyuuids) {
 		this.zyuuids = zyuuids;
 	}
-	public Long getSysuseruuid() {
+	
+	
+	public String getSysuseruuid() {
 		return sysuseruuid;
 	}
-	public void setSysuseruuid(Long sysuseruuid) {
+	public void setSysuseruuid(String sysuseruuid) {
 		this.sysuseruuid = sysuseruuid;
 	}
-	
 	@Override
 	public void setTime(Long time) {
 		super.setTime(time);

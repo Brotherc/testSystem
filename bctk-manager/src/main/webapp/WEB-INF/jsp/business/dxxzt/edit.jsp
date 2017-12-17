@@ -33,7 +33,9 @@
 	  
  	  if(data.resultInfo.type=='1'){
  		  setTimeout("parent.closemodalwindow()", 1500);
- 		 setTimeout("parent.window.location.reload()", 2000);
+  		 //setTimeout("parent.window.location.reload()", 2000);
+  		 var val=$.trim($("#kcname").combobox("getValue"));
+  		parent.querydxtByKc(val);
  	  }
   }
   $(function(){

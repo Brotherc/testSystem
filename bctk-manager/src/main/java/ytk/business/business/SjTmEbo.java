@@ -4,7 +4,7 @@ import java.util.List;
 
 import ytk.business.pojo.po.Dxt;
 import ytk.business.pojo.po.Dxxzt;
-import ytk.business.pojo.po.Jdt;
+import ytk.business.pojo.po.Pdt;
 import ytk.business.pojo.po.SjTm;
 import ytk.business.pojo.po.Tkt;
 import ytk.business.pojo.vo.SjCustom;
@@ -52,8 +52,8 @@ public interface SjTmEbo {
 	//根据试卷uuid查询填空题信息
 	public List<Tkt> findTktBySjUuid(SjTmQueryVo sjTmQueryVo) throws Exception;
 	
-	//根据试卷uuid查询简答题信息
-	public List<Jdt> findJdtBySjUuid(SjTmQueryVo sjTmQueryVo) throws Exception;
+	//根据试卷uuid查询判断题信息
+	public List<Pdt> findPdtBySjUuid(SjTmQueryVo sjTmQueryVo) throws Exception;
 	
 	//根据试卷uuid删除该试卷的临时状态的题目信息
 	public void deleteSjTmBySjUuidAndStatus(String sjUuid) throws Exception;

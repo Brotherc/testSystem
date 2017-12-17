@@ -45,6 +45,8 @@ public class StudentSjdaEbi implements StudentSjdaEbo{
 	private String DXT_ANSWER;
 	@Value("${TKT_ANSWER}")
 	private String TKT_ANSWER;
+	@Value("${PDT_ANSWER}")
+	private String PDT_ANSWER;
 	
 	@Override
 	public void addStudentSjda(String sjid,String studentsjid,List<StudentSjdaCustom> studentSjdaList)
@@ -201,6 +203,53 @@ public class StudentSjdaEbi implements StudentSjdaEbo{
 
 		
 		return null;
+	}
+
+	@Override
+	public Map<Integer, String> findStudentSjDaPdt(String sysuseruuid, String ksgluuid)
+			throws Exception {
+		String json = jedisClient.hget(sysuseruuid+"_"+ksgluuid, PDT_ANSWER);
+		if(StringUtils.isNoneBlank(json)){
+			return JsonUtils.jsonToMap(json, Integer.class,String.class);
+		}
+		return null;
+	}
+
+	@Override
+	public void addStudentSjdaPdt(String sysuseruuid, String ksgluuid,
+			List<String> pdtList, Integer pdtSize) throws Exception {
+		Map< Integer, String> map=new LinkedHashMap<Integer, String>();
+		//如果用户没写就提交，设置答案全为空
+		
+		//如果用户全写了，则中间为null的答案设置为“”
+		
+		//如果用户则写了一部分，则后面的全部设置为“”，在校验全部，如果中间为null，则设置为“”
+		
+		if(pdtList==null||pdtList.size()<1){
+			for(int i=1;i<=pdtSize;i++){
+				map.put(i, "");
+			}
+		}else if(pdtList.size()-1==pdtSize){
+			System.out.println("相等"+pdtList.size());
+			for(int i=1;i<=pdtSize;i++){
+				String answer = pdtList.get(i);
+				if(answer==null)
+					answer="";
+				map.put(i, answer);
+			}
+		}else if(pdtList.size()-1<pdtSize){
+			System.out.println("小于"+pdtList.size());
+			for(int i=0;i<=pdtSize-pdtList.size();i++){
+				pdtList.add("");
+			}
+			for(int i=1;i<=pdtSize;i++){
+				String answer = pdtList.get(i);
+				if(answer==null)
+					answer="";
+				map.put(i, answer);
+			}
+		}
+		jedisClient.hset(sysuseruuid+"_"+ksgluuid, PDT_ANSWER, JsonUtils.objectToJson(map)); 		
 	}
 
 }

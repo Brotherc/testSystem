@@ -28,6 +28,7 @@ import ytk.business.dao.mapper.DxtMapper;
 import ytk.business.dao.mapper.DxxztMapper;
 import ytk.business.dao.mapper.JdtMapper;
 import ytk.business.dao.mapper.KsglMapper;
+import ytk.business.dao.mapper.PdtMapper;
 import ytk.business.dao.mapper.SjMapper;
 import ytk.business.dao.mapper.TktMapper;
 import ytk.business.pojo.po.Dxt;
@@ -38,6 +39,8 @@ import ytk.business.pojo.po.Jdt;
 import ytk.business.pojo.po.JdtExample;
 import ytk.business.pojo.po.Ksgl;
 import ytk.business.pojo.po.KsglExample;
+import ytk.business.pojo.po.Pdt;
+import ytk.business.pojo.po.PdtExample;
 import ytk.business.pojo.po.Sj;
 import ytk.business.pojo.po.SjExample;
 import ytk.business.pojo.po.Tkt;
@@ -66,6 +69,8 @@ public class KcEbi implements KcEbo{
 	private TktMapper tktMapper;
 	@Autowired
 	private JdtMapper jdtMapper;
+	@Autowired
+	private PdtMapper pdtMapper;
 	@Autowired
 	private SjMapper sjMapper;
 	@Autowired
@@ -270,6 +275,14 @@ public class KcEbi implements KcEbo{
 			jdtCriteria.andKcuuidEqualTo(kcuuid);
 			List<Jdt> jdtList = jdtMapper.selectByExample(jdtExample);
 			if(jdtList!=null&&jdtList.size()>0)
+				ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 608, null));
+			
+			//查询该课程所对应简答题题目
+			PdtExample pdtExample=new PdtExample();
+			PdtExample.Criteria pdtCriteria = pdtExample.createCriteria();
+			pdtCriteria.andKcuuidEqualTo(kcuuid);
+			List<Pdt> pdtList = pdtMapper.selectByExample(pdtExample);
+			if(pdtList!=null&&pdtList.size()>0)
 				ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 608, null));
 			
 			SjExample sjExample=new SjExample();

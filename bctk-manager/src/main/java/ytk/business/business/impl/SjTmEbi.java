@@ -18,7 +18,7 @@ import ytk.base.process.result.ResultUtil;
 import ytk.business.business.SjTmEbo;
 import ytk.business.dao.mapper.DxtMapper;
 import ytk.business.dao.mapper.DxxztMapper;
-import ytk.business.dao.mapper.JdtMapper;
+import ytk.business.dao.mapper.PdtMapper;
 import ytk.business.dao.mapper.KsglMapper;
 import ytk.business.dao.mapper.KsglMapperCustom;
 import ytk.business.dao.mapper.SjMapper;
@@ -29,7 +29,7 @@ import ytk.business.dao.mapper.SjmbMapper;
 import ytk.business.dao.mapper.TktMapper;
 import ytk.business.pojo.po.Dxt;
 import ytk.business.pojo.po.Dxxzt;
-import ytk.business.pojo.po.Jdt;
+import ytk.business.pojo.po.Pdt;
 import ytk.business.pojo.po.Ksgl;
 import ytk.business.pojo.po.KsglExample;
 import ytk.business.pojo.po.Sj;
@@ -68,7 +68,7 @@ public class SjTmEbi implements SjTmEbo{
 	@Autowired
 	private TktMapper tktMapper;
 	@Autowired
-	private JdtMapper jdtMapper;
+	private PdtMapper pdtMapper;
 	@Autowired
 	private SjdaMapper sjdaMapper;
 	@Autowired
@@ -197,20 +197,15 @@ public class SjTmEbi implements SjTmEbo{
 				Dxt dxt = dxtMapper.selectByPrimaryKey(sjTm.getTuuid());
 				sjda.setAnswer(dxt.getAnswer());
 			}
-			//多项选择题
-			else if(type==2){
-				Dxxzt dxxzt = dxxztMapper.selectByPrimaryKey(sjTm.getTuuid());
-				sjda.setAnswer(dxxzt.getAnswer());
-			}
 			//填空题
 			else if(type==3){
 				Tkt tkt = tktMapper.selectByPrimaryKey(sjTm.getTuuid());
 				sjda.setAnswer(tkt.getAnswer());
 			}
-			//简答题
-			else if(type==4){
-				Jdt jdt = jdtMapper.selectByPrimaryKey(sjTm.getTuuid());
-				sjda.setAnswer(jdt.getAnswer());
+			//判断题
+			else if(type==5){
+				Pdt pdt = pdtMapper.selectByPrimaryKey(sjTm.getTuuid());
+				sjda.setAnswer(pdt.getAnswer());
 			}
 			sjdaMapper.insert(sjda);
 			
@@ -236,24 +231,10 @@ public class SjTmEbi implements SjTmEbo{
 					sjmb.setDxtscore(sjmb.getDxtscore()+sjTm.getScore());
 					sjmbCriteria.andDxtscoreEqualTo(sjmb.getDxtscore());
 					
-					sjmbCriteria.andDxxztcountEqualTo(sjmb.getDxxztcount());
-					sjmbCriteria.andDxxztscoreEqualTo(sjmb.getDxxztscore());
 					sjmbCriteria.andTktcountEqualTo(sjmb.getTktcount());
 					sjmbCriteria.andTktscoreEqualTo(sjmb.getTktscore());
-					sjmbCriteria.andJdtcountEqualTo(sjmb.getJdtcount());
-					sjmbCriteria.andJdtscoreEqualTo(sjmb.getJdtscore());
-				}else  if(type==2){
-					sjmb.setDxxztcount(sjmb.getDxxztcount()+1);
-					sjmbCriteria.andDxxztcountEqualTo(sjmb.getDxxztcount());
-					sjmb.setDxxztscore(sjmb.getDxxztscore()+sjTm.getScore());
-					sjmbCriteria.andDxxztscoreEqualTo(sjmb.getDxxztscore());
-					
-					sjmbCriteria.andDxtcountEqualTo(sjmb.getDxtcount());
-					sjmbCriteria.andDxtscoreEqualTo(sjmb.getDxtscore());
-					sjmbCriteria.andTktcountEqualTo(sjmb.getTktcount());
-					sjmbCriteria.andTktscoreEqualTo(sjmb.getTktscore());
-					sjmbCriteria.andJdtcountEqualTo(sjmb.getJdtcount());
-					sjmbCriteria.andJdtscoreEqualTo(sjmb.getJdtscore());
+					sjmbCriteria.andPdtcountEqualTo(sjmb.getPdtcount());
+					sjmbCriteria.andPdtscoreEqualTo(sjmb.getPdtscore());
 				}else if(type==3){
 					sjmb.setTktcount(sjmb.getTktcount()+1);
 					sjmbCriteria.andTktcountEqualTo(sjmb.getTktcount());
@@ -262,20 +243,16 @@ public class SjTmEbi implements SjTmEbo{
 					
 					sjmbCriteria.andDxtcountEqualTo(sjmb.getDxtcount());
 					sjmbCriteria.andDxtscoreEqualTo(sjmb.getDxtscore());
-					sjmbCriteria.andDxxztcountEqualTo(sjmb.getDxxztcount());
-					sjmbCriteria.andDxxztscoreEqualTo(sjmb.getDxxztscore());
-					sjmbCriteria.andJdtcountEqualTo(sjmb.getJdtcount());
-					sjmbCriteria.andJdtscoreEqualTo(sjmb.getJdtscore());
-				}else if(type==4){
-					sjmb.setJdtcount(sjmb.getJdtcount()+1);
-					sjmbCriteria.andJdtcountEqualTo(sjmb.getJdtcount());
-					sjmb.setJdtscore(sjmb.getJdtscore()+sjTm.getScore());
-					sjmbCriteria.andJdtscoreEqualTo(sjmb.getJdtscore());
+					sjmbCriteria.andPdtcountEqualTo(sjmb.getPdtcount());
+					sjmbCriteria.andPdtscoreEqualTo(sjmb.getPdtscore());
+				}else if(type==5){
+					sjmb.setPdtcount(sjmb.getPdtcount()+1);
+					sjmbCriteria.andPdtcountEqualTo(sjmb.getPdtcount());
+					sjmb.setPdtscore(sjmb.getPdtscore()+sjTm.getScore());
+					sjmbCriteria.andPdtscoreEqualTo(sjmb.getPdtscore());
 					
 					sjmbCriteria.andDxtcountEqualTo(sjmb.getDxtcount());
 					sjmbCriteria.andDxtscoreEqualTo(sjmb.getDxtscore());
-					sjmbCriteria.andDxxztcountEqualTo(sjmb.getDxxztcount());
-					sjmbCriteria.andDxxztscoreEqualTo(sjmb.getDxxztscore());
 					sjmbCriteria.andTktcountEqualTo(sjmb.getTktcount());
 					sjmbCriteria.andTktscoreEqualTo(sjmb.getTktscore());
 				}
@@ -288,10 +265,8 @@ public class SjTmEbi implements SjTmEbo{
 					sjmb2.setUuid(UUIDBuild.getUUID());
 					sjmb2.setDxtcount(sjmb.getDxtcount());
 					sjmb2.setDxtscore(sjmb.getDxtscore());
-					sjmb2.setDxxztcount(sjmb.getDxxztcount());
-					sjmb2.setDxxztscore(sjmb.getDxxztscore());
-					sjmb2.setJdtcount(sjmb.getJdtcount());
-					sjmb2.setJdtscore(sjmb.getJdtscore());
+					sjmb2.setPdtcount(sjmb.getPdtcount());
+					sjmb2.setPdtscore(sjmb.getPdtscore());
 					sjmb2.setTktcount(sjmb.getTktcount());
 					sjmb2.setTktscore(sjmb.getTktscore());
 					sjmb2.setScore(score);
@@ -401,24 +376,10 @@ public class SjTmEbi implements SjTmEbo{
 					sjmb.setDxtscore(sjmb.getDxtscore()-sjTm.getScore());
 					sjmbCriteria.andDxtscoreEqualTo(sjmb.getDxtscore());
 					
-					sjmbCriteria.andDxxztcountEqualTo(sjmb.getDxxztcount());
-					sjmbCriteria.andDxxztscoreEqualTo(sjmb.getDxxztscore());
 					sjmbCriteria.andTktcountEqualTo(sjmb.getTktcount());
 					sjmbCriteria.andTktscoreEqualTo(sjmb.getTktscore());
-					sjmbCriteria.andJdtcountEqualTo(sjmb.getJdtcount());
-					sjmbCriteria.andJdtscoreEqualTo(sjmb.getJdtscore());
-				}else  if(type==2){
-					sjmb.setDxxztcount(sjmb.getDxxztcount()-1);
-					sjmbCriteria.andDxxztcountEqualTo(sjmb.getDxxztcount());
-					sjmb.setDxxztscore(sjmb.getDxxztscore()-sjTm.getScore());
-					sjmbCriteria.andDxxztscoreEqualTo(sjmb.getDxxztscore());
-					
-					sjmbCriteria.andDxtcountEqualTo(sjmb.getDxtcount());
-					sjmbCriteria.andDxtscoreEqualTo(sjmb.getDxtscore());
-					sjmbCriteria.andTktcountEqualTo(sjmb.getTktcount());
-					sjmbCriteria.andTktscoreEqualTo(sjmb.getTktscore());
-					sjmbCriteria.andJdtcountEqualTo(sjmb.getJdtcount());
-					sjmbCriteria.andJdtscoreEqualTo(sjmb.getJdtscore());
+					sjmbCriteria.andPdtcountEqualTo(sjmb.getPdtcount());
+					sjmbCriteria.andPdtscoreEqualTo(sjmb.getPdtscore());
 				}else if(type==3){
 					sjmb.setTktcount(sjmb.getTktcount()-1);
 					sjmbCriteria.andTktcountEqualTo(sjmb.getTktcount());
@@ -427,20 +388,16 @@ public class SjTmEbi implements SjTmEbo{
 					
 					sjmbCriteria.andDxtcountEqualTo(sjmb.getDxtcount());
 					sjmbCriteria.andDxtscoreEqualTo(sjmb.getDxtscore());
-					sjmbCriteria.andDxxztcountEqualTo(sjmb.getDxxztcount());
-					sjmbCriteria.andDxxztscoreEqualTo(sjmb.getDxxztscore());
-					sjmbCriteria.andJdtcountEqualTo(sjmb.getJdtcount());
-					sjmbCriteria.andJdtscoreEqualTo(sjmb.getJdtscore());
-				}else if(type==4){
-					sjmb.setJdtcount(sjmb.getJdtcount()-1);
-					sjmbCriteria.andJdtcountEqualTo(sjmb.getJdtcount());
-					sjmb.setJdtscore(sjmb.getJdtscore()-sjTm.getScore());
-					sjmbCriteria.andJdtscoreEqualTo(sjmb.getJdtscore());
+					sjmbCriteria.andPdtcountEqualTo(sjmb.getPdtcount());
+					sjmbCriteria.andPdtscoreEqualTo(sjmb.getPdtscore());
+				}else if(type==5){
+					sjmb.setPdtcount(sjmb.getPdtcount()-1);
+					sjmbCriteria.andPdtcountEqualTo(sjmb.getPdtcount());
+					sjmb.setPdtscore(sjmb.getPdtscore()-sjTm.getScore());
+					sjmbCriteria.andPdtscoreEqualTo(sjmb.getPdtscore());
 					
 					sjmbCriteria.andDxtcountEqualTo(sjmb.getDxtcount());
 					sjmbCriteria.andDxtscoreEqualTo(sjmb.getDxtscore());
-					sjmbCriteria.andDxxztcountEqualTo(sjmb.getDxxztcount());
-					sjmbCriteria.andDxxztscoreEqualTo(sjmb.getDxxztscore());
 					sjmbCriteria.andTktcountEqualTo(sjmb.getTktcount());
 					sjmbCriteria.andTktscoreEqualTo(sjmb.getTktscore());
 				}
@@ -453,10 +410,8 @@ public class SjTmEbi implements SjTmEbo{
 					sjmb2.setUuid(UUIDBuild.getUUID());
 					sjmb2.setDxtcount(sjmb.getDxtcount());
 					sjmb2.setDxtscore(sjmb.getDxtscore());
-					sjmb2.setDxxztcount(sjmb.getDxxztcount());
-					sjmb2.setDxxztscore(sjmb.getDxxztscore());
-					sjmb2.setJdtcount(sjmb.getJdtcount());
-					sjmb2.setJdtscore(sjmb.getJdtscore());
+					sjmb2.setPdtcount(sjmb.getPdtcount());
+					sjmb2.setPdtscore(sjmb.getPdtscore());
 					sjmb2.setTktcount(sjmb.getTktcount());
 					sjmb2.setTktscore(sjmb.getTktscore());
 					sjmb2.setScore(score);
@@ -515,37 +470,6 @@ public class SjTmEbi implements SjTmEbo{
 							}
 						}
 					}
-				}else if(type==2){
-					//查询该试卷所有多项选择题信息
-					//修改其编号依次从1开始
-					sjTmCustom.setType(2);
-					List<SjTmCustom> sjTmList = sjTmMapperCustom.findSjTmList(sjTmQueryVo);
-					if(sjTmList!=null&&sjTmList.size()>0){
-						for(int i=0;i<sjTmList.size();i++){
-							SjTm tm=sjTmList.get(i);
-							Integer sjtmid=tm.getSjtmid();
-							//如果题目编号不连续
-							if(sjtmid!=i+1){
-								//修改该题目编号，并且修改该题目对应答案的编号
-								SjdaExample sjdaExample2=new SjdaExample();
-								SjdaExample.Criteria sjdaDxtCriteria = sjdaExample2.createCriteria();
-								sjdaDxtCriteria.andSjidEqualTo(sjid);
-								sjdaDxtCriteria.andTypeEqualTo(2);
-								sjdaDxtCriteria.andSjtmidEqualTo(sjtmid);
-								List<Sjda> sjdaList = sjdaMapper.selectByExample(sjdaExample2);
-								if(sjdaList!=null&&sjdaList.size()>0){
-									Sjda sjda = sjdaList.get(0);
-									sjda.setSjtmid(sjtmid);
-									//更新试卷答案题目编号
-									sjdaMapper.updateByPrimaryKey(sjda);
-								}
-								//更新试卷系题目编号
-								tm.setSjtmid(i+1);
-								tm.setType(2);
-								sjTmMapper.updateByPrimaryKey(tm);
-							}
-						}
-					}
 				}else if(type==3){
 					//查询该试卷所有填空题信息
 					//修改其编号依次从1开始
@@ -577,10 +501,10 @@ public class SjTmEbi implements SjTmEbo{
 							}
 						}
 					}
-				}else if(type==4){
-					//查询该试卷所有简答题信息
+				}else if(type==5){
+					//查询该试卷所有判断题信息
 					//修改其编号依次从1开始
-					sjTmCustom.setType(4);
+					sjTmCustom.setType(5);
 					List<SjTmCustom> sjTmList = sjTmMapperCustom.findSjTmList(sjTmQueryVo);
 					if(sjTmList!=null&&sjTmList.size()>0){
 						for(int i=0;i<sjTmList.size();i++){
@@ -592,7 +516,7 @@ public class SjTmEbi implements SjTmEbo{
 								SjdaExample sjdaExample2=new SjdaExample();
 								SjdaExample.Criteria sjdaDxtCriteria = sjdaExample2.createCriteria();
 								sjdaDxtCriteria.andSjidEqualTo(sjid);
-								sjdaDxtCriteria.andTypeEqualTo(4);
+								sjdaDxtCriteria.andTypeEqualTo(5);
 								sjdaDxtCriteria.andSjtmidEqualTo(sjtmid);
 								List<Sjda> sjdaList = sjdaMapper.selectByExample(sjdaExample2);
 								if(sjdaList!=null&&sjdaList.size()>0){
@@ -603,7 +527,7 @@ public class SjTmEbi implements SjTmEbo{
 								}
 								//更新试卷系题目编号
 								tm.setSjtmid(i+1);
-								tm.setType(4);
+								tm.setType(5);
 								sjTmMapper.updateByPrimaryKey(tm);
 							}
 						}
@@ -638,19 +562,14 @@ public class SjTmEbi implements SjTmEbo{
 		if(dxtcount==null)
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1032, null));
 		
-		//多项选择题数量不允许为空
-		Integer dxxztcount = sjmbCustom.getDxxztcount();
-		if(dxxztcount==null)
-			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1033, null));
-		
 		//填空题数量不允许为空
 		Integer tktcount = sjmbCustom.getTktcount();
 		if(tktcount==null)
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1034, null));
 		
-		//简答题数量不允许为空
-		Integer jdtcount = sjmbCustom.getJdtcount();
-		if(jdtcount==null)
+		//判断题题数量不允许为空
+		Integer pdtcount = sjmbCustom.getPdtcount();
+		if(pdtcount==null)
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1035, null));
 		
 		//单选题分值不允许为空
@@ -658,19 +577,14 @@ public class SjTmEbi implements SjTmEbo{
 		if(dxtscore==null)
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1036, null));
 		
-		//多项选择题分值不允许为空
-		Integer dxxztscore = sjmbCustom.getDxxztscore();
-		if(dxxztscore==null)
-			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1037, null));
-		
 		//填空题分值不允许为空
 		Integer tktscore = sjmbCustom.getTktscore();
 		if(tktscore==null)
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1038, null));
 		
-		//简答题分值不允许为空
-		Integer jdtscore = sjmbCustom.getJdtscore();
-		if(jdtscore==null)
+		//判断题分值不允许为空
+		Integer pdtscore = sjmbCustom.getPdtscore();
+		if(pdtscore==null)
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1039, null));
 	}
 
@@ -720,23 +634,10 @@ public class SjTmEbi implements SjTmEbo{
 					sjmb.setDxtscore(sjmb.getDxtscore()-scoreDb+score);
 					sjmbCriteria.andDxtscoreEqualTo(sjmb.getDxtscore());
 					
-					sjmbCriteria.andDxxztcountEqualTo(sjmb.getDxxztcount());
-					sjmbCriteria.andDxxztscoreEqualTo(sjmb.getDxxztscore());
 					sjmbCriteria.andTktcountEqualTo(sjmb.getTktcount());
 					sjmbCriteria.andTktscoreEqualTo(sjmb.getTktscore());
-					sjmbCriteria.andJdtcountEqualTo(sjmb.getJdtcount());
-					sjmbCriteria.andJdtscoreEqualTo(sjmb.getJdtscore());
-				}else  if(type==2){
-					sjmbCriteria.andDxxztcountEqualTo(sjmb.getDxxztcount());
-					sjmb.setDxxztscore(sjmb.getDxxztscore()-scoreDb+score);
-					sjmbCriteria.andDxxztscoreEqualTo(sjmb.getDxxztscore());
-					
-					sjmbCriteria.andDxtcountEqualTo(sjmb.getDxtcount());
-					sjmbCriteria.andDxtscoreEqualTo(sjmb.getDxtscore());
-					sjmbCriteria.andTktcountEqualTo(sjmb.getTktcount());
-					sjmbCriteria.andTktscoreEqualTo(sjmb.getTktscore());
-					sjmbCriteria.andJdtcountEqualTo(sjmb.getJdtcount());
-					sjmbCriteria.andJdtscoreEqualTo(sjmb.getJdtscore());
+					sjmbCriteria.andPdtcountEqualTo(sjmb.getPdtcount());
+					sjmbCriteria.andPdtscoreEqualTo(sjmb.getPdtscore());
 				}else if(type==3){
 					sjmbCriteria.andTktcountEqualTo(sjmb.getTktcount());
 					sjmb.setTktscore(sjmb.getTktscore()-scoreDb+score);
@@ -744,19 +645,15 @@ public class SjTmEbi implements SjTmEbo{
 					
 					sjmbCriteria.andDxtcountEqualTo(sjmb.getDxtcount());
 					sjmbCriteria.andDxtscoreEqualTo(sjmb.getDxtscore());
-					sjmbCriteria.andDxxztcountEqualTo(sjmb.getDxxztcount());
-					sjmbCriteria.andDxxztscoreEqualTo(sjmb.getDxxztscore());
-					sjmbCriteria.andJdtcountEqualTo(sjmb.getJdtcount());
-					sjmbCriteria.andJdtscoreEqualTo(sjmb.getJdtscore());
-				}else if(type==4){
-					sjmbCriteria.andJdtcountEqualTo(sjmb.getJdtcount());
-					sjmb.setJdtscore(sjmb.getJdtscore()-scoreDb+score);
-					sjmbCriteria.andJdtscoreEqualTo(sjmb.getJdtscore());
+					sjmbCriteria.andPdtcountEqualTo(sjmb.getPdtcount());
+					sjmbCriteria.andPdtscoreEqualTo(sjmb.getPdtscore());
+				}else if(type==5){
+					sjmbCriteria.andPdtcountEqualTo(sjmb.getPdtcount());
+					sjmb.setPdtscore(sjmb.getPdtscore()-scoreDb+score);
+					sjmbCriteria.andPdtscoreEqualTo(sjmb.getPdtscore());
 					
 					sjmbCriteria.andDxtcountEqualTo(sjmb.getDxtcount());
 					sjmbCriteria.andDxtscoreEqualTo(sjmb.getDxtscore());
-					sjmbCriteria.andDxxztcountEqualTo(sjmb.getDxxztcount());
-					sjmbCriteria.andDxxztscoreEqualTo(sjmb.getDxxztscore());
 					sjmbCriteria.andTktcountEqualTo(sjmb.getTktcount());
 					sjmbCriteria.andTktscoreEqualTo(sjmb.getTktscore());
 				}
@@ -769,10 +666,8 @@ public class SjTmEbi implements SjTmEbo{
 					sjmb2.setUuid(UUIDBuild.getUUID());
 					sjmb2.setDxtcount(sjmb.getDxtcount());
 					sjmb2.setDxtscore(sjmb.getDxtscore());
-					sjmb2.setDxxztcount(sjmb.getDxxztcount());
-					sjmb2.setDxxztscore(sjmb.getDxxztscore());
-					sjmb2.setJdtcount(sjmb.getJdtcount());
-					sjmb2.setJdtscore(sjmb.getJdtscore());
+					sjmb2.setPdtcount(sjmb.getPdtcount());
+					sjmb2.setPdtscore(sjmb.getPdtscore());
 					sjmb2.setTktcount(sjmb.getTktcount());
 					sjmb2.setTktscore(sjmb.getTktscore());
 					sjmb2.setScore(sjScore);
@@ -940,22 +835,22 @@ public class SjTmEbi implements SjTmEbo{
 	}
 
 	@Override
-	public List<Jdt> findJdtBySjUuid(SjTmQueryVo sjTmQueryVo)
+	public List<Pdt> findPdtBySjUuid(SjTmQueryVo sjTmQueryVo)
 			throws Exception {
-		//查询该试卷的简答题题试卷题目信息，取出题uuid添加到list，再查询tuuid在list中的简答题信息
-		sjTmQueryVo.getSjTmCustom().setType(4);
+		//查询该试卷的判断题题试卷题目信息，取出题uuid添加到list，再查询tuuid在list中的判断题信息
+		sjTmQueryVo.getSjTmCustom().setType(5);
 		sjTmQueryVo.getSjTmCustom().setState(1);
 		List<SjTmCustom> sjTmList = findSjTmList(sjTmQueryVo);
 		
 		//存在相应试卷题目再去查询具体类型题目信息
-		List<Jdt> jdtList=new ArrayList<Jdt>();
+		List<Pdt> pdtList=new ArrayList<Pdt>();
 		if(sjTmList!=null&&sjTmList.size()>0){
 			for(SjTmCustom sjTmCustom:sjTmList){
-				Jdt jdt = jdtMapper.selectByPrimaryKey(sjTmCustom.getTuuid());
-				jdtList.add(jdt);
+				Pdt pdt = pdtMapper.selectByPrimaryKey(sjTmCustom.getTuuid());
+				pdtList.add(pdt);
 			}
 		}
-		return jdtList;
+		return pdtList;
 	}
 
 	@Override

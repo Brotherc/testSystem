@@ -9,6 +9,7 @@ public class StudentSjdaQueryVo {
 	private PageQuery pageQuery;
 	
 	private List<String> dxtList;
+	private List<String> pdtList;
 	private List<String> dxxztList;
 	private List<List<String>> tktList;
 	private List<String> jdtList;
@@ -47,6 +48,12 @@ public class StudentSjdaQueryVo {
 	}
 	public void setTktList(List<List<String>> tktList) {
 		this.tktList = tktList;
+	}
+	public List<String> getPdtList() {
+		return pdtList;
+	}
+	public void setPdtList(List<String> pdtList) {
+		this.pdtList = pdtList;
 	}
 
 	

@@ -3,14 +3,14 @@ package ytk.business.pojo.po;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SjmbExample {
+public class PdtExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public SjmbExample() {
+    public PdtExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -174,423 +174,453 @@ public class SjmbExample {
             return (Criteria) this;
         }
 
-        public Criteria andDxtcountIsNull() {
-            addCriterion("dxtcount is null");
+        public Criteria andTypeIsNull() {
+            addCriterion("type is null");
             return (Criteria) this;
         }
 
-        public Criteria andDxtcountIsNotNull() {
-            addCriterion("dxtcount is not null");
+        public Criteria andTypeIsNotNull() {
+            addCriterion("type is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDxtcountEqualTo(Integer value) {
-            addCriterion("dxtcount =", value, "dxtcount");
+        public Criteria andTypeEqualTo(Integer value) {
+            addCriterion("type =", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andDxtcountNotEqualTo(Integer value) {
-            addCriterion("dxtcount <>", value, "dxtcount");
+        public Criteria andTypeNotEqualTo(Integer value) {
+            addCriterion("type <>", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andDxtcountGreaterThan(Integer value) {
-            addCriterion("dxtcount >", value, "dxtcount");
+        public Criteria andTypeGreaterThan(Integer value) {
+            addCriterion("type >", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andDxtcountGreaterThanOrEqualTo(Integer value) {
-            addCriterion("dxtcount >=", value, "dxtcount");
+        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("type >=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andDxtcountLessThan(Integer value) {
-            addCriterion("dxtcount <", value, "dxtcount");
+        public Criteria andTypeLessThan(Integer value) {
+            addCriterion("type <", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andDxtcountLessThanOrEqualTo(Integer value) {
-            addCriterion("dxtcount <=", value, "dxtcount");
+        public Criteria andTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("type <=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andDxtcountIn(List<Integer> values) {
-            addCriterion("dxtcount in", values, "dxtcount");
+        public Criteria andTypeIn(List<Integer> values) {
+            addCriterion("type in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andDxtcountNotIn(List<Integer> values) {
-            addCriterion("dxtcount not in", values, "dxtcount");
+        public Criteria andTypeNotIn(List<Integer> values) {
+            addCriterion("type not in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andDxtcountBetween(Integer value1, Integer value2) {
-            addCriterion("dxtcount between", value1, value2, "dxtcount");
+        public Criteria andTypeBetween(Integer value1, Integer value2) {
+            addCriterion("type between", value1, value2, "type");
             return (Criteria) this;
         }
 
-        public Criteria andDxtcountNotBetween(Integer value1, Integer value2) {
-            addCriterion("dxtcount not between", value1, value2, "dxtcount");
+        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("type not between", value1, value2, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTktcountIsNull() {
-            addCriterion("tktcount is null");
+        public Criteria andKcuuidIsNull() {
+            addCriterion("kcuuid is null");
             return (Criteria) this;
         }
 
-        public Criteria andTktcountIsNotNull() {
-            addCriterion("tktcount is not null");
+        public Criteria andKcuuidIsNotNull() {
+            addCriterion("kcuuid is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTktcountEqualTo(Integer value) {
-            addCriterion("tktcount =", value, "tktcount");
+        public Criteria andKcuuidEqualTo(Long value) {
+            addCriterion("kcuuid =", value, "kcuuid");
             return (Criteria) this;
         }
 
-        public Criteria andTktcountNotEqualTo(Integer value) {
-            addCriterion("tktcount <>", value, "tktcount");
+        public Criteria andKcuuidNotEqualTo(Long value) {
+            addCriterion("kcuuid <>", value, "kcuuid");
             return (Criteria) this;
         }
 
-        public Criteria andTktcountGreaterThan(Integer value) {
-            addCriterion("tktcount >", value, "tktcount");
+        public Criteria andKcuuidGreaterThan(Long value) {
+            addCriterion("kcuuid >", value, "kcuuid");
             return (Criteria) this;
         }
 
-        public Criteria andTktcountGreaterThanOrEqualTo(Integer value) {
-            addCriterion("tktcount >=", value, "tktcount");
+        public Criteria andKcuuidGreaterThanOrEqualTo(Long value) {
+            addCriterion("kcuuid >=", value, "kcuuid");
             return (Criteria) this;
         }
 
-        public Criteria andTktcountLessThan(Integer value) {
-            addCriterion("tktcount <", value, "tktcount");
+        public Criteria andKcuuidLessThan(Long value) {
+            addCriterion("kcuuid <", value, "kcuuid");
             return (Criteria) this;
         }
 
-        public Criteria andTktcountLessThanOrEqualTo(Integer value) {
-            addCriterion("tktcount <=", value, "tktcount");
+        public Criteria andKcuuidLessThanOrEqualTo(Long value) {
+            addCriterion("kcuuid <=", value, "kcuuid");
             return (Criteria) this;
         }
 
-        public Criteria andTktcountIn(List<Integer> values) {
-            addCriterion("tktcount in", values, "tktcount");
+        public Criteria andKcuuidIn(List<Long> values) {
+            addCriterion("kcuuid in", values, "kcuuid");
             return (Criteria) this;
         }
 
-        public Criteria andTktcountNotIn(List<Integer> values) {
-            addCriterion("tktcount not in", values, "tktcount");
+        public Criteria andKcuuidNotIn(List<Long> values) {
+            addCriterion("kcuuid not in", values, "kcuuid");
             return (Criteria) this;
         }
 
-        public Criteria andTktcountBetween(Integer value1, Integer value2) {
-            addCriterion("tktcount between", value1, value2, "tktcount");
+        public Criteria andKcuuidBetween(Long value1, Long value2) {
+            addCriterion("kcuuid between", value1, value2, "kcuuid");
             return (Criteria) this;
         }
 
-        public Criteria andTktcountNotBetween(Integer value1, Integer value2) {
-            addCriterion("tktcount not between", value1, value2, "tktcount");
+        public Criteria andKcuuidNotBetween(Long value1, Long value2) {
+            addCriterion("kcuuid not between", value1, value2, "kcuuid");
             return (Criteria) this;
         }
 
-        public Criteria andPdtcountIsNull() {
-            addCriterion("pdtcount is null");
+        public Criteria andContentIsNull() {
+            addCriterion("content is null");
             return (Criteria) this;
         }
 
-        public Criteria andPdtcountIsNotNull() {
-            addCriterion("pdtcount is not null");
+        public Criteria andContentIsNotNull() {
+            addCriterion("content is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPdtcountEqualTo(Integer value) {
-            addCriterion("pdtcount =", value, "pdtcount");
+        public Criteria andContentEqualTo(String value) {
+            addCriterion("content =", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andPdtcountNotEqualTo(Integer value) {
-            addCriterion("pdtcount <>", value, "pdtcount");
+        public Criteria andContentNotEqualTo(String value) {
+            addCriterion("content <>", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andPdtcountGreaterThan(Integer value) {
-            addCriterion("pdtcount >", value, "pdtcount");
+        public Criteria andContentGreaterThan(String value) {
+            addCriterion("content >", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andPdtcountGreaterThanOrEqualTo(Integer value) {
-            addCriterion("pdtcount >=", value, "pdtcount");
+        public Criteria andContentGreaterThanOrEqualTo(String value) {
+            addCriterion("content >=", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andPdtcountLessThan(Integer value) {
-            addCriterion("pdtcount <", value, "pdtcount");
+        public Criteria andContentLessThan(String value) {
+            addCriterion("content <", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andPdtcountLessThanOrEqualTo(Integer value) {
-            addCriterion("pdtcount <=", value, "pdtcount");
+        public Criteria andContentLessThanOrEqualTo(String value) {
+            addCriterion("content <=", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andPdtcountIn(List<Integer> values) {
-            addCriterion("pdtcount in", values, "pdtcount");
+        public Criteria andContentLike(String value) {
+            addCriterion("content like", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andPdtcountNotIn(List<Integer> values) {
-            addCriterion("pdtcount not in", values, "pdtcount");
+        public Criteria andContentNotLike(String value) {
+            addCriterion("content not like", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andPdtcountBetween(Integer value1, Integer value2) {
-            addCriterion("pdtcount between", value1, value2, "pdtcount");
+        public Criteria andContentIn(List<String> values) {
+            addCriterion("content in", values, "content");
             return (Criteria) this;
         }
 
-        public Criteria andPdtcountNotBetween(Integer value1, Integer value2) {
-            addCriterion("pdtcount not between", value1, value2, "pdtcount");
+        public Criteria andContentNotIn(List<String> values) {
+            addCriterion("content not in", values, "content");
             return (Criteria) this;
         }
 
-        public Criteria andDxtscoreIsNull() {
-            addCriterion("dxtscore is null");
+        public Criteria andContentBetween(String value1, String value2) {
+            addCriterion("content between", value1, value2, "content");
             return (Criteria) this;
         }
 
-        public Criteria andDxtscoreIsNotNull() {
-            addCriterion("dxtscore is not null");
+        public Criteria andContentNotBetween(String value1, String value2) {
+            addCriterion("content not between", value1, value2, "content");
             return (Criteria) this;
         }
 
-        public Criteria andDxtscoreEqualTo(Integer value) {
-            addCriterion("dxtscore =", value, "dxtscore");
+        public Criteria andAnswerIsNull() {
+            addCriterion("answer is null");
             return (Criteria) this;
         }
 
-        public Criteria andDxtscoreNotEqualTo(Integer value) {
-            addCriterion("dxtscore <>", value, "dxtscore");
+        public Criteria andAnswerIsNotNull() {
+            addCriterion("answer is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDxtscoreGreaterThan(Integer value) {
-            addCriterion("dxtscore >", value, "dxtscore");
+        public Criteria andAnswerEqualTo(String value) {
+            addCriterion("answer =", value, "answer");
             return (Criteria) this;
         }
 
-        public Criteria andDxtscoreGreaterThanOrEqualTo(Integer value) {
-            addCriterion("dxtscore >=", value, "dxtscore");
+        public Criteria andAnswerNotEqualTo(String value) {
+            addCriterion("answer <>", value, "answer");
             return (Criteria) this;
         }
 
-        public Criteria andDxtscoreLessThan(Integer value) {
-            addCriterion("dxtscore <", value, "dxtscore");
+        public Criteria andAnswerGreaterThan(String value) {
+            addCriterion("answer >", value, "answer");
             return (Criteria) this;
         }
 
-        public Criteria andDxtscoreLessThanOrEqualTo(Integer value) {
-            addCriterion("dxtscore <=", value, "dxtscore");
+        public Criteria andAnswerGreaterThanOrEqualTo(String value) {
+            addCriterion("answer >=", value, "answer");
             return (Criteria) this;
         }
 
-        public Criteria andDxtscoreIn(List<Integer> values) {
-            addCriterion("dxtscore in", values, "dxtscore");
+        public Criteria andAnswerLessThan(String value) {
+            addCriterion("answer <", value, "answer");
             return (Criteria) this;
         }
 
-        public Criteria andDxtscoreNotIn(List<Integer> values) {
-            addCriterion("dxtscore not in", values, "dxtscore");
+        public Criteria andAnswerLessThanOrEqualTo(String value) {
+            addCriterion("answer <=", value, "answer");
             return (Criteria) this;
         }
 
-        public Criteria andDxtscoreBetween(Integer value1, Integer value2) {
-            addCriterion("dxtscore between", value1, value2, "dxtscore");
+        public Criteria andAnswerLike(String value) {
+            addCriterion("answer like", value, "answer");
             return (Criteria) this;
         }
 
-        public Criteria andDxtscoreNotBetween(Integer value1, Integer value2) {
-            addCriterion("dxtscore not between", value1, value2, "dxtscore");
+        public Criteria andAnswerNotLike(String value) {
+            addCriterion("answer not like", value, "answer");
             return (Criteria) this;
         }
 
-        public Criteria andTktscoreIsNull() {
-            addCriterion("tktscore is null");
+        public Criteria andAnswerIn(List<String> values) {
+            addCriterion("answer in", values, "answer");
             return (Criteria) this;
         }
 
-        public Criteria andTktscoreIsNotNull() {
-            addCriterion("tktscore is not null");
+        public Criteria andAnswerNotIn(List<String> values) {
+            addCriterion("answer not in", values, "answer");
             return (Criteria) this;
         }
 
-        public Criteria andTktscoreEqualTo(Integer value) {
-            addCriterion("tktscore =", value, "tktscore");
+        public Criteria andAnswerBetween(String value1, String value2) {
+            addCriterion("answer between", value1, value2, "answer");
             return (Criteria) this;
         }
 
-        public Criteria andTktscoreNotEqualTo(Integer value) {
-            addCriterion("tktscore <>", value, "tktscore");
+        public Criteria andAnswerNotBetween(String value1, String value2) {
+            addCriterion("answer not between", value1, value2, "answer");
             return (Criteria) this;
         }
 
-        public Criteria andTktscoreGreaterThan(Integer value) {
-            addCriterion("tktscore >", value, "tktscore");
+        public Criteria andNdtypeIsNull() {
+            addCriterion("ndtype is null");
             return (Criteria) this;
         }
 
-        public Criteria andTktscoreGreaterThanOrEqualTo(Integer value) {
-            addCriterion("tktscore >=", value, "tktscore");
+        public Criteria andNdtypeIsNotNull() {
+            addCriterion("ndtype is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTktscoreLessThan(Integer value) {
-            addCriterion("tktscore <", value, "tktscore");
+        public Criteria andNdtypeEqualTo(Integer value) {
+            addCriterion("ndtype =", value, "ndtype");
             return (Criteria) this;
         }
 
-        public Criteria andTktscoreLessThanOrEqualTo(Integer value) {
-            addCriterion("tktscore <=", value, "tktscore");
+        public Criteria andNdtypeNotEqualTo(Integer value) {
+            addCriterion("ndtype <>", value, "ndtype");
             return (Criteria) this;
         }
 
-        public Criteria andTktscoreIn(List<Integer> values) {
-            addCriterion("tktscore in", values, "tktscore");
+        public Criteria andNdtypeGreaterThan(Integer value) {
+            addCriterion("ndtype >", value, "ndtype");
             return (Criteria) this;
         }
 
-        public Criteria andTktscoreNotIn(List<Integer> values) {
-            addCriterion("tktscore not in", values, "tktscore");
+        public Criteria andNdtypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("ndtype >=", value, "ndtype");
             return (Criteria) this;
         }
 
-        public Criteria andTktscoreBetween(Integer value1, Integer value2) {
-            addCriterion("tktscore between", value1, value2, "tktscore");
+        public Criteria andNdtypeLessThan(Integer value) {
+            addCriterion("ndtype <", value, "ndtype");
             return (Criteria) this;
         }
 
-        public Criteria andTktscoreNotBetween(Integer value1, Integer value2) {
-            addCriterion("tktscore not between", value1, value2, "tktscore");
+        public Criteria andNdtypeLessThanOrEqualTo(Integer value) {
+            addCriterion("ndtype <=", value, "ndtype");
             return (Criteria) this;
         }
 
-        public Criteria andPdtscoreIsNull() {
-            addCriterion("pdtscore is null");
+        public Criteria andNdtypeIn(List<Integer> values) {
+            addCriterion("ndtype in", values, "ndtype");
             return (Criteria) this;
         }
 
-        public Criteria andPdtscoreIsNotNull() {
-            addCriterion("pdtscore is not null");
+        public Criteria andNdtypeNotIn(List<Integer> values) {
+            addCriterion("ndtype not in", values, "ndtype");
             return (Criteria) this;
         }
 
-        public Criteria andPdtscoreEqualTo(Integer value) {
-            addCriterion("pdtscore =", value, "pdtscore");
+        public Criteria andNdtypeBetween(Integer value1, Integer value2) {
+            addCriterion("ndtype between", value1, value2, "ndtype");
             return (Criteria) this;
         }
 
-        public Criteria andPdtscoreNotEqualTo(Integer value) {
-            addCriterion("pdtscore <>", value, "pdtscore");
+        public Criteria andNdtypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("ndtype not between", value1, value2, "ndtype");
             return (Criteria) this;
         }
 
-        public Criteria andPdtscoreGreaterThan(Integer value) {
-            addCriterion("pdtscore >", value, "pdtscore");
+        public Criteria andTeacheruuidIsNull() {
+            addCriterion("teacheruuid is null");
             return (Criteria) this;
         }
 
-        public Criteria andPdtscoreGreaterThanOrEqualTo(Integer value) {
-            addCriterion("pdtscore >=", value, "pdtscore");
+        public Criteria andTeacheruuidIsNotNull() {
+            addCriterion("teacheruuid is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPdtscoreLessThan(Integer value) {
-            addCriterion("pdtscore <", value, "pdtscore");
+        public Criteria andTeacheruuidEqualTo(String value) {
+            addCriterion("teacheruuid =", value, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andPdtscoreLessThanOrEqualTo(Integer value) {
-            addCriterion("pdtscore <=", value, "pdtscore");
+        public Criteria andTeacheruuidNotEqualTo(String value) {
+            addCriterion("teacheruuid <>", value, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andPdtscoreIn(List<Integer> values) {
-            addCriterion("pdtscore in", values, "pdtscore");
+        public Criteria andTeacheruuidGreaterThan(String value) {
+            addCriterion("teacheruuid >", value, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andPdtscoreNotIn(List<Integer> values) {
-            addCriterion("pdtscore not in", values, "pdtscore");
+        public Criteria andTeacheruuidGreaterThanOrEqualTo(String value) {
+            addCriterion("teacheruuid >=", value, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andPdtscoreBetween(Integer value1, Integer value2) {
-            addCriterion("pdtscore between", value1, value2, "pdtscore");
+        public Criteria andTeacheruuidLessThan(String value) {
+            addCriterion("teacheruuid <", value, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andPdtscoreNotBetween(Integer value1, Integer value2) {
-            addCriterion("pdtscore not between", value1, value2, "pdtscore");
+        public Criteria andTeacheruuidLessThanOrEqualTo(String value) {
+            addCriterion("teacheruuid <=", value, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andScoreIsNull() {
-            addCriterion("score is null");
+        public Criteria andTeacheruuidLike(String value) {
+            addCriterion("teacheruuid like", value, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andScoreIsNotNull() {
-            addCriterion("score is not null");
+        public Criteria andTeacheruuidNotLike(String value) {
+            addCriterion("teacheruuid not like", value, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andScoreEqualTo(Integer value) {
-            addCriterion("score =", value, "score");
+        public Criteria andTeacheruuidIn(List<String> values) {
+            addCriterion("teacheruuid in", values, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andScoreNotEqualTo(Integer value) {
-            addCriterion("score <>", value, "score");
+        public Criteria andTeacheruuidNotIn(List<String> values) {
+            addCriterion("teacheruuid not in", values, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andScoreGreaterThan(Integer value) {
-            addCriterion("score >", value, "score");
+        public Criteria andTeacheruuidBetween(String value1, String value2) {
+            addCriterion("teacheruuid between", value1, value2, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andScoreGreaterThanOrEqualTo(Integer value) {
-            addCriterion("score >=", value, "score");
+        public Criteria andTeacheruuidNotBetween(String value1, String value2) {
+            addCriterion("teacheruuid not between", value1, value2, "teacheruuid");
             return (Criteria) this;
         }
 
-        public Criteria andScoreLessThan(Integer value) {
-            addCriterion("score <", value, "score");
+        public Criteria andCreatetimeIsNull() {
+            addCriterion("createtime is null");
             return (Criteria) this;
         }
 
-        public Criteria andScoreLessThanOrEqualTo(Integer value) {
-            addCriterion("score <=", value, "score");
+        public Criteria andCreatetimeIsNotNull() {
+            addCriterion("createtime is not null");
             return (Criteria) this;
         }
 
-        public Criteria andScoreIn(List<Integer> values) {
-            addCriterion("score in", values, "score");
+        public Criteria andCreatetimeEqualTo(Long value) {
+            addCriterion("createtime =", value, "createtime");
             return (Criteria) this;
         }
 
-        public Criteria andScoreNotIn(List<Integer> values) {
-            addCriterion("score not in", values, "score");
+        public Criteria andCreatetimeNotEqualTo(Long value) {
+            addCriterion("createtime <>", value, "createtime");
             return (Criteria) this;
         }
 
-        public Criteria andScoreBetween(Integer value1, Integer value2) {
-            addCriterion("score between", value1, value2, "score");
+        public Criteria andCreatetimeGreaterThan(Long value) {
+            addCriterion("createtime >", value, "createtime");
             return (Criteria) this;
         }
 
-        public Criteria andScoreNotBetween(Integer value1, Integer value2) {
-            addCriterion("score not between", value1, value2, "score");
+        public Criteria andCreatetimeGreaterThanOrEqualTo(Long value) {
+            addCriterion("createtime >=", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeLessThan(Long value) {
+            addCriterion("createtime <", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeLessThanOrEqualTo(Long value) {
+            addCriterion("createtime <=", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeIn(List<Long> values) {
+            addCriterion("createtime in", values, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeNotIn(List<Long> values) {
+            addCriterion("createtime not in", values, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeBetween(Long value1, Long value2) {
+            addCriterion("createtime between", value1, value2, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeNotBetween(Long value1, Long value2) {
+            addCriterion("createtime not between", value1, value2, "createtime");
             return (Criteria) this;
         }
 

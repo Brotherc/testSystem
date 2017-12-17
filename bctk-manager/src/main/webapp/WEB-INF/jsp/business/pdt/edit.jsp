@@ -12,7 +12,7 @@
 <%@ include file="/WEB-INF/jsp/base/common_js2.jsp"%>
 <title>修改题目</title>
 <script type="text/javascript">
-  function jdtsave(){
+  function pdtsave(){
 		$("input[type=text]").each(function(i){
 			var val=$.trim($(this).val());
 			$(this).val(val);
@@ -23,11 +23,11 @@
 		});	
  		var val=$.trim($("#kcname").combobox("getText"));
  		$("#kcname").combobox("setValue",val);
-	  jquerySubByFId('jdtform',jdtsave_callback,null,"json");
+	  jquerySubByFId('pdtform',pdtsave_callback,null,"json");
 	  
   }
   //ajax调用的回调函数，ajax请求完成调用此函数，传入的参数是action返回的结果
-  function jdtsave_callback(data){
+  function pdtsave_callback(data){
 	 
  	  message_alert(data);
 	  
@@ -35,7 +35,7 @@
  		  setTimeout("parent.closemodalwindow()", 1500);
   		 //setTimeout("parent.window.location.reload()", 2000);
   		 var val=$.trim($("#kcname").combobox("getValue"));
-  		parent.querydxtByKc(val);
+  		parent.querypdtByKc(val);
  	  }
   }
   $(function(){
@@ -50,7 +50,7 @@
 	    });
 	    
 	    $('#zsd').combobox({
-            url: '${baseurl}zsd/jsonList.action?zsdCustom.kcname=${jdttCustom.kcname}',
+            url: '${baseurl}zsd/jsonList.action?zsdCustom.kcname=${pdttCustom.kcname}',
             valueField: 'uuid',//绑定字段ID
             textField: 'name',//绑定字段Name
             panelHeight: 'auto',//自适应
@@ -91,17 +91,18 @@
             }
         });
 	    
-		  $('#ndtype').combobox('setValues', '${jdtCustom.ndtype}');
-		  $('#kcname').combobox('setValues', '${jdtCustom.kcname}');
+		  $('#ndtype').combobox('setValues', '${pdtCustom.ndtype}');
+		  $('#kcname').combobox('setValues', '${pdtCustom.kcname}');
+		  $('#answer').combobox('setValues', '${pdtCustom.answer}');
 });
 </script>
 </head>
 <body>
 
 
-<form id="jdtform" action="${baseurl}jdt/edit.action" method="post">
+<form id="pdtform" action="${baseurl}pdt/edit.action" method="post">
 <!-- 更新用户的id -->
-<input type="hidden" name="uuid" value="${jdtCustom.uuid}"/>
+<input type="hidden" name="uuid" value="${pdtCustom.uuid}"/>
 <TABLE border=0 cellSpacing=0 cellPadding=0 width="100%" bgColor=#c4d8ed>
 
 	<TBODY>
@@ -110,7 +111,7 @@
    				<TABLE cellSpacing=0 cellPadding=0 width="100%">
 					<TBODY>
 						<TR>
-							<TD>&nbsp;简答题目信息</TD>
+							<TD>&nbsp;判断题目信息</TD>
 							<TD align=right>&nbsp;</TD>
 						</TR>
 					</TBODY>
@@ -125,42 +126,49 @@
 						<TR>
 							<TD height=30 width="15%" align=right >课程名称：</TD>
 							<td class=category>
-								<input id="kcname" class="easyui-combobox" data-options="required:true,editable:true,mode:'remote',url:'${baseurl}kc/jsonList.action?kcCustom.sysuseruuid=${sysuseruuid }',valueField:'name',textField:'name'" name="jdtCustom.kcname" >
+								<input id="kcname" class="easyui-combobox" data-options="required:true,editable:true,mode:'remote',url:'${baseurl}kc/jsonList.action?kcCustom.sysuseruuid=${sysuseruuid }',valueField:'name',textField:'name'" name="pdtCustom.kcname" >
 							</TD>
 							<TD height=30 width="15%" align=right >难度类型：</TD>
 							<td class=category>
-								<input id="ndtype" class="easyui-combobox" data-options="required:true,editable:false,url:'${baseurl}dxt/ndTypeJsonList.action',valueField:'dictcode',textField:'info'" name="jdtCustom.ndtype" >
+								<input id="ndtype" class="easyui-combobox" data-options="required:true,editable:false,url:'${baseurl}dxt/ndTypeJsonList.action',valueField:'dictcode',textField:'info'" name="pdtCustom.ndtype" >
 							</TD>
 						</TR>
 							
 						<tr>
 							<TD height=30 width="15%" align=right >题目内容：</TD>
 				            <td class=category width="100%" colspan="3">
-				            	<input class="easyui-textbox" id="jdtcontent" name="jdtCustom.content" data-options="required:true,multiline:true,validType:'length[0,150]'" style="height:60px;width: 280px;" value="${jdtCustom.content}"></input>
+				            	<input class="easyui-textbox" id="pdtcontent" name="pdtCustom.content" data-options="required:true,multiline:true,validType:'length[0,150]'" style="height:60px;width: 280px;" value="${pdtCustom.content}"></input>
 				            </td>
 						</tr>
 										
 						<tr>
 							<TD height=30 width="15%" align=right >答案：</TD>
-							<TD class=category width="35%">
+							<TD class=category width="35%" >
 								<div>
-									<input type="text" id="jdt_answer" class="easyui-textbox" data-options="required:true" name="jdtCustom.answer" value="${jdtCustom.answer}"/>
+								<input id="answer" class="easyui-combobox" 
+								data-options="required:true,editable:false,data: [{
+										key: '0',
+										value: '×'
+									},{
+										key: '1',
+										value: '√'
+									},],valueField:'key',textField:'value'" 
+								name="pdtCustom.answer" >
 								</div>
-								<div id="jdt_answerTip"></div>
 							</TD>
 							
 							<TD height=30 width="15%" align=right >创建用户：</TD>
 							<TD class=category width="35%">
-								${jdtCustom.teachername}
-								<div id="jdt_teachernameTip"></div>
+								${pdtCustom.teachername}
+								<div id="pdt_teachernameTip"></div>
 							</TD>							
 						</tr>
 						
 						<tr>
 							<TD height=30 width="15%" align=right >创建日期：</TD>
 							<TD class=category width="35%">
-								${jdtCustom.createtimeView}
-								<div id="jdt_createtimeViewTip"></div>
+								${pdtCustom.createtimeView}
+								<div id="pdt_createtimeViewTip"></div>
 							</TD>
 							
 						</tr>
@@ -174,7 +182,7 @@
 						
 						<tr>
 							<td colspan=4 align=center class=category>
-								<a id="submitbtn"  class="easyui-linkbutton"   iconCls="icon-ok" href="#" onclick="jdtsave()">修改</a>
+								<a id="submitbtn"  class="easyui-linkbutton"   iconCls="icon-ok" href="#" onclick="pdtsave()">修改</a>
 								<a id="closebtn"  class="easyui-linkbutton" iconCls="icon-cancel" href="#" onclick="parent.closemodalwindow()">关闭</a>
 							</td>
 						</tr>

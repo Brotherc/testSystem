@@ -5,19 +5,15 @@ public class Sjmb {
 
     private Integer dxtcount;
 
-    private Integer dxxztcount;
-
     private Integer tktcount;
 
-    private Integer jdtcount;
+    private Integer pdtcount;
 
     private Integer dxtscore;
 
-    private Integer dxxztscore;
-
     private Integer tktscore;
 
-    private Integer jdtscore;
+    private Integer pdtscore;
 
     private Integer score;
 
@@ -39,14 +35,6 @@ public class Sjmb {
         this.dxtcount = dxtcount;
     }
 
-    public Integer getDxxztcount() {
-        return dxxztcount;
-    }
-
-    public void setDxxztcount(Integer dxxztcount) {
-        this.dxxztcount = dxxztcount;
-    }
-
     public Integer getTktcount() {
         return tktcount;
     }
@@ -55,12 +43,12 @@ public class Sjmb {
         this.tktcount = tktcount;
     }
 
-    public Integer getJdtcount() {
-        return jdtcount;
+    public Integer getPdtcount() {
+        return pdtcount;
     }
 
-    public void setJdtcount(Integer jdtcount) {
-        this.jdtcount = jdtcount;
+    public void setPdtcount(Integer pdtcount) {
+        this.pdtcount = pdtcount;
     }
 
     public Integer getDxtscore() {
@@ -71,14 +59,6 @@ public class Sjmb {
         this.dxtscore = dxtscore;
     }
 
-    public Integer getDxxztscore() {
-        return dxxztscore;
-    }
-
-    public void setDxxztscore(Integer dxxztscore) {
-        this.dxxztscore = dxxztscore;
-    }
-
     public Integer getTktscore() {
         return tktscore;
     }
@@ -87,12 +67,12 @@ public class Sjmb {
         this.tktscore = tktscore;
     }
 
-    public Integer getJdtscore() {
-        return jdtscore;
+    public Integer getPdtscore() {
+        return pdtscore;
     }
 
-    public void setJdtscore(Integer jdtscore) {
-        this.jdtscore = jdtscore;
+    public void setPdtscore(Integer pdtscore) {
+        this.pdtscore = pdtscore;
     }
 
     public Integer getScore() {

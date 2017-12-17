@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ytk.business.dao.mapper.PdtMapperCustom" >
+	
+	<sql id="query_pdt_where">
+		<if test="pdtCustom!=null">
+			<if test="pdtCustom.uuid!=null and pdtCustom.uuid!=''">
+				and PDT.uuid = #{pdtCustom.uuid}
+			</if>
+			<if test="pdtCustom.status!=null and pdtCustom.status!=''">
+				and PDT.status = #{pdtCustom.status}
+			</if>
+			<if test="pdtCustom.content!=null and pdtCustom.content!=''">
+				and PDT.content like '%${pdtCustom.content}%'
+			</if>
+			<if test="pdtCustom.teachername!=null and pdtCustom.teachername!=''">
+				and PDT.teachername like '%${pdtCustom.teachername}%'
+			</if>
+			<if test="pdtCustom.kcname!=null and pdtCustom.kcname!=''">
+				and PDT.kcname like '%${pdtCustom.kcname}%'
+			</if>
+			<if test="pdtCustom.createtime!=null and pdtCustom.createtime!=''">
+				and PDT.createtime = #{pdtCustom.createtime}
+			</if>
+			<if test="pdtCustom.answer!=null and pdtCustom.answer!=''">
+				and PDT.answer like '%${pdtCustom.answer}%'
+			</if>
+			<if test="pdtCustom.ndtype!=null and pdtCustom.ndtype!=''">
+				and PDT.ndtype = #{pdtCustom.ndtype}
+			</if>
+			<if test="pdtCustom.createtimeMin!=null and pdtCustom.createtimeMin!=''">
+				and PDT.createtime <![CDATA[>= ]]> #{pdtCustom.createtimeMin}
+			</if>
+			<if test="pdtCustom.createtimeMax!=null and pdtCustom.createtimeMax!=''">
+				and PDT.createtime <![CDATA[<= ]]> #{pdtCustom.createtimeMax}
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_pdtZy_where">
+		<if test="pdtCustom!=null">
+			<if test="pdtCustom.zyname!=null and pdtCustom.zyname!=''">
+				and zy.name like '%${pdtCustom.zyname}%'
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_pdtZsd_where">
+		<if test="pdtCustom!=null">
+			<if test="pdtCustom.zsdname!=null and pdtCustom.zsdname!=''">
+				and zsd.name like '%${pdtCustom.zsdname}%'
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_pdtTeacherKc_where">
+		<if test="pdtCustom!=null">
+			<if test="pdtCustom.sysuseruuid!=null and pdtCustom.sysuseruuid!=''">
+				AND pdt.kcuuid IN (SELECT kcuuid FROM teacher_kc WHERE teacheruuid=#{pdtCustom.sysuseruuid})
+			</if>
+		</if>
+	</sql>
+	
+	<resultMap type="ytk.business.pojo.vo.PdtCustom" id="pdtCustom">
+		
+	    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+	    <result column="type" property="type" jdbcType="INTEGER" />
+	    <result column="kcuuid" property="kcuuid" jdbcType="BIGINT" />
+	    <result column="content" property="content" jdbcType="VARCHAR" />
+	    <result column="answer" property="answer" jdbcType="CHAR" />
+	    <result column="ndtype" property="ndtype" jdbcType="INTEGER" />
+	    <result column="teacheruuid" property="teacheruuid" jdbcType="VARCHAR" />
+	    <result column="createtime" property="createtime" jdbcType="BIGINT" />
+	    <result column="status" property="status" jdbcType="INTEGER" />
+	    
+	    <result column="kcname" property="kcname" />
+	    <result column="ndname" property="ndname" />
+	    <result column="teachername" property="teachername" />
+	    <result column="statusname" property="statusname" />
+		
+		<collection property="zyList" ofType="ytk.base.pojo.po.Zy">
+			<id column="zyuuid" property="uuid"/>
+			<result column="zyname" property="name"/>
+		</collection>
+		
+		<collection property="zsdList" ofType="ytk.base.pojo.po.Zsd">
+			<id column="zsduuid" property="uuid"/>
+			<result column="zsdname" property="name"/>
+		</collection>	
+	</resultMap>
+	
+	<select id="findPdtList" parameterType="ytk.business.pojo.vo.PdtQueryVo" resultMap="pdtCustom">
+		SELECT * FROM(
+			SELECT pdt.*,kc.name kcname,zy.name zyname,dictinfo.info ndname,sysuser.username teachername,kc_zy.zyuuid zyuuid,zsd.uuid zsduuid,zsd.name zsdname,
+ 			(SELECT info FROM dictinfo WHERE dictcode=pdt.status AND typecode='008') statusname
+				FROM pdt,kc,zy,dictinfo,sysuser,kc_zy,tm_zsd,zsd
+					WHERE pdt.kcuuid=kc.uuid AND pdt.ndtype=dictinfo.dictcode AND dictinfo.typecode=002 AND pdt.teacheruuid=sysuser.uuid
+					AND kc_zy.kcuuid=pdt.kcuuid AND kc_zy.zyuuid=zy.uuid
+					AND pdt.uuid=tm_zsd.tmuuid AND pdt.type=tm_zsd.type AND tm_zsd.zsduuid=zsd.uuid	
+					<include refid="query_pdtZy_where"></include>	
+					<include refid="query_pdtZsd_where"></include>		
+					<include refid="query_pdtTeacherKc_where"></include>			
+		) PDT 
+		<where>
+			<include refid="query_pdt_where"></include>
+		</where>
+<!-- 		<if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start},${pageQuery.PageQuery_pageSize};
+		</if> -->
+	</select>
+	
+	<select id="findPdtListCount" parameterType="ytk.business.pojo.vo.PdtQueryVo" resultType="int">
+		SELECT count(*) FROM(
+			SELECT pdt.*,kc.name kcname,dictinfo.info ndname,sysuser.username teachername,
+		<if test="pdtCustom!=null">
+			<if test="pdtCustom.zyname!=null and pdtCustom.zyname!=''">
+							zy.name zyname,kc_zy.zyuuid zyuuid,
+			</if>
+		</if>
+		<if test="pdtCustom!=null">
+			<if test="pdtCustom.zsdname!=null and pdtCustom.zsdname!=''">
+							zsd.uuid zsduuid,zsd.name zsdname,
+			</if>
+		</if>
+ 			(SELECT info FROM dictinfo WHERE dictcode=pdt.status AND typecode='008') statusname
+				FROM 
+		<if test="pdtCustom!=null">
+			<if test="pdtCustom.zyname!=null and pdtCustom.zyname!=''">
+							zy,kc_zy,
+			</if>
+		</if>
+		<if test="pdtCustom!=null">
+			<if test="pdtCustom.zsdname!=null and pdtCustom.zsdname!=''">
+							tm_zsd,zsd,
+			</if>
+		</if>
+				pdt,kc,dictinfo,sysuser
+					WHERE pdt.kcuuid=kc.uuid AND pdt.ndtype=dictinfo.dictcode AND dictinfo.typecode=002 AND pdt.teacheruuid=sysuser.uuid
+		<if test="pdtCustom!=null">
+			<if test="pdtCustom.zyname!=null and pdtCustom.zyname!=''">
+							AND kc_zy.kcuuid=pdt.kcuuid AND kc_zy.zyuuid=zy.uuid
+			</if>
+		</if>
+		<if test="pdtCustom!=null">
+			<if test="pdtCustom.zsdname!=null and pdtCustom.zsdname!=''">
+							AND pdt.uuid=tm_zsd.tmuuid AND pdt.type=tm_zsd.type AND tm_zsd.zsduuid=zsd.uuid	
+			</if>
+		</if>
+					<include refid="query_pdtZy_where"></include>	
+					<include refid="query_pdtZsd_where"></include>
+					<include refid="query_pdtTeacherKc_where"></include>					
+		) PDT 
+		<where>
+			<include refid="query_pdt_where"></include>
+		</where>
+	</select>
+</mapper>

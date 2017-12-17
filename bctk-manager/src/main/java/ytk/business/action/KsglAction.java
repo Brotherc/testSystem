@@ -37,8 +37,7 @@ import ytk.business.business.SjmbEbo;
 import ytk.business.business.StudentSjEbo;
 import ytk.business.business.StudentSjdaEbo;
 import ytk.business.pojo.po.Dxt;
-import ytk.business.pojo.po.Dxxzt;
-import ytk.business.pojo.po.Jdt;
+import ytk.business.pojo.po.Pdt;
 import ytk.business.pojo.po.Ksgl;
 import ytk.business.pojo.po.Sjmb;
 import ytk.business.pojo.po.Tkt;
@@ -200,14 +199,6 @@ public class KsglAction {
 		}
 		model.addAttribute("dxtList", dxtList);
 		
-		//加载试卷多项选择题信息
-		List<Dxxzt> dxxztList = sjXitmEbo.findDxxztBySjUuid(sjTmQueryVo);
-		if(dxxztList!=null&&dxxztList.size()>0){
-			model.addAttribute("dxxztListTypeId", tmTypeMap.get(tmTypeId));
-			tmTypeId++;
-		}
-		model.addAttribute("dxxztList", dxxztList);
-		
 		//加载试卷填空题信息
 		List<Tkt> tktList = sjXitmEbo.findTktBySjUuid(sjTmQueryVo);
 		if(tktList!=null&&tktList.size()>0){
@@ -216,13 +207,13 @@ public class KsglAction {
 		}
 		model.addAttribute("tktList", tktList);
 		
-		//加载试卷简答题信息
-		List<Jdt> jdtList = sjXitmEbo.findJdtBySjUuid(sjTmQueryVo);
-		if(jdtList!=null&&jdtList.size()>0){
-			model.addAttribute("jdtListTypeId", tmTypeMap.get(tmTypeId));
+		//加载试卷判断题信息
+		List<Pdt> pdtList = sjXitmEbo.findPdtBySjUuid(sjTmQueryVo);
+		if(pdtList!=null&&pdtList.size()>0){
+			model.addAttribute("pdtListTypeId", tmTypeMap.get(tmTypeId));
 			tmTypeId++;
 		}
-		model.addAttribute("jdtList", jdtList);
+		model.addAttribute("pdtList", pdtList);
 		
 		//加载考试管理uuid
 		model.addAttribute("ksgluuid", ksgluuid);
@@ -286,10 +277,10 @@ public class KsglAction {
 		if(tktList!=null&&tktList.size()>0)
 			studentSjdaEbo.addStudentSjda(sjuuid,studentsjid,tktList);*/
 		
-		//获取学生试卷简答题答案
-/*		List<StudentSjdaCustom> jdtList = studentSjdaQueryVo.getJdtList();
-		if(jdtList!=null&&jdtList.size()>0)
-			studentSjdaEbo.addStudentSjda(sjuuid,studentsjid,jdtList);*/
+		//获取学生试卷判断题答案
+/*		List<StudentSjdaCustom> pdtList = studentSjdaQueryVo.getPdtList();
+		if(pdtList!=null&&pdtList.size()>0)
+			studentSjdaEbo.addStudentSjda(sjuuid,studentsjid,pdtList);*/
 		
 		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(Config.MESSAGE, 906, null));
 	}	

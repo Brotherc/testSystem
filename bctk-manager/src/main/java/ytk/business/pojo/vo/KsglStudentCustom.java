@@ -2,7 +2,6 @@ package ytk.business.pojo.vo;
 
 import ytk.business.pojo.po.KsglStudent;
 import ytk.util.DateUtil;
-import ytk.util.MyUtil;
 
 public class KsglStudentCustom extends KsglStudent{
 	private String studentId;

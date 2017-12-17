@@ -29,9 +29,15 @@ public interface StudentSjdaEbo {
 	//查询学生试卷答案（单选题）
 	public Map<Integer, String> findStudentSjDaDxt(String sysuseruuid,String ksgluuid) throws Exception;
 
-	//添加学生试卷答案(单选题)到缓存中
+	//添加学生试卷答案(填空题)到缓存中
 	public void addStudentSjdaTkt(String sysuseruuid, String ksgluuid,List<List<String>> tktList) throws Exception;
 
 	//查询学生试卷答案（填空题）
-	public Map<Integer, List> findStudentSjDaTkt(String sysuseruuid, String ksgluuid);
+	public Map<Integer, List> findStudentSjDaTkt(String sysuseruuid, String ksgluuid) throws Exception;
+
+	//查询学生试卷答案（判断题）
+	public Map<Integer, String> findStudentSjDaPdt(String sysuseruuid, String ksgluuid) throws Exception;
+	
+	//添加学生试卷答案(判断题)到缓存中
+	public void addStudentSjdaPdt(String sysuseruuid,String ksgluuid,List<String> pdtList,Integer pdtSize) throws Exception;
 }
