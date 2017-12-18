@@ -139,7 +139,6 @@ function sjxitmdel(){
 				var indexs = [];//定义一个数组准备存放删除记录的序号
 				//通过jquery easyui的datagrid的getSelections函数，得到当前所有选中的行(对象数组)
 				var rows = $('#sjxitmlist').datagrid('getSelections');
-				alert(rows.length);
 				//循环遍历选中行
 				for(var i=0;i<rows.length;i++){
 

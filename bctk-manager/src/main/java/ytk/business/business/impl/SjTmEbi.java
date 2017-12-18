@@ -86,6 +86,8 @@ public class SjTmEbi implements SjTmEbo{
 	private String DXT_ORDER;
 	@Value("${TKT_ORDER}")
 	private String TKT_ORDER;
+	@Value("${PDT_ORDER}")
+	private String PDT_ORDER;
 	
 	@Override
 	public List<SjTmCustom> findSjTmList(SjTmQueryVo sjTmQueryVo)
@@ -490,7 +492,7 @@ public class SjTmEbi implements SjTmEbo{
 								List<Sjda> sjdaList = sjdaMapper.selectByExample(sjdaExample2);
 								if(sjdaList!=null&&sjdaList.size()>0){
 									Sjda sjda = sjdaList.get(0);
-									sjda.setSjtmid(sjtmid);
+									sjda.setSjtmid(i+1);
 									//更新试卷答案题目编号
 									sjdaMapper.updateByPrimaryKey(sjda);
 								}
@@ -514,14 +516,14 @@ public class SjTmEbi implements SjTmEbo{
 							if(sjtmid!=i+1){
 								//修改该题目编号，并且修改该题目对应答案的编号
 								SjdaExample sjdaExample2=new SjdaExample();
-								SjdaExample.Criteria sjdaDxtCriteria = sjdaExample2.createCriteria();
-								sjdaDxtCriteria.andSjidEqualTo(sjid);
-								sjdaDxtCriteria.andTypeEqualTo(5);
-								sjdaDxtCriteria.andSjtmidEqualTo(sjtmid);
+								SjdaExample.Criteria sjdaPdtCriteria = sjdaExample2.createCriteria();
+								sjdaPdtCriteria.andSjidEqualTo(sjid);
+								sjdaPdtCriteria.andTypeEqualTo(5);
+								sjdaPdtCriteria.andSjtmidEqualTo(sjtmid);
 								List<Sjda> sjdaList = sjdaMapper.selectByExample(sjdaExample2);
 								if(sjdaList!=null&&sjdaList.size()>0){
 									Sjda sjda = sjdaList.get(0);
-									sjda.setSjtmid(sjtmid);
+									sjda.setSjtmid(i+1);
 									//更新试卷答案题目编号
 									sjdaMapper.updateByPrimaryKey(sjda);
 								}
@@ -870,6 +872,8 @@ public class SjTmEbi implements SjTmEbo{
 			tm_order=DXT_ORDER;
 		else if(type==3)
 			tm_order=TKT_ORDER;
+		else if(type==5)
+			tm_order=PDT_ORDER;
 		
 		String student_ksgl=sysuseruuid+"_"+ksgluuid;
 		//查询缓存

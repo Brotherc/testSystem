@@ -402,10 +402,16 @@ public class KsglStudentEbi implements KsglStudentEbo{
 	@Override
 	public void addKsglStudentChoose(String ksgluuid, String studentUuid)
 			throws Exception {
+		
+		Ksgl ksgl = ksglMapper.selectByPrimaryKey(ksgluuid);
+		//只有当考试管理状态为待考试，才允许添加考试学生
+		Integer status = ksgl.getStatus();
+		if(status==2||status==3)
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1308, null));
+		
 		//学生所属专业存在考试试卷课程
 		Student student = studentMapper.selectByPrimaryKey(studentUuid);
 		Class classCustom = classMapper.selectByPrimaryKey(student.getClassUuid());
-		Ksgl ksgl = ksglMapper.selectByPrimaryKey(ksgluuid);
 		KcZyExample kcZyExample=new KcZyExample();
 		KcZyExample.Criteria kcZyCriteria = kcZyExample.createCriteria();
 		kcZyCriteria.andKcuuidEqualTo(ksgl.getKcuuid());
@@ -424,8 +430,14 @@ public class KsglStudentEbi implements KsglStudentEbo{
 	}
 
 	@Override
-	public SubmitResultInfo importKsglStudent(String filePath) throws Exception {
+	public SubmitResultInfo importKsglStudent(String filePath,String ksgluuid) throws Exception {
 
+		Ksgl ksgl = ksglMapper.selectByPrimaryKey(ksgluuid);
+		//只有当考试管理状态为待考试，才允许添加考试学生
+		Integer status = ksgl.getStatus();
+		if(status==2||status==3)
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 1308, null));
+		
 		
 		//调用工具类进行考试学生 导入
 		HxlsRead xls2csv = null;

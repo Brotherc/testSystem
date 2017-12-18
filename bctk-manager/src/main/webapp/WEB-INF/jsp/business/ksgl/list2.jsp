@@ -91,7 +91,8 @@
 		title : '监考',
 		width : 65,
 		formatter : function(value, row, index) {
-			return '<a href=javascript:ksglStudent("'+row.uuid+'","'+row.sjname+'")>查看</a>';
+			if(row.status==3)
+				return '<a href=javascript:ksglStudent("'+row.uuid+'","'+row.sjname+'")>查看</a>';
 		}
 	}] ];
 

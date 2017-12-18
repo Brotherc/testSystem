@@ -110,6 +110,7 @@ public class StudentSjdaEbi implements StudentSjdaEbo{
 		studentSjda.setScore(score);
 		//修改学生试卷分数
 		//获取该学生考试试卷
+		System.out.println("修改的分数"+score+"-------------"+"原分"+scoreDb);
 		StudentSj studentSj = studentSjMapper.selectByPrimaryKey(studentSjda.getStudentsjid());
 		studentSj.setScore(studentSj.getScore()+score-scoreDb);
 		//更新学生试卷

@@ -64,7 +64,10 @@
 		width : 100,
 		formatter: function(value,row,index){
 			//gysypmls对应action接收对象中list的名称，[]括号中是从0开始序号,id是list中对象属性
-			return '<div class="time"></div>';
+			if(row.status==3)
+				return '<div class="time"></div>';
+			else 
+				return '<div class="notime">0</div>';
 		}
 	}  ] ];
 	function checkTime(i){

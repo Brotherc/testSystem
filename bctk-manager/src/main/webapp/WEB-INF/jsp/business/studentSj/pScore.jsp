@@ -29,6 +29,7 @@
  	  message_alert(data);
  	  
  	  if(data.resultInfo.type=='1'){
+ 		 parent.parent.queryStudentSj();
  		  setTimeout("parent.closemodalwindow()", 1500);
  		 setTimeout("parent.window.location.reload()", 2000);
  	  }

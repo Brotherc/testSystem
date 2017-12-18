@@ -33,7 +33,17 @@
 	}, {
 		field : 'answer',//对应json中的key
 		title : '答案',
-		width : 100
+		width : 100,
+		formatter: function(value,row,index){
+			if(row.type==5){
+				if(row.answer==1)
+					return '√';
+				else 
+					return '×';
+			}
+			else
+				return row.answer;
+		}
 	}, {
 		field : 'score',//对应json中的key
 		title : '得分',

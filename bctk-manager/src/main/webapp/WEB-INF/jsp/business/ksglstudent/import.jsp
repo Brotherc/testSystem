@@ -64,6 +64,7 @@ $(function(){
 </style>
 
 <form id="ksglStudentImportForm" name="ksglStudentImportForm" action="${baseurl}ksglStudent/import.action" method="post" enctype="multipart/form-data">
+<input type="hidden" name="ksgluuid" value="${ksgluuid }">
 	<TABLE border=0 cellSpacing=0 cellPadding=0 width="100%" bgColor=#D3D3D3>
 		<TBODY>
 			<TR>

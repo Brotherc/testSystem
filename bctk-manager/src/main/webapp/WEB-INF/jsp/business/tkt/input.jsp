@@ -71,7 +71,7 @@ function toLogin(){
  		  setTimeout("parent.closemodalwindow()", 1500);
   		 //setTimeout("parent.window.location.reload()", 2000);
   		 var val=$.trim($("#kcname").combobox("getValue"));
-  		parent.querydxtByKc(val);
+  		parent.querytktByKc(val);
  	  } 	  
 
 	 // alert(data.message);
@@ -322,15 +322,6 @@ function toLogin(){
 							<td>
      						<input id="zsd" class="easyui-combobox" name="zsdList" />
 							</td>
-						</tr>	
-						<tr>
-							<TD height=30 width="15%" align=right >答案：</TD>
-							<TD class=category width="35%">
-								<div>
-									<input type="text" id="tkt_answer" class="easyui-textbox" data-options="required:true" name="tktCustom.answer" />
-								</div>
-								<div id="tkt_answerTip"></div>
-							</TD>
 						</tr>					
 						<tr id="content">
 							  <td colspan=4 align=center class=category>

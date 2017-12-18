@@ -11,7 +11,7 @@
 	<dependencies>
 		<!-- 依赖技术架构模块 -->
 		<dependency>
-			<groupId>cn.brotherchun</groupId>   
+			<groupId>cn.brotherchun</groupId>     
 			<artifactId>bctk-ssm</artifactId>
 			<version>0.0.1-SNAPSHOT</version>   
 		</dependency>

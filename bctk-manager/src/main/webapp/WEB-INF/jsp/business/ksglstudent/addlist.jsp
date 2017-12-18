@@ -60,7 +60,7 @@ var ksglStudentAdd = function(){
 }; 
 
 var ksglStudentImport=function(){
-	createmodalwindow("考试学生导入", 900, 570, '${baseurl}ksglStudentImport.action');	
+	createmodalwindow("考试学生导入", 900, 570, '${baseurl}ksglStudentImport.action?ksgluuid=${ksgluuid}');	
 };
 	//datagrid列定义
 	var columns_v = [ [  {

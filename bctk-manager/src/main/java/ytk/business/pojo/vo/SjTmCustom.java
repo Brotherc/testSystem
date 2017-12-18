@@ -11,7 +11,7 @@ public class SjTmCustom extends SjTm{
 	private Long zjuuid;
 	private String content;
 	private Integer ndtype;
-	private Long teacheruuid;
+	private String teacheruuid;
 	private String kcname;
 	private String zyname;
 	private String zjname;
@@ -64,11 +64,11 @@ public class SjTmCustom extends SjTm{
 		this.ndtype = ndtype;
 	}
 
-	public Long getTeacheruuid() {
+	public String getTeacheruuid() {
 		return teacheruuid;
 	}
 
-	public void setTeacheruuid(Long teacheruuid) {
+	public void setTeacheruuid(String teacheruuid) {
 		this.teacheruuid = teacheruuid;
 	}
 

@@ -229,7 +229,8 @@ public class KsglStudentAction {
 	}
 	
 	@RequestMapping("/ksglStudentImport")
-	public String toKsglStudentImport() throws Exception{
+	public String toKsglStudentImport(String ksgluuid,Model model) throws Exception{
+		model.addAttribute("ksgluuid", ksgluuid);
 		return "/business/ksglstudent/import";
 	}
 	
@@ -237,7 +238,8 @@ public class KsglStudentAction {
 	@RequestMapping("/ksglStudent/import")
 	public @ResponseBody SubmitResultInfo importKsglStudent(
 			//写上传的文件
-			MultipartFile ksglStudentImportFile
+			MultipartFile ksglStudentImportFile,
+			String ksgluuid
 			)throws Exception{
 		
 		//将上传的文件写到磁盘
@@ -255,7 +257,7 @@ public class KsglStudentAction {
 		//上传文件磁盘上路径 
 		String absolutePath = file.getAbsolutePath();
 		
-		return ksglStudentEbo.importKsglStudent(absolutePath);
+		return ksglStudentEbo.importKsglStudent(absolutePath,ksgluuid);
 /*		String[] msgs = msg.split("_");
 		System.out.println(msgs[0]+" "+msgs[1]);
 		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(Config.MESSAGE, 317, new Object[]{

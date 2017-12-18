@@ -47,7 +47,7 @@ function removeAllSpace(str){
  		  setTimeout("parent.closemodalwindow()", 1500);
   		 //setTimeout("parent.window.location.reload()", 2000);
   		 var val=$.trim($("#kcname").combobox("getValue"));
-  		parent.querydxtByKc(val);
+  		parent.querytktByKc(val);
  	  }
   }
     

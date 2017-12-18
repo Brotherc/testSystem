@@ -28,7 +28,7 @@ public interface KsglStudentEbo {
 	
 	public void addKsglStudentChoose(String ksgluuid,String studentUuid) throws Exception;
 	
-	public SubmitResultInfo importKsglStudent(String filePath) throws Exception;
+	public SubmitResultInfo importKsglStudent(String filePath,String ksgluuid) throws Exception;
 
 	public void updateKsglStudentStatus(String ksgluuid, String studentUuid,Integer status) throws Exception;
 	
