@@ -55,6 +55,7 @@ public class ClassAction {
 	@RequestMapping("/classInput")
 	public String toClassInput(){
 		return "/base/class/input";
+		
 	}
 	
 	//添加系信息
